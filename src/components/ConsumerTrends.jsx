@@ -24,7 +24,9 @@ import {
   ChevronDown,
   ChevronUp,
   Calculator,
-  Database
+  Database,
+  Globe,
+  Activity
 } from 'lucide-react'
 import { 
   LineChart, 
@@ -71,7 +73,8 @@ const ConsumerTrends = () => {
   const [showRecommendations, setShowRecommendations] = useState(false)
   const [businessSuggestions, setBusinessSuggestions] = useState([])
   const [showSuggestions, setShowSuggestions] = useState(false)
-  const [showDataGuide, setShowDataGuide] = useState(false)
+
+  const [showDataSources, setShowDataSources] = useState(false)
 
   // Mock business database for autocomplete
   const businessDatabase = [
@@ -128,43 +131,51 @@ const ConsumerTrends = () => {
     { name: 'Careem Car Rental', type: 'car-rental', category: 'mid-size', location: 'App-based, Multiple Locations' }
   ]
 
-  // Emerging trend data
-  const emergingTrends = [
+  // Revenue-driving behavioral trends
+  const revenueDrivers = [
     { 
-      trend: 'Sustainable Travel', 
+      trend: 'Sustainable Travel Premium', 
       growth: 156, 
       impact: 'High',
       adoption: 34,
+      premiumWillingness: 22,
+      revenueUplift: 340,
       color: 'from-emerald-500 to-green-600',
       icon: Leaf,
-      description: 'Eco-conscious bookings up 156% YoY'
+      description: 'Eco-conscious travelers pay 22% premium for sustainable options'
     },
     { 
-      trend: 'Bleisure Travel', 
+      trend: 'Bleisure Package Bundles', 
       growth: 89, 
       impact: 'High',
       adoption: 28,
+      premiumWillingness: 28,
+      revenueUplift: 420,
       color: 'from-blue-500 to-indigo-600',
       icon: Zap,
-      description: 'Business + leisure trips growing rapidly'
+      description: 'Business travelers extend stays for leisure at premium rates'
     },
     { 
-      trend: 'Digital Detox', 
-      growth: 67, 
-      impact: 'Medium',
-      adoption: 19,
-      color: 'from-purple-500 to-violet-600',
-      icon: Smartphone,
-      description: 'Tech-free vacation demand rising'
-    },
-    { 
-      trend: 'Solo Female Travel', 
+      trend: 'Solo Female Travel Premium', 
       growth: 124, 
       impact: 'High',
       adoption: 41,
+      premiumWillingness: 35,
+      revenueUplift: 285,
       color: 'from-rose-500 to-pink-600',
       icon: Heart,
-      description: 'Independent female travelers increasing'
+      description: 'Solo female travelers pay premium for safety and convenience'
+    },
+    { 
+      trend: 'Digital Detox Luxury', 
+      growth: 67, 
+      impact: 'Medium',
+      adoption: 19,
+      premiumWillingness: 18,
+      revenueUplift: 125,
+      color: 'from-purple-500 to-violet-600',
+      icon: Smartphone,
+      description: 'Tech-free experiences command luxury pricing premiums'
     }
   ]
 
@@ -211,6 +222,36 @@ const ConsumerTrends = () => {
     { week: 'Week 3', confidence: 79, optimism: 82, satisfaction: 85 },
     { week: 'Week 4', confidence: 85, optimism: 90, satisfaction: 88 },
   ]
+
+
+
+  // Demographics and audience analysis data
+  const audienceData = {
+    ageGroups: [
+      { age: '25-34', percentage: 32, travelers: '2.1M', spending: '$2,850' },
+      { age: '35-44', percentage: 28, travelers: '1.8M', spending: '$3,420' },
+      { age: '45-54', percentage: 22, travelers: '1.4M', spending: '$4,100' },
+      { age: '18-24', percentage: 12, travelers: '780K', spending: '$1,650' },
+      { age: '55+', percentage: 6, travelers: '390K', spending: '$5,200' }
+    ],
+    travelTypes: [
+      { type: 'Leisure', percentage: 45, growth: '+18%', avgSpend: '$3,200', icon: Heart },
+      { type: 'Business', percentage: 32, growth: '+8%', avgSpend: '$4,800', icon: Building2 },
+      { type: 'Bleisure', percentage: 15, growth: '+89%', avgSpend: '$5,400', icon: Zap },
+      { type: 'Medical Tourism', percentage: 5, growth: '+34%', avgSpend: '$8,200', icon: Activity },
+      { type: 'Events & Conferences', percentage: 3, growth: '+12%', avgSpend: '$3,800', icon: Calendar }
+    ],
+    demographics: {
+
+      travelerTypes: [
+        { type: 'Solo Travelers', percentage: 28, avgStay: '4.2 days', preference: 'Flexibility & independence' },
+        { type: 'Couples', percentage: 35, avgStay: '5.8 days', preference: 'Romance & experiences' },
+        { type: 'Families', percentage: 22, avgStay: '6.5 days', preference: 'Safety & activities' },
+        { type: 'Friends Groups', percentage: 12, avgStay: '4.8 days', preference: 'Adventure & nightlife' },
+        { type: 'Business Groups', percentage: 3, avgStay: '3.2 days', preference: 'Convenience & efficiency' }
+      ]
+    }
+  }
 
   // Business search functions
   const handleBusinessNameChange = (value) => {
@@ -502,7 +543,6 @@ const ConsumerTrends = () => {
               onClick={() => setIsDrawerOpen(true)}
               className="bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-700 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl"
             >
-              <Target className="w-5 h-5" />
               <span>Get Action Plan</span>
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -513,218 +553,48 @@ const ConsumerTrends = () => {
         </div>
       </div>
 
-      {/* Data Guide Section */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100">
-        <div 
-          className="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors"
-          onClick={() => setShowDataGuide(!showDataGuide)}
-        >
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-emerald-100 rounded-lg">
-              <Calculator className="w-5 h-5 text-emerald-600" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-gray-900">How to Read Consumer Trends Data</h3>
-              <p className="text-sm text-gray-600">Complete guide to understanding metrics, charts, and insights</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-500">
-              {showDataGuide ? 'Hide Guide' : 'Show Guide'}
-            </span>
-            {showDataGuide ? (
-              <ChevronUp className="w-5 h-5 text-gray-400" />
-            ) : (
-              <ChevronDown className="w-5 h-5 text-gray-400" />
-            )}
-          </div>
-        </div>
-        
-        {showDataGuide && (
-          <div className="px-6 pb-6 border-t border-gray-100">
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-              
-              {/* Trend Metrics Guide */}
-              <div className="space-y-6">
-                <div className="bg-emerald-50 rounded-xl p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <TrendingUp className="w-5 h-5 text-emerald-600" />
-                    <h4 className="font-bold text-gray-900">Understanding Trend Metrics</h4>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Growth Rate (%)</h5>
-                      <p className="text-sm text-gray-600">Year-over-year percentage change in consumer interest, measured through search volume, booking patterns, and social media mentions.</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Adoption Rate (%)</h5>
-                      <p className="text-sm text-gray-600">Percentage of travelers currently engaging with this trend. Values range from 0-100%, with higher values indicating mainstream adoption.</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Impact Level</h5>
-                      <p className="text-sm text-gray-600">
-                        <strong>High:</strong> Major revenue/strategy implications<br/>
-                        <strong>Medium:</strong> Moderate business impact<br/>
-                        <strong>Low:</strong> Emerging opportunity
-                      </p>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="bg-blue-50 rounded-xl p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <BarChart3 className="w-5 h-5 text-blue-600" />
-                    <h4 className="font-bold text-gray-900">Chart Reading Guide</h4>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Line Charts (Behavior Evolution)</h5>
-                      <p className="text-sm text-gray-600">Track changes over time. Upward trends indicate growing behaviors, downward trends show declining patterns.</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Radar Charts (Motivations)</h5>
-                      <p className="text-sm text-gray-600">Compare multiple factors on a 0-100 scale. Larger areas indicate stronger performance or higher values.</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Stacked Charts (Generational)</h5>
-                      <p className="text-sm text-gray-600">Show proportional breakdowns. Each segment represents percentage contribution to the total (100%).</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Data Sources & Methodology */}
-              <div className="space-y-6">
-                <div className="bg-purple-50 rounded-xl p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <Database className="w-5 h-5 text-purple-600" />
-                    <h4 className="font-bold text-gray-900">Data Sources & Quality</h4>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Primary Data Sources</h5>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Consumer surveys (12,500+ respondents)</li>
-                        <li>• Booking system analytics</li>
-                        <li>• Social media sentiment analysis</li>
-                        <li>• Search trend data</li>
-                        <li>• Industry research reports</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Sample Demographics</h5>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Geographic: GCC region focus</li>
-                        <li>• Age range: 18-65+ years</li>
-                        <li>• Income: Premium travel segment</li>
-                        <li>• Travel frequency: 2+ trips/year</li>
-                      </ul>
-                    </div>
 
-                    <div>
-                      <h5 className="text-sm font-semibold text-gray-700 mb-2">Data Freshness</h5>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Real-time: Social sentiment, booking data</li>
-                        <li>• Weekly: Consumer surveys, search trends</li>
-                        <li>• Monthly: Industry reports, competitor analysis</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-yellow-50 rounded-xl p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <HelpCircle className="w-5 h-5 text-yellow-600" />
-                    <h4 className="font-bold text-gray-900">Key Interpretation Tips</h4>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-start space-x-2">
-                      <div className="w-2 h-2 bg-yellow-600 rounded-full mt-2"></div>
-                      <p className="text-sm text-gray-600">Growth rates above 50% indicate strong emerging trends worth immediate attention.</p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-2 h-2 bg-yellow-600 rounded-full mt-2"></div>
-                      <p className="text-sm text-gray-600">Adoption rates above 30% suggest trends are moving from niche to mainstream.</p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-2 h-2 bg-yellow-600 rounded-full mt-2"></div>
-                      <p className="text-sm text-gray-600">Seasonal variations are normal - focus on year-over-year comparisons.</p>
-                    </div>
-                    <div className="flex items-start space-x-2">
-                      <div className="w-2 h-2 bg-yellow-600 rounded-full mt-2"></div>
-                      <p className="text-sm text-gray-600">High-impact + high-growth trends require immediate strategic planning.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-              <div className="flex items-start space-x-3">
-                <Info className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <h5 className="font-semibold text-gray-900 mb-2">Statistical Confidence & Reliability</h5>
-                  <p className="text-sm text-gray-700 mb-3">
-                    Our trend analysis uses statistical methods to ensure reliability and actionability:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
-                    <div>
-                      <p className="font-medium text-gray-700">Confidence Intervals</p>
-                      <p>95% confidence level for all trend predictions</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-700">Sample Size</p>
-                      <p>Minimum 1,000 data points per trend metric</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-700">Validation</p>
-                      <p>Cross-validated with external industry data</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Emerging Trends Cards */}
+      {/* Revenue-Driving Behavioral Trends */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
-            <h2 className="text-2xl font-bold text-gray-900">Emerging Travel Trends</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Revenue-Driving Behavioral Trends</h2>
             <div className="group relative">
               <HelpCircle className="w-5 h-5 text-gray-400 hover:text-emerald-600 cursor-help" />
               <div className="absolute left-0 top-8 w-80 p-4 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                 <p className="text-sm text-gray-700 mb-3">
-                  These cards show the most significant emerging trends based on consumer behavior analysis and booking data.
+                  These behavioral trends show strong revenue potential through premium pricing opportunities and higher willingness to pay.
                 </p>
                 <div className="space-y-2 text-xs text-gray-600">
-                  <p><strong>Growth Rate:</strong> Year-over-year increase in consumer interest</p>
-                  <p><strong>Adoption:</strong> Current percentage of travelers engaging with this trend</p>
-                  <p><strong>Impact Level:</strong> Potential business/revenue implications</p>
+                  <p><strong>Growth Rate:</strong> Year-over-year increase in demand</p>
+                  <p><strong>Premium Willingness:</strong> Additional percentage customers will pay</p>
+                  <p><strong>Revenue Uplift:</strong> Projected revenue increase in thousands AED</p>
                 </div>
               </div>
             </div>
+            <button
+              onClick={() => setShowDataSources(true)}
+              className="p-2 bg-gray-100 hover:bg-emerald-100 rounded-lg transition-colors group"
+              title="Data Sources & KPI Methodology"
+            >
+              <HelpCircle className="w-4 h-4 text-gray-500 group-hover:text-emerald-600" />
+            </button>
           </div>
           <div className="text-right">
-            <p className="text-sm text-gray-600">Top 4 Emerging Trends</p>
-            <p className="text-xs text-gray-500">{currentPeriod} Analysis</p>
+            <p className="text-sm text-gray-600">Top 4 Revenue Drivers</p>
+            <p className="text-xs text-gray-500">{currentPeriod} Intelligence</p>
+            <p className="flex items-center justify-end text-xs text-gray-500">
+              <Database className="w-3 h-3 mr-1" />
+              STR • Survey Data • Analytics
+            </p>
           </div>
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {emergingTrends.map((trend, index) => {
+        {revenueDrivers.map((trend, index) => {
           const Icon = trend.icon
           return (
             <div key={index} className="group relative overflow-hidden bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gray-200">
@@ -753,7 +623,20 @@ const ConsumerTrends = () => {
                       <div className="group/tooltip relative">
                         <HelpCircle className="w-3 h-3 text-gray-400 hover:text-blue-600 cursor-help" />
                         <div className="absolute right-0 top-5 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-20">
-                          YoY growth in searches, bookings, and social mentions
+                          YoY growth in demand and bookings for this trend
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">Premium Willingness</span>
+                    <div className="flex items-center space-x-1">
+                      <span className="text-lg font-bold text-blue-600">+{trend.premiumWillingness}%</span>
+                      <div className="group/tooltip relative">
+                        <HelpCircle className="w-3 h-3 text-gray-400 hover:text-blue-600 cursor-help" />
+                        <div className="absolute right-0 top-5 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-20">
+                          Additional percentage customers will pay for this experience
                         </div>
                       </div>
                     </div>
@@ -761,13 +644,13 @@ const ConsumerTrends = () => {
                   
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">Adoption</span>
+                      <span className="text-sm text-gray-500">Revenue Uplift</span>
                       <div className="flex items-center space-x-1">
-                        <span className="text-sm font-semibold">{trend.adoption}%</span>
+                        <span className="text-sm font-semibold text-green-600">+{trend.revenueUplift}K AED</span>
                         <div className="group/tooltip relative">
                           <HelpCircle className="w-3 h-3 text-gray-400 hover:text-blue-600 cursor-help" />
                           <div className="absolute right-0 top-5 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-20">
-                            Current percentage of travelers actively engaging with this trend
+                            Projected quarterly revenue increase from implementing this trend
                           </div>
                         </div>
                       </div>
@@ -775,7 +658,7 @@ const ConsumerTrends = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div 
                         className={`h-2 rounded-full bg-gradient-to-r ${trend.color}`}
-                        style={{ width: `${trend.adoption}%` }}
+                        style={{ width: `${trend.premiumWillingness * 2}%` }}
                       ></div>
                     </div>
                   </div>
@@ -786,310 +669,405 @@ const ConsumerTrends = () => {
         })}
       </div>
 
-      {/* Consumer Behavior Evolution */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Users className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">Consumer Behavior Evolution</h3>
-                <p className="text-sm text-gray-600">{marketRegion} • {currentPeriod}</p>
-              </div>
-              <div className="group relative">
-                <HelpCircle className="w-4 h-4 text-gray-400 hover:text-blue-600 cursor-help" />
-                <div className="absolute left-0 top-6 w-72 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                  <p className="text-sm text-gray-700 mb-2">
-                    <strong>How to read this chart:</strong> Track changes in booking behaviors over time.
-                  </p>
-                  <div className="space-y-1 text-xs text-gray-600">
-                    <p><strong>Instant Booking:</strong> Same-day booking decisions</p>
-                    <p><strong>Advance Planning:</strong> Bookings made 30+ days ahead</p>
-                    <p><strong>Last Minute:</strong> Bookings within 7 days of travel</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="text-right text-sm text-gray-500">
-              <p>6-Month Trend</p>
-              <p>Jul - Dec 2024</p>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={behaviorEvolution}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line 
-                type="monotone" 
-                dataKey="instantBooking" 
-                stroke="#3B82F6" 
-                strokeWidth={3}
-                name="Instant Booking"
-              />
-              <Line 
-                type="monotone" 
-                dataKey="advancePlanning" 
-                stroke="#10B981" 
-                strokeWidth={3}
-                name="Advance Planning"
-              />
-              <Line 
-                type="monotone" 
-                dataKey="lastMinute" 
-                stroke="#F59E0B" 
-                strokeWidth={3}
-                name="Last Minute"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Travel Motivations Radar */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Target className="w-5 h-5 text-purple-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">Travel Motivations</h3>
-                <p className="text-sm text-gray-600">{currentPeriod} vs Emerging Trends</p>
-              </div>
-              <div className="group relative">
-                <HelpCircle className="w-4 h-4 text-gray-400 hover:text-purple-600 cursor-help" />
-                <div className="absolute left-0 top-6 w-72 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                  <p className="text-sm text-gray-700 mb-2">
-                    <strong>How to read this radar chart:</strong> Compare current motivations (purple) vs emerging trends (green).
-                  </p>
-                  <div className="space-y-1 text-xs text-gray-600">
-                    <p>• Larger areas = stronger motivations</p>
-                    <p>• Gap between lines = growth opportunity</p>
-                    <p>• Scale: 0-100 (consumer interest level)</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="text-right text-sm text-gray-500">
-              <p>Motivation Strength</p>
-              <p>0-100 Scale</p>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <RadarChart data={travelMotivations}>
-              <PolarGrid />
-              <PolarAngleAxis dataKey="motivation" />
-              <PolarRadiusAxis angle={90} domain={[0, 100]} />
-              <Radar 
-                name="Current" 
-                dataKey="current" 
-                stroke="#8B5CF6" 
-                fill="#8B5CF6" 
-                fillOpacity={0.3}
-                strokeWidth={2}
-              />
-              <Radar 
-                name="Emerging" 
-                dataKey="emerging" 
-                stroke="#10B981" 
-                fill="#10B981" 
-                fillOpacity={0.2}
-                strokeWidth={2}
-              />
-              <Tooltip />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Generational Preferences & Seasonal Attitudes */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <Users className="w-5 h-5 text-amber-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">Generational Preferences</h3>
-                <p className="text-sm text-gray-600">{marketScope} Breakdown</p>
-              </div>
-              <div className="group relative">
-                <HelpCircle className="w-4 h-4 text-gray-400 hover:text-amber-600 cursor-help" />
-                <div className="absolute left-0 top-6 w-72 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                  <p className="text-sm text-gray-700 mb-2">
-                    <strong>How to read this chart:</strong> Stacked bars show priority breakdown for each generation (totals 100%).
-                  </p>
-                  <div className="space-y-1 text-xs text-gray-600">
-                    <p><strong>Experience:</strong> Unique experiences & activities</p>
-                    <p><strong>Convenience:</strong> Ease of booking & travel</p>
-                    <p><strong>Price:</strong> Value for money considerations</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="text-right text-sm text-gray-500">
-              <p>Priority Distribution</p>
-              <p>Percentage Breakdown</p>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={generationData} layout="horizontal">
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
-              <YAxis dataKey="name" type="category" />
-              <Tooltip />
-              <Bar dataKey="experience" stackId="a" fill="#3B82F6" name="Experience" />
-              <Bar dataKey="convenience" stackId="a" fill="#10B981" name="Convenience" />
-              <Bar dataKey="price" stackId="a" fill="#F59E0B" name="Price" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-rose-100 rounded-lg">
-                <Star className="w-5 h-5 text-rose-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">Seasonal Attitude Shifts</h3>
-                <p className="text-sm text-gray-600">{currentPeriod} Seasonal Analysis</p>
-              </div>
-              <div className="group relative">
-                <HelpCircle className="w-4 h-4 text-gray-400 hover:text-rose-600 cursor-help" />
-                <div className="absolute left-0 top-6 w-72 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                  <p className="text-sm text-gray-700 mb-2">
-                    <strong>How to read this chart:</strong> Stacked areas show travel attitude intensity by season (0-100 scale).
-                  </p>
-                  <div className="space-y-1 text-xs text-gray-600">
-                    <p><strong>Adventure:</strong> Seeking thrills & new experiences</p>
-                    <p><strong>Relaxation:</strong> Rest & wellness focused</p>
-                    <p><strong>Cultural:</strong> Heritage & local experiences</p>
-                    <p><strong>Luxury:</strong> Premium service preferences</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="text-right text-sm text-gray-500">
-              <p>Attitude Intensity</p>
-              <p>Seasonal Patterns</p>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={seasonalAttitudes}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="season" />
-              <YAxis />
-              <Tooltip />
-              <Area 
-                type="monotone" 
-                dataKey="adventure" 
-                stackId="1"
-                stroke="#3B82F6" 
-                fill="#3B82F6" 
-                fillOpacity={0.8}
-                name="Adventure"
-              />
-              <Area 
-                type="monotone" 
-                dataKey="relaxation" 
-                stackId="1"
-                stroke="#10B981" 
-                fill="#10B981" 
-                fillOpacity={0.8}
-                name="Relaxation"
-              />
-              <Area 
-                type="monotone" 
-                dataKey="cultural" 
-                stackId="1"
-                stroke="#8B5CF6" 
-                fill="#8B5CF6" 
-                fillOpacity={0.8}
-                name="Cultural"
-              />
-              <Area 
-                type="monotone" 
-                dataKey="luxury" 
-                stackId="1"
-                stroke="#F59E0B" 
-                fill="#F59E0B" 
-                fillOpacity={0.8}
-                name="Luxury"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Consumer Sentiment Timeline */}
+      {/* Dubai Source Markets - World Map */}
       <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <div className="p-2 bg-emerald-100 rounded-lg">
-              <Heart className="w-5 h-5 text-emerald-600" />
+              <Globe className="w-5 h-5 text-emerald-600" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-900">Consumer Sentiment Timeline</h3>
-              <p className="text-sm text-gray-600">{marketRegion} • {currentPeriod} Weekly Tracking</p>
+              <h3 className="text-2xl font-bold text-gray-900">Dubai Source Markets Intelligence</h3>
+              <p className="text-sm text-gray-600">Top international visitor markets • {currentPeriod} Analysis</p>
+            </div>
+          </div>
+          <div className="text-right text-sm text-gray-500">
+            <p>6.5M Total Visitors</p>
+            <p>+16% vs {previousPeriod}</p>
+          </div>
+        </div>
+        
+        {/* Source Markets Overview */}
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Top Source Markets</h3>
+              <p className="text-gray-600">International visitor distribution • Q3 2024</p>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-blue-600">6.5M</div>
+              <div className="text-sm text-gray-500">Total Visitors</div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Saudi Arabia - Top Source Market */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇸🇦</span>
+                <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">28%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">Saudi Arabia</h4>
+              <p className="text-lg font-bold text-blue-600 mb-1">1.82M</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-blue-600 rounded-full h-2" style={{width: '93%'}}></div>
+              </div>
+            </div>
+
+            {/* India - Second Largest */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇮🇳</span>
+                <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">18%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">India</h4>
+              <p className="text-lg font-bold text-blue-600 mb-1">1.17M</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-blue-600 rounded-full h-2" style={{width: '75%'}}></div>
+              </div>
+            </div>
+
+            {/* United Kingdom */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇬🇧</span>
+                <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">12%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">United Kingdom</h4>
+              <p className="text-lg font-bold text-blue-600 mb-1">780K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-blue-600 rounded-full h-2" style={{width: '50%'}}></div>
+              </div>
+            </div>
+
+            {/* Germany */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇩🇪</span>
+                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">8%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">Germany</h4>
+              <p className="text-lg font-bold text-gray-600 mb-1">520K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-600 rounded-full h-2" style={{width: '33%'}}></div>
+              </div>
+            </div>
+
+            {/* Russia */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇷🇺</span>
+                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">7%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">Russia</h4>
+              <p className="text-lg font-bold text-gray-600 mb-1">455K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-600 rounded-full h-2" style={{width: '29%'}}></div>
+              </div>
+            </div>
+
+            {/* United States */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇺🇸</span>
+                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">6%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">United States</h4>
+              <p className="text-lg font-bold text-gray-600 mb-1">390K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-600 rounded-full h-2" style={{width: '25%'}}></div>
+              </div>
+            </div>
+
+            {/* Iran */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇮🇷</span>
+                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">5%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">Iran</h4>
+              <p className="text-lg font-bold text-gray-600 mb-1">325K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-600 rounded-full h-2" style={{width: '21%'}}></div>
+              </div>
+            </div>
+
+            {/* France */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🇫🇷</span>
+                <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm font-bold">4%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">France</h4>
+              <p className="text-lg font-bold text-gray-500 mb-1">260K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-500 rounded-full h-2" style={{width: '17%'}}></div>
+              </div>
+            </div>
+
+            {/* Others - Remaining Markets */}
+            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🌍</span>
+                <span className="bg-gray-400 text-white px-2 py-1 rounded-full text-sm font-bold">12%</span>
+              </div>
+              <h4 className="font-bold text-gray-800 mb-1">Other Markets</h4>
+              <p className="text-lg font-bold text-gray-400 mb-1">780K</p>
+              <p className="text-xs text-gray-500">visitors</p>
+              <div className="mt-2 bg-gray-200 rounded-full h-2">
+                <div className="bg-gray-400 rounded-full h-2" style={{width: '50%'}}></div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center text-sm text-gray-600">
+                <Globe className="w-4 h-4 mr-2"/>
+                <span className="font-medium">Market Distribution Summary</span>
+              </div>
+              <div className="text-xs text-gray-500">
+                Total: 100% • 6.5M visitors
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+              <div>
+                <span className="text-blue-600 font-semibold">Top 3 Markets:</span> 58% (3.78M)
+              </div>
+              <div>
+                <span className="text-gray-600 font-semibold">Key Markets:</span> 30% (1.95M)
+              </div>
+              <div>
+                <span className="text-gray-500 font-semibold">Others:</span> 12% (780K)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Audience Analysis - Demographics & Travel Types */}
+      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Users className="w-5 h-5 text-purple-600" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900">Audience Analysis & Demographics</h3>
+              <p className="text-sm text-gray-600">Comprehensive visitor segmentation • {currentPeriod}</p>
+            </div>
+            <button
+              onClick={() => setShowDataSources(true)}
+              className="p-2 bg-gray-100 hover:bg-blue-100 rounded-lg transition-colors group"
+              title="Data Sources & KPI Methodology"
+            >
+              <HelpCircle className="w-4 h-4 text-gray-500 group-hover:text-blue-600" />
+            </button>
+          </div>
+          <div className="text-right text-xs text-gray-500">
+            <p>Multi-dimensional Analysis</p>
+            <p className="flex items-center text-xs">
+              <Database className="w-3 h-3 mr-1" />
+              STR • Tourism Board • Survey Data
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Age Demographics */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 mb-3">
+              <Calendar className="w-4 h-4 text-purple-600" />
+              <h4 className="text-base font-bold text-gray-900">Age Demographics</h4>
+            </div>
+            <div className="space-y-2">
+              {audienceData.ageGroups.map((group, index) => (
+                <div key={index} className="bg-purple-50 rounded-lg p-3 border border-purple-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-semibold text-purple-900">{group.age} years</span>
+                    <span className="text-sm font-bold text-purple-600">{group.percentage}%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
+                    <span>{group.travelers} travelers</span>
+                    <span className="font-semibold text-emerald-600">{group.spending}</span>
+                  </div>
+                  <div className="w-full bg-purple-200 rounded-full h-1.5">
+                    <div className="bg-purple-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${group.percentage * 2.5}%` }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Travel Types */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 mb-3">
+              <MapPin className="w-4 h-4 text-blue-600" />
+              <h4 className="text-base font-bold text-gray-900">Travel Types</h4>
+            </div>
+            <div className="space-y-2">
+              {audienceData.travelTypes.map((type, index) => {
+                const Icon = type.icon
+                return (
+                  <div key={index} className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center space-x-2">
+                        <Icon className="w-3 h-3 text-blue-600" />
+                        <span className="text-sm font-semibold text-blue-900">{type.type}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-sm font-bold text-blue-600">{type.percentage}%</span>
+                        <span className="text-xs text-emerald-600 ml-1">{type.growth}</span>
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-600 mb-2">
+                      <span>Avg Spend: <span className="font-semibold text-gray-900">{type.avgSpend}</span></span>
+                    </div>
+                    <div className="w-full bg-blue-200 rounded-full h-1.5">
+                      <div className="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${type.percentage * 2}%` }}></div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Traveler Group Types */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 mb-3">
+              <Users className="w-4 h-4 text-indigo-600" />
+              <h4 className="text-base font-bold text-gray-900">Traveler Groups</h4>
+            </div>
+            
+            {/* Traveler Types */}
+            <div className="space-y-2">
+              {audienceData.demographics.travelerTypes.map((traveler, index) => (
+                <div key={index} className="bg-indigo-50 rounded-lg p-2 border border-indigo-200">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-semibold text-indigo-900 text-xs">{traveler.type}</span>
+                    <span className="text-xs font-bold text-indigo-600">{traveler.percentage}%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="text-indigo-700">{traveler.avgStay}</span>
+                    <span className="text-indigo-600 text-xs">{traveler.preference}</span>
+                  </div>
+                  <div className="w-full bg-indigo-200 rounded-full h-1">
+                    <div className="bg-indigo-500 h-1 rounded-full transition-all duration-500" style={{ width: `${traveler.percentage * 2.5}%` }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Consumer Behavior Evolution - Full Width */}
+      <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Consumer Behavior Evolution</h3>
+              <p className="text-sm text-gray-600">{marketRegion} • {currentPeriod} Booking Pattern Analysis</p>
             </div>
             <div className="group relative">
-              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-emerald-600 cursor-help" />
+              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-blue-600 cursor-help" />
               <div className="absolute left-0 top-6 w-72 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                 <p className="text-sm text-gray-700 mb-2">
-                  <strong>How to read this chart:</strong> Track weekly changes in consumer sentiment across multiple dimensions.
+                  <strong>How to read this chart:</strong> Track changes in booking behaviors over time.
                 </p>
                 <div className="space-y-1 text-xs text-gray-600">
-                  <p><strong>Confidence Index:</strong> Travel confidence level (0-100)</p>
-                  <p><strong>Optimism Level:</strong> Positive future outlook</p>
-                  <p><strong>Satisfaction Score:</strong> Current service satisfaction</p>
-                  <p>• Higher values = more positive sentiment</p>
+                  <p><strong>Instant Booking:</strong> Same-day booking decisions</p>
+                  <p><strong>Advance Planning:</strong> Bookings made 30+ days ahead</p>
+                  <p><strong>Last Minute:</strong> Bookings within 7 days of travel</p>
                 </div>
               </div>
             </div>
           </div>
           <div className="text-right text-sm text-gray-500">
-            <p>Real-time Sentiment Analysis</p>
-            <p>Weekly Consumer Pulse</p>
+            <p>6-Month Trend Analysis</p>
+            <p>Jul - Dec 2024</p>
+            <p className="flex items-center justify-end text-xs">
+              <Database className="w-3 h-3 mr-1" />
+              Booking System • STR • Surveys
+            </p>
           </div>
         </div>
-        <ResponsiveContainer width="100%" height={350}>
-          <LineChart data={sentimentData}>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={behaviorEvolution}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="week" />
+            <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
             <Line 
               type="monotone" 
-              dataKey="confidence" 
+              dataKey="instantBooking" 
               stroke="#3B82F6" 
               strokeWidth={3}
-              name="Confidence Index"
+              name="Instant Booking"
               dot={{ fill: '#3B82F6', strokeWidth: 2, r: 6 }}
             />
             <Line 
               type="monotone" 
-              dataKey="optimism" 
+              dataKey="advancePlanning" 
               stroke="#10B981" 
               strokeWidth={3}
-              name="Optimism Level"
+              name="Advance Planning"
               dot={{ fill: '#10B981', strokeWidth: 2, r: 6 }}
             />
             <Line 
               type="monotone" 
-              dataKey="satisfaction" 
-              stroke="#8B5CF6" 
+              dataKey="lastMinute" 
+              stroke="#F59E0B" 
               strokeWidth={3}
-              name="Satisfaction Score"
-              dot={{ fill: '#8B5CF6', strokeWidth: 2, r: 6 }}
+              name="Last Minute"
+              dot={{ fill: '#F59E0B', strokeWidth: 2, r: 6 }}
             />
           </LineChart>
         </ResponsiveContainer>
+        
+        {/* Behavior Insights */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <h5 className="font-semibold text-blue-900">Instant Booking Trend</h5>
+            </div>
+            <p className="text-2xl font-bold text-blue-600 mb-1">+49%</p>
+            <p className="text-sm text-blue-700">Same-day decisions increasing, indicating growing consumer confidence and impulse travel behavior.</p>
+          </div>
+          <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+              <h5 className="font-semibold text-emerald-900">Advance Planning</h5>
+            </div>
+            <p className="text-2xl font-bold text-emerald-600 mb-1">+23%</p>
+            <p className="text-sm text-emerald-700">Strategic planners remain strong, showing continued demand for planned travel experiences.</p>
+          </div>
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+              <h5 className="font-semibold text-orange-900">Last Minute Bookings</h5>
+            </div>
+            <p className="text-2xl font-bold text-orange-600 mb-1">+9%</p>
+            <p className="text-sm text-orange-700">Steady growth in spontaneous travel, creating opportunities for dynamic pricing strategies.</p>
+          </div>
+        </div>
       </div>
+
+
+
+
 
       {/* Strategic Insights Summary */}
       <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-2xl p-8 text-white">
@@ -1134,6 +1112,279 @@ const ConsumerTrends = () => {
           </div>
         </div>
       </div>
+
+      {/* Data Sources & KPI Methodology Drawer */}
+      {showDataSources && (
+        <>
+          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setShowDataSources(false)}></div>
+          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+            showDataSources ? 'translate-x-0' : 'translate-x-full'
+          }`}>
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-emerald-50">
+              <div className="flex items-center space-x-3">
+                <div className="p-3 bg-blue-100 rounded-xl">
+                  <Database className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Data Sources & KPI Methodology</h2>
+                  <p className="text-gray-600">Comprehensive data sourcing and calculation transparency</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowDataSources(false)}
+                className="p-2 hover:bg-white rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6 text-gray-500" />
+              </button>
+            </div>
+            
+            {/* Drawer Content */}
+            <div className="h-full overflow-y-auto pb-20">
+              <div className="p-6">
+                
+                {/* Data Sources Section */}
+                <div className="bg-blue-50 rounded-xl p-6 border border-blue-200 mb-8">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <Globe className="w-6 h-6 text-blue-600" />
+                    <h3 className="text-xl font-bold text-gray-900">Primary Data Sources</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-lg p-4 border border-blue-200">
+                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                        <BarChart3 className="w-4 h-4 mr-2" />
+                        STR (Smith Travel Research)
+                      </h4>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Hotel performance benchmarking</li>
+                        <li>• Market penetration analysis</li>
+                        <li>• Competitive set performance</li>
+                        <li>• RevPAR and occupancy trends</li>
+                        <li>• Regional market intelligence</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-blue-200">
+                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                        <Building2 className="w-4 h-4 mr-2" />
+                        Dubai Tourism Board
+                      </h4>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Official visitor arrival statistics</li>
+                        <li>• Country-wise source market data</li>
+                        <li>• Tourism economic impact reports</li>
+                        <li>• Hotel classification and inventory</li>
+                        <li>• Event and conference data</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-blue-200">
+                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                        <Users className="w-4 h-4 mr-2" />
+                        Primary Research Surveys
+                      </h4>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Consumer behavior tracking (15,000+ respondents)</li>
+                        <li>• Travel motivation and preferences</li>
+                        <li>• Spending pattern analysis</li>
+                        <li>• Brand perception studies</li>
+                        <li>• Post-travel satisfaction surveys</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-blue-200">
+                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                        <TrendingUp className="w-4 h-4 mr-2" />
+                        Digital Intelligence
+                      </h4>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Social media sentiment analysis</li>
+                        <li>• Google Trends and search data</li>
+                        <li>• Online booking platform analytics</li>
+                        <li>• Review platform aggregation</li>
+                        <li>• Competitor digital performance</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* KPI Calculation Methodologies */}
+                <div className="bg-emerald-50 rounded-xl p-6 border border-emerald-200 mb-8">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <Calculator className="w-6 h-6 text-emerald-600" />
+                    <h3 className="text-xl font-bold text-gray-900">KPI Calculation Methodologies</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-lg p-4 border border-emerald-200">
+                      <h4 className="font-semibold text-emerald-900 mb-3">Consumer Behavior Trends</h4>
+                      <div className="text-sm text-emerald-800 space-y-2">
+                        <p><strong>Growth Rate:</strong> YoY percentage change in demand/bookings</p>
+                        <p><strong>Premium Willingness:</strong> Price elasticity analysis from booking data</p>
+                        <p><strong>Revenue Uplift:</strong> Projected quarterly impact based on historical correlation</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-emerald-200">
+                      <h4 className="font-semibold text-emerald-900 mb-3">Source Market Analysis</h4>
+                      <div className="text-sm text-emerald-800 space-y-2">
+                        <p><strong>Visitor Volume:</strong> Official tourism board + immigration data</p>
+                        <p><strong>Growth Rates:</strong> 12-month rolling average comparison</p>
+                        <p><strong>Market Share:</strong> Percentage of total visitor arrivals</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-emerald-200">
+                      <h4 className="font-semibold text-emerald-900 mb-3">Demographics & Segmentation</h4>
+                      <div className="text-sm text-emerald-800 space-y-2">
+                        <p><strong>Age Distribution:</strong> Survey data + booking system demographics</p>
+                        <p><strong>Spending Analysis:</strong> Transaction data + expense surveys</p>
+                        <p><strong>Travel Patterns:</strong> Booking timing and duration analysis</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-emerald-200">
+                      <h4 className="font-semibold text-emerald-900 mb-3">Revenue Intelligence</h4>
+                      <div className="text-sm text-emerald-800 space-y-2">
+                        <p><strong>Performance Scores:</strong> Weighted composite of multiple metrics</p>
+                        <p><strong>Market Position:</strong> STR competitive set benchmarking</p>
+                        <p><strong>Channel Optimization:</strong> Revenue per channel analysis</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Data Quality & Refresh */}
+                <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-200 mb-8">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <Info className="w-6 h-6 text-yellow-600" />
+                    <h3 className="text-xl font-bold text-gray-900">Data Quality & Refresh Frequency</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-white rounded-lg p-4 border border-yellow-200">
+                      <h4 className="font-semibold text-yellow-900 mb-3">Real-time (15 min refresh)</h4>
+                      <ul className="text-sm text-yellow-800 space-y-1">
+                        <li>• Digital sentiment tracking</li>
+                        <li>• Website analytics</li>
+                        <li>• Booking system data</li>
+                        <li>• Search trends</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-yellow-200">
+                      <h4 className="font-semibold text-yellow-900 mb-3">Daily (6 AM GST)</h4>
+                      <ul className="text-sm text-yellow-800 space-y-1">
+                        <li>• STR performance data</li>
+                        <li>• Tourism board statistics</li>
+                        <li>• Competitor analysis</li>
+                        <li>• Financial performance</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-yellow-200">
+                      <h4 className="font-semibold text-yellow-900 mb-3">Weekly/Monthly</h4>
+                      <ul className="text-sm text-yellow-800 space-y-1">
+                        <li>• Consumer surveys</li>
+                        <li>• Market research reports</li>
+                        <li>• Industry benchmarks</li>
+                        <li>• Economic indicators</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-white rounded-lg border border-yellow-200">
+                    <h4 className="font-semibold text-yellow-900 mb-2 flex items-center">
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Data Validation & Quality Assurance
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-yellow-800">
+                      <div>
+                        <p><strong>Statistical Confidence:</strong> 95% confidence intervals for all projections</p>
+                        <p><strong>Sample Sizes:</strong> Minimum 1,000 data points per metric</p>
+                      </div>
+                      <div>
+                        <p><strong>Cross-validation:</strong> Multiple source verification for key metrics</p>
+                        <p><strong>Seasonal Adjustment:</strong> 90-day rolling averages with trend analysis</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* How to Read Consumer Trends Data */}
+                <div className="bg-purple-50 rounded-xl p-6 border border-purple-200">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <Lightbulb className="w-6 h-6 text-purple-600" />
+                    <h3 className="text-xl font-bold text-gray-900">How to Read Consumer Trends Data</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white rounded-lg p-4 border border-purple-200">
+                      <h4 className="font-semibold text-purple-900 mb-3">Understanding Growth Metrics</h4>
+                      <div className="text-sm text-purple-800 space-y-2">
+                        <p><strong>Growth Rate:</strong> Year-over-year percentage increase in consumer demand for specific trends</p>
+                        <p><strong>Premium Willingness:</strong> Additional percentage customers will pay for trend-related experiences</p>
+                        <p><strong>Revenue Uplift:</strong> Projected quarterly revenue increase in thousands AED</p>
+                        <p><strong>Impact Rating:</strong> High (&gt;$300K), Medium ($100K-$300K), Low (&lt;$100K)</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-purple-200">
+                      <h4 className="font-semibold text-purple-900 mb-3">Chart & Visualization Guide</h4>
+                      <div className="text-sm text-purple-800 space-y-2">
+                        <p><strong>Trend Lines:</strong> Upward slopes indicate growing demand; steeper = faster growth</p>
+                        <p><strong>Color Coding:</strong> Green = High growth, Blue = Medium growth, Yellow = Emerging trends</p>
+                        <p><strong>Bar Heights:</strong> Represent market size or consumer adoption rates</p>
+                        <p><strong>Progress Bars:</strong> Show premium willingness as percentage of base pricing</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-purple-200">
+                      <h4 className="font-semibold text-purple-900 mb-3">Source Market Intelligence</h4>
+                      <div className="text-sm text-purple-800 space-y-2">
+                        <p><strong>Circle Size:</strong> Larger circles = higher visitor volumes from that market</p>
+                        <p><strong>Line Thickness:</strong> Represents strength of travel connection to Dubai</p>
+                        <p><strong>Growth Indicators:</strong> Green arrows = growing market, Red = declining</p>
+                        <p><strong>Spending Data:</strong> Average per-capita tourism expenditure by source market</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-4 border border-purple-200">
+                      <h4 className="font-semibold text-purple-900 mb-3">Key Performance Indicators</h4>
+                      <div className="text-sm text-purple-800 space-y-2">
+                        <p><strong>Confidence Score:</strong> Statistical reliability of trend predictions (0-100)</p>
+                        <p><strong>Market Penetration:</strong> Percentage of target demographic engaging with trend</p>
+                        <p><strong>Seasonality Index:</strong> How much trends vary by season/month</p>
+                        <p><strong>Competitive Advantage:</strong> Your position vs. market competitors</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-white rounded-lg border border-purple-200">
+                    <h4 className="font-semibold text-purple-900 mb-3 flex items-center">
+                      <Calculator className="w-4 h-4 mr-2" />
+                      Action-Oriented Insights
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-purple-800">
+                      <div>
+                        <p><strong>High-Growth Trends:</strong> Prioritize investment and marketing focus</p>
+                        <p><strong>Premium Opportunities:</strong> Trends with 20%+ willingness to pay premium</p>
+                        <p><strong>Quick Wins:</strong> Trends with high growth + low implementation complexity</p>
+                      </div>
+                      <div>
+                        <p><strong>Market Timing:</strong> Seasonal patterns to optimize launch timing</p>
+                        <p><strong>Resource Allocation:</strong> Budget distribution based on revenue potential</p>
+                        <p><strong>Risk Assessment:</strong> Confidence scores help evaluate implementation risk</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Action Plan Drawer */}
       <div className={`fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 ${isDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>

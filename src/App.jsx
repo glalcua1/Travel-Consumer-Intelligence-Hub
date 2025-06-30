@@ -4,33 +4,9 @@ import ExecutiveOverview from './components/ExecutiveOverview'
 import ConsumerTrends from './components/ConsumerTrends'
 import ProductInsights from './components/ProductInsights'
 import ActionPlanner from './components/ActionPlanner'
+import ChannelStrategy from './components/ChannelStrategy'
 
 // Placeholder components for other sections
-const ChannelEvolution = () => (
-  <div className="space-y-6">
-    <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border border-purple-100">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            Channel Evolution Intelligence
-          </h1>
-          <p className="text-gray-600 mt-2 text-lg">
-            Omni-channel engagement strategy & retailer differentiation analysis
-          </p>
-        </div>
-        <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-          <span className="text-2xl">🌐</span>
-        </div>
-      </div>
-    </div>
-    <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
-      <p className="text-gray-600">
-        <strong>Coming Soon:</strong> Comprehensive analysis of sell-in strategies, omni-channel engagement approaches, 
-        retailer differentiation tactics, and social commerce evolution in the travel industry.
-      </p>
-    </div>
-  </div>
-)
 
 const BrandAffinity = () => (
   <div className="space-y-6">
@@ -155,7 +131,7 @@ function App() {
       case 'action-planner':
         return <ActionPlanner />
       case 'channel-evolution':
-        return <ChannelEvolution />
+        return <ChannelStrategy />
       case 'brand-affinity':
         return <BrandAffinity />
       case 'demographics':
