@@ -53,6 +53,9 @@ const ProductInsights = () => {
   const [activeTab, setActiveTab] = useState('hotels')
   const [showActionPlan, setShowActionPlan] = useState(false)
   const [showDataSources, setShowDataSources] = useState(false)
+  const [showProductDetails, setShowProductDetails] = useState(false)
+  const [showLifecycleDetails, setShowLifecycleDetails] = useState(false)
+  const [showChannelDetails, setShowChannelDetails] = useState(false)
   const [businessInfo, setBusinessInfo] = useState({
     name: '',
     type: '',
@@ -573,201 +576,393 @@ const ProductInsights = () => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Revenue Manager Dashboard Header */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6 border border-blue-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Revenue Management Intelligence</h1>
-                <p className="text-gray-600 mt-1">{currentConfig.analysisScope} • {marketRegion} • {currentPeriod}</p>
-                <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
-                  <Database className="w-3 h-3" />
-                  <span>STR • Pricing Analytics • Revenue Systems</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setShowDataSources(true)}
-                className="p-2 bg-white/50 hover:bg-white/80 rounded-lg transition-colors group"
-                title="Data Sources & KPI Methodology"
-              >
-                <HelpCircle className="w-4 h-4 text-gray-500 group-hover:text-blue-600" />
-              </button>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-600">+{activeTab === 'hotels' ? '18%' : activeTab === 'airlines' ? '15%' : '22%'}</div>
-                <div className="text-xs text-gray-500">Revenue Uplift Potential</div>
-              </div>
-              <button
-                onClick={() => setShowActionPlan(true)}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center space-x-2 shadow-lg"
-              >
-                <Lightbulb className="w-5 h-5" />
-                <span>Get AI Action Plan</span>
-              </button>
-              <div className="text-right text-sm text-gray-500">
-                <div>Last Updated: {dataLastUpdated}</div>
-                <div className="mt-1 text-emerald-600 font-medium">vs {previousPeriod}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Tabs Navigation */}
-        <div className="flex space-x-1 border-b border-gray-200">
-          <button
-            onClick={() => setActiveTab('hotels')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === 'hotels' 
-                ? 'text-blue-600 border-b-2 border-blue-600' 
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            Hotels
-          </button>
-          <button
-            onClick={() => setActiveTab('airlines')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === 'airlines' 
-                ? 'text-purple-600 border-b-2 border-purple-600' 
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            Airlines
-          </button>
-          <button
-            onClick={() => setActiveTab('carRentals')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === 'carRentals' 
-                ? 'text-emerald-600 border-b-2 border-emerald-600' 
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            Car Rentals
-          </button>
-        </div>
-        
-        {/* Key Behavioral Insights for Revenue Managers */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200 mb-6">
+    <>
+    <div className="space-y-8 p-2">
+      {/* Tab Navigation */}
+      <div className="bg-white rounded-2xl border border-gray-100">
+        <div className="px-8 pt-6 pb-2">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-bold text-purple-900">Behavioral Revenue Drivers</h2>
-              <p className="text-sm text-purple-700">Key trends beyond price influencing revenue opportunities • {currentPeriod}</p>
+              <h3 className="text-lg font-medium text-gray-900">Product Categories</h3>
+              <p className="text-gray-500 text-sm">Select product category for detailed revenue insights</p>
             </div>
-            <div className="text-purple-800 font-semibold text-sm">
-              Revenue Intelligence
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {activeTab === 'hotels' && (
-              <>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+156%</div>
-                  <div className="text-sm font-medium text-purple-900">Sustainable Travel</div>
-                  <div className="text-xs text-purple-700 mt-1">18% willing to pay premium for eco-certified rooms</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+124%</div>
-                  <div className="text-sm font-medium text-purple-900">Solo Female Travel</div>
-                  <div className="text-xs text-purple-700 mt-1">23% higher spend on room upgrades & amenities</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+89%</div>
-                  <div className="text-sm font-medium text-purple-900">Bleisure Travel</div>
-                  <div className="text-xs text-purple-700 mt-1">31% higher total spend per extended stay</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+42%</div>
-                  <div className="text-sm font-medium text-purple-900">Wellness Premium</div>
-                  <div className="text-xs text-purple-700 mt-1">Digital detox packages command premium rates</div>
-                </div>
-              </>
-            )}
-            {activeTab === 'airlines' && (
-              <>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+24%</div>
-                  <div className="text-sm font-medium text-purple-900">Business Travel Recovery</div>
-                  <div className="text-xs text-purple-700 mt-1">Corporate rates optimization opportunity</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+19%</div>
-                  <div className="text-sm font-medium text-purple-900">Premium Class Demand</div>
-                  <div className="text-xs text-purple-700 mt-1">Yield management opportunities in business class</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+22%</div>
-                  <div className="text-sm font-medium text-purple-900">Hub Traffic Growth</div>
-                  <div className="text-xs text-purple-700 mt-1">Strategic slot optimization potential</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+12%</div>
-                  <div className="text-sm font-medium text-purple-900">Sustainability Premium</div>
-                  <div className="text-xs text-purple-700 mt-1">Eco-conscious travelers willing to pay more</div>
-                </div>
-              </>
-            )}
-            {activeTab === 'carRentals' && (
-              <>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+34%</div>
-                  <div className="text-sm font-medium text-purple-900">Luxury Fleet Preference</div>
-                  <div className="text-xs text-purple-700 mt-1">Premium vehicle demand driving rate increases</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+26%</div>
-                  <div className="text-sm font-medium text-purple-900">Tourism Vehicle Demand</div>
-                  <div className="text-xs text-purple-700 mt-1">Seasonal pricing optimization opportunity</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">+21%</div>
-                  <div className="text-sm font-medium text-purple-900">Corporate Fleet Services</div>
-                  <div className="text-xs text-purple-700 mt-1">B2B subscription pricing model potential</div>
-                </div>
-                <div className="bg-white/70 rounded-lg p-4 border border-purple-200">
-                  <div className="text-2xl font-bold text-emerald-600">40%</div>
-                  <div className="text-sm font-medium text-purple-900">Subscription Revenue</div>
-                  <div className="text-xs text-purple-700 mt-1">New business model opportunity</div>
-                </div>
-              </>
-            )}
+            <button
+              onClick={() => setShowDataSources(true)}
+              className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Data Sources"
+            >
+              <HelpCircle className="w-4 h-4 text-gray-400" />
+            </button>
           </div>
         </div>
+        
+        <div className="px-8 pb-6">
+          <div className="flex space-x-0">
+            <button
+              onClick={() => setActiveTab('hotels')}
+              className={`relative px-6 py-4 text-sm font-medium transition-all duration-200 border-b-2 flex items-center space-x-3 ${
+                activeTab === 'hotels'
+                  ? 'border-blue-500 text-blue-600 bg-blue-50'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Building className={`w-5 h-5 ${activeTab === 'hotels' ? 'text-blue-600' : 'text-gray-400'}`} />
+              <span>Hotels</span>
+              <div className="bg-emerald-600 text-white text-xs px-2 py-1 rounded-full font-semibold">+18%</div>
+              {activeTab === 'hotels' && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"></div>
+              )}
+            </button>
 
-        {/* Revenue Performance Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 py-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">${activeTab === 'hotels' ? '485' : activeTab === 'airlines' ? '625' : '285'}</div>
-            <div className="text-sm text-gray-600">{activeTab === 'hotels' ? 'ADR (Avg Daily Rate)' : activeTab === 'airlines' ? 'Avg Ticket Price' : 'Avg Rental Rate'}</div>
-            <div className="text-xs text-emerald-600">+8.2% vs {previousPeriod}</div>
+            <button
+              onClick={() => setActiveTab('airlines')}
+              className={`relative px-6 py-4 text-sm font-medium transition-all duration-200 border-b-2 flex items-center space-x-3 ${
+                activeTab === 'airlines'
+                  ? 'border-purple-500 text-purple-600 bg-purple-50'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Plane className={`w-5 h-5 ${activeTab === 'airlines' ? 'text-purple-600' : 'text-gray-400'}`} />
+              <span>Airlines</span>
+              <div className="bg-emerald-600 text-white text-xs px-2 py-1 rounded-full font-semibold">+15%</div>
+              {activeTab === 'airlines' && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-500"></div>
+              )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('carRentals')}
+              className={`relative px-6 py-4 text-sm font-medium transition-all duration-200 border-b-2 flex items-center space-x-3 ${
+                activeTab === 'carRentals'
+                  ? 'border-emerald-500 text-emerald-600 bg-emerald-50'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Car className={`w-5 h-5 ${activeTab === 'carRentals' ? 'text-emerald-600' : 'text-gray-400'}`} />
+              <span>Car Rentals</span>
+              <div className="bg-emerald-600 text-white text-xs px-2 py-1 rounded-full font-semibold">+22%</div>
+              {activeTab === 'carRentals' && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500"></div>
+              )}
+            </button>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">{activeTab === 'hotels' ? '78.5%' : activeTab === 'airlines' ? '82.1%' : '71.3%'}</div>
-            <div className="text-sm text-gray-600">{activeTab === 'hotels' ? 'Occupancy Rate' : activeTab === 'airlines' ? 'Load Factor' : 'Utilization Rate'}</div>
-            <div className="text-xs text-emerald-600">+4.1% vs {previousPeriod}</div>
+        </div>
+      </div>
+
+      {/* Header - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-light bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-3">
+              Product Revenue <span className="font-bold">Intelligence</span>
+            </h1>
+            <p className="text-gray-600 text-lg mb-2">
+              Strategic product performance & revenue optimization insights
+            </p>
+            <p className="text-gray-500 text-sm">
+              {currentConfig.analysisScope} • {marketRegion} • {currentPeriod}
+            </p>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">${activeTab === 'hotels' ? '381' : activeTab === 'airlines' ? '513' : '204'}</div>
-            <div className="text-sm text-gray-600">{activeTab === 'hotels' ? 'RevPAR' : activeTab === 'airlines' ? 'RevPAX' : 'Revenue per Rental'}</div>
-            <div className="text-xs text-emerald-600">+12.8% vs {previousPeriod}</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-orange-600">{activeTab === 'hotels' ? '24.5%' : activeTab === 'airlines' ? '18.2%' : '31.7%'}</div>
-            <div className="text-sm text-gray-600">Profit Margin</div>
-            <div className="text-xs text-emerald-600">+2.3% vs {previousPeriod}</div>
+          <div className="flex items-center space-x-8">
+            <div className="text-center">
+              <p className="text-sm text-gray-500 mb-1">Revenue Uplift</p>
+              <p className="text-3xl font-light text-emerald-600">+{activeTab === 'hotels' ? '18' : activeTab === 'airlines' ? '15' : '22'}<span className="text-lg">%</span></p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setShowActionPlan(true)}
+                className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-emerald-700 transition-colors flex items-center space-x-2"
+              >
+                <span>Get Action Plan</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-emerald-600" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
 
 
-      {/* Product Performance Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        {productPerformance.map((product, index) => (
+      {/* Behavioral Revenue Drivers - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-light text-gray-900 mb-2">Behavioral Revenue <span className="font-bold">Drivers</span></h2>
+              <p className="text-gray-500 text-sm">Key trends beyond price influencing revenue opportunities • {currentPeriod}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-4xl font-light text-emerald-600 mb-1">+{activeTab === 'hotels' ? '127' : activeTab === 'airlines' ? '93' : '106'}<span className="text-lg">%</span></p>
+              <p className="text-xs text-gray-500 mb-2">Avg Growth</p>
+              <div className="flex items-center justify-center text-xs text-green-600">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                <span className="font-semibold">High Impact</span>
+              </div>
+            </div>
+          </div>
+        </div>
+          
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {activeTab === 'hotels' && (
+              <>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+                    <span className="text-2xl">🌱</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+156%</h4>
+                    <p className="text-sm font-medium text-gray-600">Sustainable Travel</p>
+                    <p className="text-xs text-gray-500">18% willing to pay premium for eco-certified rooms</p>
+                    <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-rose-200 transition-colors">
+                    <span className="text-2xl">👩</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+124%</h4>
+                    <p className="text-sm font-medium text-gray-600">Solo Female Travel</p>
+                    <p className="text-xs text-gray-500">23% higher spend on room upgrades & amenities</p>
+                    <div className="w-12 h-1 bg-rose-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                    <span className="text-2xl">💼</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+89%</h4>
+                    <p className="text-sm font-medium text-gray-600">Bleisure Travel</p>
+                    <p className="text-xs text-gray-500">31% higher total spend per extended stay</p>
+                    <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                    <span className="text-2xl">🧘</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+42%</h4>
+                    <p className="text-sm font-medium text-gray-600">Wellness Premium</p>
+                    <p className="text-xs text-gray-500">Digital detox packages command premium rates</p>
+                    <div className="w-12 h-1 bg-purple-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+              </>
+            )}
+            {activeTab === 'airlines' && (
+              <>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                    <span className="text-2xl">💼</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+24%</h4>
+                    <p className="text-sm font-medium text-gray-600">Business Travel Recovery</p>
+                    <p className="text-xs text-gray-500">Corporate rates optimization opportunity</p>
+                    <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                    <span className="text-2xl">✈️</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+19%</h4>
+                    <p className="text-sm font-medium text-gray-600">Premium Class Demand</p>
+                    <p className="text-xs text-gray-500">Yield management opportunities in business class</p>
+                    <div className="w-12 h-1 bg-purple-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+                    <span className="text-2xl">🌐</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+22%</h4>
+                    <p className="text-sm font-medium text-gray-600">Hub Traffic Growth</p>
+                    <p className="text-xs text-gray-500">Strategic slot optimization potential</p>
+                    <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
+                    <span className="text-2xl">🌱</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+12%</h4>
+                    <p className="text-sm font-medium text-gray-600">Sustainability Premium</p>
+                    <p className="text-xs text-gray-500">Eco-conscious travelers willing to pay more</p>
+                    <div className="w-12 h-1 bg-green-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+              </>
+            )}
+            {activeTab === 'carRentals' && (
+              <>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-200 transition-colors">
+                    <span className="text-2xl">🚗</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+34%</h4>
+                    <p className="text-sm font-medium text-gray-600">Luxury Fleet Preference</p>
+                    <p className="text-xs text-gray-500">Premium vehicle demand driving rate increases</p>
+                    <div className="w-12 h-1 bg-amber-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-teal-200 transition-colors">
+                    <span className="text-2xl">🗺️</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+26%</h4>
+                    <p className="text-sm font-medium text-gray-600">Tourism Vehicle Demand</p>
+                    <p className="text-xs text-gray-500">Seasonal pricing optimization opportunity</p>
+                    <div className="w-12 h-1 bg-teal-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-200 transition-colors">
+                    <span className="text-2xl">🏢</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">+21%</h4>
+                    <p className="text-sm font-medium text-gray-600">Corporate Fleet Services</p>
+                    <p className="text-xs text-gray-500">B2B subscription pricing model potential</p>
+                    <div className="w-12 h-1 bg-indigo-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+                    <span className="text-2xl">🔄</span>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-gray-900">40%</h4>
+                    <p className="text-sm font-medium text-gray-600">Subscription Revenue</p>
+                    <p className="text-xs text-gray-500">New business model opportunity</p>
+                    <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+                  </div>
+                </div>
+              </>
+            )}
+        </div>
+
+        {/* Revenue Performance Summary - Magazine Style */}
+        <div className="border-t border-gray-200 pt-8 mt-8">
+          <div className="mb-6">
+            <h4 className="text-xl font-light text-gray-900 mb-2">Key Performance <span className="font-bold">Metrics</span></h4>
+            <p className="text-gray-500 text-sm">Core revenue indicators • {currentPeriod} Performance</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                <span className="text-2xl">💰</span>
+              </div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '485' : activeTab === 'airlines' ? '625' : '285'}</h5>
+                <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'ADR (Avg Daily Rate)' : activeTab === 'airlines' ? 'Avg Ticket Price' : 'Avg Rental Rate'}</p>
+                <p className="text-xs text-green-600 font-semibold">+8.2% vs {previousPeriod}</p>
+              </div>
+            </div>
+            
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                <span className="text-2xl">📊</span>
+              </div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '78.5%' : activeTab === 'airlines' ? '82.1%' : '71.3%'}</h5>
+                <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'Occupancy Rate' : activeTab === 'airlines' ? 'Load Factor' : 'Utilization Rate'}</p>
+                <p className="text-xs text-green-600 font-semibold">+4.1% vs {previousPeriod}</p>
+              </div>
+            </div>
+            
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+                <span className="text-2xl">📈</span>
+              </div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '381' : activeTab === 'airlines' ? '513' : '204'}</h5>
+                <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'RevPAR' : activeTab === 'airlines' ? 'RevPAX' : 'Revenue per Rental'}</p>
+                <p className="text-xs text-green-600 font-semibold">+12.8% vs {previousPeriod}</p>
+              </div>
+            </div>
+            
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
+                <span className="text-2xl">🎯</span>
+              </div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '24.5%' : activeTab === 'airlines' ? '18.2%' : '31.7%'}</h5>
+                <p className="text-sm font-medium text-gray-600">Profit Margin</p>
+                <p className="text-xs text-green-600 font-semibold">+2.3% vs {previousPeriod}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Product Performance Overview - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-light text-gray-900 mb-2">Product Performance <span className="font-bold">Portfolio</span></h2>
+              <p className="text-gray-500 text-sm">Revenue & satisfaction insights by product category • {currentPeriod}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-4xl font-light text-emerald-600 mb-1">{productPerformance.length}</p>
+              <p className="text-xs text-gray-500 mb-2">Products</p>
+              <div className="flex items-center justify-center text-xs text-green-600">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                <span className="font-semibold">High Performers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+          {productPerformance.map((product, index) => (
+            <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300 border border-gray-200">
+              <div className="space-y-3">
+                <h4 className="text-lg font-bold text-gray-900">{product.product}</h4>
+                <div className="space-y-2">
+                  <div className="text-2xl font-bold text-emerald-600">${(product.revenue / 1000000).toFixed(1)}M</div>
+                  <div className="text-sm text-gray-600">Revenue</div>
+                  <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${
+                    product.trend === 'up' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                  }`}>
+                    {product.improvement}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Progressive Disclosure Button */}
+        <div className="text-center">
+          <button
+            onClick={() => setShowProductDetails(!showProductDetails)}
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-medium transition-colors flex items-center space-x-2 mx-auto"
+          >
+            <span>{showProductDetails ? 'Hide' : 'Show'} Detailed Analytics</span>
+            <Eye className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Detailed Performance Cards */}
+        {showProductDetails && (
+          <div className="mt-8 pt-8 border-t border-gray-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">Detailed Performance Metrics</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+              {productPerformance.map((product, index) => (
           <div key={index} className="bg-white rounded border border-gray-200 p-4 hover:border-gray-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-medium text-gray-900 truncate">{product.product}</h3>
@@ -862,6 +1057,9 @@ const ProductInsights = () => {
           </div>
         ))}
       </div>
+          </div>
+        )}
+      </div>
 
       {/* Highlighted Product Portfolio Lifecycle */}
       <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 shadow-xl">
@@ -953,19 +1151,31 @@ const ProductInsights = () => {
           ))}
         </div>
         
-        <div className="mt-8 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50">
-          <div className="text-lg font-semibold text-gray-900 mb-4">Lifecycle Stage Definitions:</div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
-              <span className="text-gray-700"><strong>Introduction:</strong> New products with low market penetration but high growth potential</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
-              <span className="text-gray-700"><strong>Growth:</strong> Rapidly expanding market share and accelerating revenue</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-4 h-4 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></div>
+        {/* Progressive Disclosure for Lifecycle Insights */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => setShowLifecycleDetails(!showLifecycleDetails)}
+            className="bg-white/90 hover:bg-white text-gray-700 px-6 py-3 rounded-xl font-medium transition-colors flex items-center space-x-2 mx-auto shadow-sm border border-white/50"
+          >
+            <span>{showLifecycleDetails ? 'Hide' : 'Show'} Stage Definitions & Strategy</span>
+            <Eye className="w-4 h-4" />
+          </button>
+        </div>
+
+        {showLifecycleDetails && (
+          <div className="mt-8 bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/50">
+            <div className="text-lg font-semibold text-gray-900 mb-4">Lifecycle Stage Definitions:</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
+                <span className="text-gray-700"><strong>Introduction:</strong> New products with low market penetration but high growth potential</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
+                <span className="text-gray-700"><strong>Growth:</strong> Rapidly expanding market share and accelerating revenue</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></div>
               <span className="text-gray-700"><strong>Maturity:</strong> Established products with stable revenue and market position</span>
             </div>
             <div className="flex items-center space-x-3">
@@ -985,7 +1195,8 @@ const ProductInsights = () => {
               <strong>Introduction stage</strong> products show promising potential for future growth.
             </p>
           </div>
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Full Width Market Intelligence */}
@@ -1219,19 +1430,77 @@ const ProductInsights = () => {
         </div>
       </div>
 
-      {/* Revenue Channel Performance */}
-      <div className="bg-white rounded border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-lg font-medium text-gray-900">Revenue Channel Performance</h3>
-            <p className="text-sm text-gray-600">Distribution & Booking Analysis • {currentPeriod}</p>
-          </div>
-          <div className="text-right text-sm text-gray-500">
-            <p>Total Revenue: ${activeTab === 'hotels' ? '8.95M' : activeTab === 'airlines' ? '16.4M' : '4.2M'}</p>
-            <p>Commission Impact: -{activeTab === 'hotels' ? '12.5%' : activeTab === 'airlines' ? '8.2%' : '15.1%'}</p>
+      {/* Revenue Channel Performance - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-light text-gray-900 mb-2">Revenue Channel <span className="font-bold">Performance</span></h2>
+              <p className="text-gray-500 text-sm">Distribution & booking optimization insights • {currentPeriod}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-4xl font-light text-emerald-600 mb-1">${activeTab === 'hotels' ? '8.95' : activeTab === 'airlines' ? '16.4' : '4.2'}<span className="text-lg">M</span></p>
+              <p className="text-xs text-gray-500 mb-2">Total Revenue</p>
+              <div className="flex items-center justify-center text-xs text-red-600">
+                <TrendingDown className="w-3 h-3 mr-1" />
+                <span className="font-semibold">-{activeTab === 'hotels' ? '12.5%' : activeTab === 'airlines' ? '8.2%' : '15.1%'} Commission</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+
+        {/* Key Channel Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+              <span className="text-2xl">🌐</span>
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '3.2' : activeTab === 'airlines' ? '6.8' : '1.8'}M</h4>
+              <p className="text-sm font-medium text-gray-600">Direct Bookings</p>
+              <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
+            </div>
+          </div>
+          
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
+              <span className="text-2xl">📱</span>
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '4.7' : activeTab === 'airlines' ? '7.3' : '1.9'}M</h4>
+              <p className="text-sm font-medium text-gray-600">OTA & Partners</p>
+              <div className="w-12 h-1 bg-orange-500 rounded-full mx-auto mt-3"></div>
+            </div>
+          </div>
+          
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+              <span className="text-2xl">🏢</span>
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '1.05' : activeTab === 'airlines' ? '2.3' : '0.5'}M</h4>
+              <p className="text-sm font-medium text-gray-600">Corporate & Direct</p>
+              <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Progressive Disclosure Button */}
+        <div className="text-center">
+          <button
+            onClick={() => setShowChannelDetails(!showChannelDetails)}
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-medium transition-colors flex items-center space-x-2 mx-auto"
+          >
+            <span>{showChannelDetails ? 'Hide' : 'Show'} Detailed Channel Breakdown</span>
+            <Eye className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Detailed Channel Breakdown */}
+        {showChannelDetails && (
+          <div className="mt-8 pt-8 border-t border-gray-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">Channel Performance Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {[
             { channel: 'Direct Website', revenue: activeTab === 'hotels' ? 3.2 : activeTab === 'airlines' ? 6.8 : 1.8, commission: 0, growth: '+18%' },
             { channel: activeTab === 'hotels' ? 'Booking.com' : activeTab === 'airlines' ? 'Travel Agents' : 'Rental Sites', revenue: activeTab === 'hotels' ? 2.8 : activeTab === 'airlines' ? 4.2 : 1.1, commission: activeTab === 'hotels' ? 15 : activeTab === 'airlines' ? 9 : 18, growth: '+5%' },
@@ -1266,11 +1535,14 @@ const ProductInsights = () => {
               </div>
             </div>
           ))}
-        </div>
+            </div>
+          </div>
+        )}
       </div>
+    </div>
 
-      {/* Action Plan Drawer */}
-      {showActionPlan && (
+    {/* Action Plan Drawer */}
+    {showActionPlan && (
         <div className="fixed inset-0 z-50">
           <div 
             className="absolute inset-0 bg-black bg-opacity-20 transition-opacity"
@@ -1388,7 +1660,7 @@ const ProductInsights = () => {
                                        onClick={() => setBusinessInfo({...businessInfo, name: business})}
                                        className="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs transition-colors"
                                      >
-                                       {business.split(' ')[0]} {business.split(' ')[1] || ''}
+                                       {business.split(' ').slice(0, 2).join(' ')}
                                      </button>
                                    ))}
                                  </div>
@@ -1695,8 +1967,8 @@ const ProductInsights = () => {
         </div>
       )}
 
-      {/* Data Sources & KPI Methodology Drawer */}
-      {showDataSources && (
+    {/* Data Sources & KPI Methodology Drawer */}
+    {showDataSources && (
         <>
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setShowDataSources(false)}></div>
           <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
@@ -1902,8 +2174,7 @@ const ProductInsights = () => {
           </div>
         </>
       )}
-
-    </div>
+    </>
   )
 }
 

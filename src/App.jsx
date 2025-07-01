@@ -146,7 +146,7 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 to-gray-100">
+    <div className="flex h-screen bg-slate-200">
       {/* Sidebar */}
       <Sidebar 
         activeSection={activeSection} 

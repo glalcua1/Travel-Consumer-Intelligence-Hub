@@ -26,7 +26,17 @@ import {
   Calculator,
   Database,
   Globe,
-  Activity
+  Activity,
+  User,
+  Laptop,
+  Home,
+  GraduationCap,
+  Crown,
+  UserCheck,
+  Backpack,
+  Briefcase,
+  Plane,
+  Stethoscope
 } from 'lucide-react'
 import { 
   LineChart, 
@@ -75,6 +85,8 @@ const ConsumerTrends = () => {
   const [showSuggestions, setShowSuggestions] = useState(false)
 
   const [showDataSources, setShowDataSources] = useState(false)
+  const [showSecondaryMarkets, setShowSecondaryMarkets] = useState(false)
+  const [showExtendedDemographics, setShowExtendedDemographics] = useState(false)
 
   // Mock business database for autocomplete
   const businessDatabase = [
@@ -475,7 +487,7 @@ const ConsumerTrends = () => {
     <>
       <div className="space-y-8 p-2">
       {/* Market Context & Time Period Header */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+              <div className="bg-white rounded-2xl p-6 border border-gray-100">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-3">
@@ -516,38 +528,36 @@ const ConsumerTrends = () => {
         </div>
       </div>
 
-      {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-2xl p-8 border border-emerald-100">
+      {/* Header - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-              Consumer Trends Intelligence
+            <h1 className="text-4xl font-light bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-3">
+              Consumer Trends <span className="font-bold">Intelligence</span>
             </h1>
-            <p className="text-gray-600 mt-2 text-lg">
+            <p className="text-gray-600 text-lg mb-2">
               Emerging behaviors & attitudes shaping travel decisions
             </p>
-            <p className="text-gray-500 mt-1 text-base">
+            <p className="text-gray-500 text-sm">
               {marketScope} • {currentPeriod} Behavioral Analysis
             </p>
           </div>
-          <div className="flex items-center space-x-6">
-            <div className="text-center group relative">
-              <p className="text-sm text-gray-500">Trend Confidence</p>
-              <p className="text-2xl font-bold text-emerald-600">94.2%</p>
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                <p className="text-sm text-gray-700 font-semibold mb-1">Trend Confidence Score</p>
-                <p className="text-xs text-gray-600">Statistical confidence in trend predictions based on data quality, sample size, and correlation strength.</p>
-              </div>
+          <div className="flex items-center space-x-8">
+            <div className="text-center">
+              <p className="text-sm text-gray-500 mb-1">Trend Confidence</p>
+              <p className="text-3xl font-light text-emerald-600">94<span className="text-lg">.2%</span></p>
             </div>
-            <button
-              onClick={() => setIsDrawerOpen(true)}
-              className="bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-700 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl"
-            >
-              <span>Get Action Plan</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <TrendingUp className="w-8 h-8 text-white" />
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsDrawerOpen(true)}
+                className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-emerald-700 transition-colors flex items-center space-x-2"
+              >
+                <span>Get Action Plan</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-emerald-600" />
+              </div>
             </div>
           </div>
         </div>
@@ -556,511 +566,472 @@ const ConsumerTrends = () => {
 
 
 
-      {/* Revenue-Driving Behavioral Trends */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <h2 className="text-2xl font-bold text-gray-900">Revenue-Driving Behavioral Trends</h2>
-            <div className="group relative">
-              <HelpCircle className="w-5 h-5 text-gray-400 hover:text-emerald-600 cursor-help" />
-              <div className="absolute left-0 top-8 w-80 p-4 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                <p className="text-sm text-gray-700 mb-3">
-                  These behavioral trends show strong revenue potential through premium pricing opportunities and higher willingness to pay.
-                </p>
-                <div className="space-y-2 text-xs text-gray-600">
-                  <p><strong>Growth Rate:</strong> Year-over-year increase in demand</p>
-                  <p><strong>Premium Willingness:</strong> Additional percentage customers will pay</p>
-                  <p><strong>Revenue Uplift:</strong> Projected revenue increase in thousands AED</p>
-                </div>
-              </div>
+      {/* Revenue-Driving Behavioral Trends - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100 mb-8">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-light text-gray-900 mb-2">Revenue-Driving <span className="font-bold">Behavioral Trends</span></h2>
+              <p className="text-gray-500 text-sm">Premium opportunities with high willingness to pay • {currentPeriod} Intelligence</p>
             </div>
             <button
               onClick={() => setShowDataSources(true)}
-              className="p-2 bg-gray-100 hover:bg-emerald-100 rounded-lg transition-colors group"
-              title="Data Sources & KPI Methodology"
+              className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Data Sources"
             >
-              <HelpCircle className="w-4 h-4 text-gray-500 group-hover:text-emerald-600" />
+              <HelpCircle className="w-4 h-4 text-gray-400" />
             </button>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-600">Top 4 Revenue Drivers</p>
-            <p className="text-xs text-gray-500">{currentPeriod} Intelligence</p>
-            <p className="flex items-center justify-end text-xs text-gray-500">
-              <Database className="w-3 h-3 mr-1" />
-              STR • Survey Data • Analytics
-            </p>
-          </div>
         </div>
-      </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {revenueDrivers.map((trend, index) => {
           const Icon = trend.icon
+          const colorMap = {
+            'from-emerald-500 to-green-600': { bg: 'bg-emerald-100', text: 'text-emerald-600' },
+            'from-blue-500 to-indigo-600': { bg: 'bg-blue-100', text: 'text-blue-600' },
+            'from-rose-500 to-pink-600': { bg: 'bg-rose-100', text: 'text-rose-600' },
+            'from-purple-500 to-violet-600': { bg: 'bg-purple-100', text: 'text-purple-600' }
+          }
+          const colors = colorMap[trend.color] || { bg: 'bg-gray-100', text: 'text-gray-600' }
+          
           return (
-            <div key={index} className="group relative overflow-hidden bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gray-200">
-              <div className={`absolute inset-0 bg-gradient-to-br ${trend.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
-              
-              <div className="relative">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-xl bg-gradient-to-br ${trend.color}`}>
-                    <Icon className="w-6 h-6 text-white" />
+            <div key={index} className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
+              {/* Header with Icon left, Impact badge right */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className={`w-10 h-10 ${colors.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <Icon className={`w-5 h-5 ${colors.text}`} />
                   </div>
-                  <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    trend.impact === 'High' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {trend.impact} Impact
-                  </div>
+                  <h3 className="text-sm font-bold text-gray-900 leading-tight">{trend.trend}</h3>
                 </div>
-                
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{trend.trend}</h3>
-                <p className="text-sm text-gray-600 mb-4">{trend.description}</p>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Growth Rate</span>
-                    <div className="flex items-center space-x-1">
-                      <span className="text-lg font-bold text-emerald-600">+{trend.growth}%</span>
-                      <div className="group/tooltip relative">
-                        <HelpCircle className="w-3 h-3 text-gray-400 hover:text-blue-600 cursor-help" />
-                        <div className="absolute right-0 top-5 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-20">
-                          YoY growth in demand and bookings for this trend
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Premium Willingness</span>
-                    <div className="flex items-center space-x-1">
-                      <span className="text-lg font-bold text-blue-600">+{trend.premiumWillingness}%</span>
-                      <div className="group/tooltip relative">
-                        <HelpCircle className="w-3 h-3 text-gray-400 hover:text-blue-600 cursor-help" />
-                        <div className="absolute right-0 top-5 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-20">
-                          Additional percentage customers will pay for this experience
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">Revenue Uplift</span>
-                      <div className="flex items-center space-x-1">
-                        <span className="text-sm font-semibold text-green-600">+{trend.revenueUplift}K AED</span>
-                        <div className="group/tooltip relative">
-                          <HelpCircle className="w-3 h-3 text-gray-400 hover:text-blue-600 cursor-help" />
-                          <div className="absolute right-0 top-5 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-20">
-                            Projected quarterly revenue increase from implementing this trend
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className={`h-2 rounded-full bg-gradient-to-r ${trend.color}`}
-                        style={{ width: `${trend.premiumWillingness * 2}%` }}
-                      ></div>
-                    </div>
-                  </div>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  trend.impact === 'High' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                }`}>
+                  {trend.impact}
+                </span>
+              </div>
+              
+              {/* Data Grid */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="text-center">
+                  <p className="text-lg font-bold text-emerald-600">+{trend.growth}%</p>
+                  <p className="text-xs text-gray-500">Growth</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-lg font-bold text-blue-600">+{trend.premiumWillingness}%</p>
+                  <p className="text-xs text-gray-500">Premium</p>
+                </div>
+                <div className="text-center col-span-2 mt-2 pt-2 border-t border-gray-100">
+                  <p className="text-xl font-bold text-green-600">+{trend.revenueUplift}K</p>
+                  <p className="text-xs text-gray-500">Revenue Uplift (AED)</p>
                 </div>
               </div>
             </div>
           )
         })}
       </div>
+      </div>
 
-      {/* Dubai Source Markets - World Map */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-emerald-100 rounded-lg">
-              <Globe className="w-5 h-5 text-emerald-600" />
-            </div>
+      {/* Dubai Source Markets Intelligence - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">Dubai Source Markets Intelligence</h3>
-              <p className="text-sm text-gray-600">Top international visitor markets • {currentPeriod} Analysis</p>
+              <h3 className="text-3xl font-light text-gray-900 mb-2">
+                Dubai Source Markets <span className="font-bold">Intelligence</span>
+              </h3>
+              <p className="text-gray-500 text-sm">Global visitor insights • {currentPeriod} • 6.5M total visitors</p>
             </div>
-          </div>
-          <div className="text-right text-sm text-gray-500">
-            <p>6.5M Total Visitors</p>
-            <p>+16% vs {previousPeriod}</p>
+            <div className="text-center">
+              <p className="text-4xl font-light text-blue-600 mb-1">6.5<span className="text-lg">M</span></p>
+              <p className="text-xs text-gray-500 mb-2">Total Visitors</p>
+              <div className="flex items-center justify-center text-xs text-green-600">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                <span className="font-semibold">+16%</span>
+              </div>
+            </div>
           </div>
         </div>
-        
-        {/* Source Markets Overview */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Top Source Markets</h3>
-              <p className="text-gray-600">International visitor distribution • Q3 2024</p>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-blue-600">6.5M</div>
-              <div className="text-sm text-gray-500">Total Visitors</div>
-            </div>
-          </div>
+
+        {/* Top Markets - Magazine Style */}
+        <div className="mb-8">
+          <h4 className="text-xl font-light text-gray-900 mb-6">Top Source <span className="font-bold">Markets</span></h4>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Saudi Arabia - Top Source Market */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇸🇦</span>
-                <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">28%</span>
+          {/* Primary Markets */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* Saudi Arabia */}
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                <span className="text-3xl">🇸🇦</span>
               </div>
-              <h4 className="font-bold text-gray-800 mb-1">Saudi Arabia</h4>
-              <p className="text-lg font-bold text-blue-600 mb-1">1.82M</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 rounded-full h-2" style={{width: '93%'}}></div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">28%</h5>
+                <p className="text-sm font-medium text-gray-600">Saudi Arabia</p>
+                <p className="text-xs text-gray-500">1.82M visitors</p>
+                <p className="text-sm font-semibold text-blue-600">Primary Market</p>
               </div>
             </div>
 
-            {/* India - Second Largest */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇮🇳</span>
-                <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">18%</span>
+            {/* India */}
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-200 transition-colors">
+                <span className="text-3xl">🇮🇳</span>
               </div>
-              <h4 className="font-bold text-gray-800 mb-1">India</h4>
-              <p className="text-lg font-bold text-blue-600 mb-1">1.17M</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 rounded-full h-2" style={{width: '75%'}}></div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">18%</h5>
+                <p className="text-sm font-medium text-gray-600">India</p>
+                <p className="text-xs text-gray-500">1.17M visitors</p>
+                <p className="text-sm font-semibold text-emerald-600">Growth Market</p>
               </div>
             </div>
 
             {/* United Kingdom */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇬🇧</span>
-                <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">12%</span>
+            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+              <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                <span className="text-3xl">🇬🇧</span>
               </div>
-              <h4 className="font-bold text-gray-800 mb-1">United Kingdom</h4>
-              <p className="text-lg font-bold text-blue-600 mb-1">780K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 rounded-full h-2" style={{width: '50%'}}></div>
-              </div>
-            </div>
-
-            {/* Germany */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇩🇪</span>
-                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">8%</span>
-              </div>
-              <h4 className="font-bold text-gray-800 mb-1">Germany</h4>
-              <p className="text-lg font-bold text-gray-600 mb-1">520K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-gray-600 rounded-full h-2" style={{width: '33%'}}></div>
-              </div>
-            </div>
-
-            {/* Russia */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇷🇺</span>
-                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">7%</span>
-              </div>
-              <h4 className="font-bold text-gray-800 mb-1">Russia</h4>
-              <p className="text-lg font-bold text-gray-600 mb-1">455K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-gray-600 rounded-full h-2" style={{width: '29%'}}></div>
-              </div>
-            </div>
-
-            {/* United States */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇺🇸</span>
-                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">6%</span>
-              </div>
-              <h4 className="font-bold text-gray-800 mb-1">United States</h4>
-              <p className="text-lg font-bold text-gray-600 mb-1">390K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-gray-600 rounded-full h-2" style={{width: '25%'}}></div>
-              </div>
-            </div>
-
-            {/* Iran */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇮🇷</span>
-                <span className="bg-gray-600 text-white px-2 py-1 rounded-full text-sm font-bold">5%</span>
-              </div>
-              <h4 className="font-bold text-gray-800 mb-1">Iran</h4>
-              <p className="text-lg font-bold text-gray-600 mb-1">325K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-gray-600 rounded-full h-2" style={{width: '21%'}}></div>
-              </div>
-            </div>
-
-            {/* France */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🇫🇷</span>
-                <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm font-bold">4%</span>
-              </div>
-              <h4 className="font-bold text-gray-800 mb-1">France</h4>
-              <p className="text-lg font-bold text-gray-500 mb-1">260K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-gray-500 rounded-full h-2" style={{width: '17%'}}></div>
-              </div>
-            </div>
-
-            {/* Others - Remaining Markets */}
-            <div className="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 border border-gray-200 transition-colors">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl">🌍</span>
-                <span className="bg-gray-400 text-white px-2 py-1 rounded-full text-sm font-bold">12%</span>
-              </div>
-              <h4 className="font-bold text-gray-800 mb-1">Other Markets</h4>
-              <p className="text-lg font-bold text-gray-400 mb-1">780K</p>
-              <p className="text-xs text-gray-500">visitors</p>
-              <div className="mt-2 bg-gray-200 rounded-full h-2">
-                <div className="bg-gray-400 rounded-full h-2" style={{width: '50%'}}></div>
+              <div className="space-y-1">
+                <h5 className="text-2xl font-bold text-gray-900">12%</h5>
+                <p className="text-sm font-medium text-gray-600">United Kingdom</p>
+                <p className="text-xs text-gray-500">780K visitors</p>
+                <p className="text-sm font-semibold text-violet-600">Premium Market</p>
               </div>
             </div>
           </div>
-          
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center text-sm text-gray-600">
-                <Globe className="w-4 h-4 mr-2"/>
-                <span className="font-medium">Market Distribution Summary</span>
-              </div>
-              <div className="text-xs text-gray-500">
-                Total: 100% • 6.5M visitors
+
+          {/* Show More/Less Button */}
+          <div className="text-center">
+            <button
+              onClick={() => setShowSecondaryMarkets(!showSecondaryMarkets)}
+              className="flex items-center space-x-2 mx-auto px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              <span className="text-sm font-medium">
+                {showSecondaryMarkets ? 'Hide Secondary Markets' : 'Show Secondary Markets & Details'}
+              </span>
+              {showSecondaryMarkets ? 
+                <ChevronUp className="w-4 h-4" /> : 
+                <ChevronDown className="w-4 h-4" />
+              }
+            </button>
+          </div>
+
+          {/* Secondary Markets - Progressive Disclosure */}
+          {showSecondaryMarkets && (
+            <div className="border-t border-gray-200 pt-6 mt-6">
+              <h5 className="text-lg font-semibold text-gray-900 mb-4">Secondary Markets</h5>
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+                {[
+                  { country: 'Germany', flag: '🇩🇪', percentage: 8, visitors: '520K' },
+                  { country: 'Russia', flag: '🇷🇺', percentage: 7, visitors: '455K' },
+                  { country: 'USA', flag: '🇺🇸', percentage: 6, visitors: '390K' },
+                  { country: 'Iran', flag: '🇮🇷', percentage: 5, visitors: '325K' },
+                  { country: 'France', flag: '🇫🇷', percentage: 4, visitors: '260K' },
+                  { country: 'Others', flag: '🌍', percentage: 21, visitors: '1.37M' }
+                ].map((market, index) => (
+                  <div key={index} className="text-center group hover:bg-gray-50 rounded-lg p-3 transition-all duration-300">
+                    <div className="text-2xl mb-2">{market.flag}</div>
+                    <h6 className="text-lg font-bold text-gray-900">{market.percentage}%</h6>
+                    <p className="text-xs font-medium text-gray-600">{market.country}</p>
+                    <p className="text-xs text-gray-500">{market.visitors}</p>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+          )}
+        </div>
+
+
+
+        {/* Key Insights */}
+        <div className="border-t border-gray-200 pt-6">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+              <Lightbulb className="w-4 h-4 text-emerald-600" />
+            </div>
+            <h4 className="text-lg font-semibold text-gray-900">Key Market Insights</h4>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
               <div>
-                <span className="text-blue-600 font-semibold">Top 3 Markets:</span> 58% (3.78M)
+                <p className="text-sm font-semibold text-gray-900">GCC Dominance</p>
+                <p className="text-xs text-gray-600">35% of total visitors from Gulf region</p>
               </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
               <div>
-                <span className="text-gray-600 font-semibold">Key Markets:</span> 30% (1.95M)
+                <p className="text-sm font-semibold text-gray-900">European Premium</p>
+                <p className="text-xs text-gray-600">24% higher spending per visit</p>
               </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full mt-2"></div>
               <div>
-                <span className="text-gray-500 font-semibold">Others:</span> 12% (780K)
+                <p className="text-sm font-semibold text-gray-900">Asian Growth</p>
+                <p className="text-xs text-gray-600">23% year-over-year increase</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Audience Analysis - Demographics & Travel Types */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Users className="w-5 h-5 text-purple-600" />
-            </div>
+            {/* Audience Analysis & Demographics - Magazine Style */}
+      <div className="bg-white rounded-2xl p-6 border border-gray-100">
+        {/* Header - Clean & Minimal */}
+        <div className="border-b border-gray-200 pb-4 mb-6">
+          <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-bold text-gray-900">Audience Analysis & Demographics</h3>
-              <p className="text-sm text-gray-600">Comprehensive visitor segmentation • {currentPeriod}</p>
+              <h3 className="text-2xl font-light text-gray-900 mb-1">
+                Audience Analysis & <span className="font-bold">Demographics</span>
+              </h3>
+              <p className="text-gray-500 text-sm">Comprehensive visitor segmentation • {currentPeriod} • 6.5M total visitors</p>
             </div>
             <button
               onClick={() => setShowDataSources(true)}
-              className="p-2 bg-gray-100 hover:bg-blue-100 rounded-lg transition-colors group"
-              title="Data Sources & KPI Methodology"
+              className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Data Sources"
             >
-              <HelpCircle className="w-4 h-4 text-gray-500 group-hover:text-blue-600" />
+              <HelpCircle className="w-4 h-4 text-gray-400" />
             </button>
           </div>
-          <div className="text-right text-xs text-gray-500">
-            <p>Multi-dimensional Analysis</p>
-            <p className="flex items-center text-xs">
-              <Database className="w-3 h-3 mr-1" />
-              STR • Tourism Board • Survey Data
-            </p>
+        </div>
+
+        {/* Age Demographics - Magazine Layout */}
+        <div className="mb-8">
+          <div className="mb-5">
+            <h4 className="text-xl font-light text-gray-900 mb-1">Age <span className="font-bold">Demographics</span></h4>
+            <p className="text-gray-500 text-sm">Visitor distribution by age groups</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {audienceData.ageGroups.map((group, index) => (
+              <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-3 transition-all duration-300">
+                <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-gray-200 transition-colors">
+                  {index === 0 ? <Briefcase className="w-6 h-6 text-gray-600" /> : 
+                   index === 1 ? <Laptop className="w-6 h-6 text-gray-600" /> : 
+                   index === 2 ? <Home className="w-6 h-6 text-gray-600" /> : 
+                   index === 3 ? <GraduationCap className="w-6 h-6 text-gray-600" /> : 
+                   <Crown className="w-6 h-6 text-gray-600" />}
+                </div>
+                <div className="space-y-0.5">
+                  <h5 className="text-lg font-bold text-gray-900">{group.percentage}%</h5>
+                  <p className="text-sm font-medium text-gray-600">{group.age} years</p>
+                  <p className="text-xs text-gray-500">{group.travelers}</p>
+                  <p className="text-sm font-semibold text-emerald-600">{group.spending}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Age Demographics */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 mb-3">
-              <Calendar className="w-4 h-4 text-purple-600" />
-              <h4 className="text-base font-bold text-gray-900">Age Demographics</h4>
-            </div>
-            <div className="space-y-2">
-              {audienceData.ageGroups.map((group, index) => (
-                <div key={index} className="bg-purple-50 rounded-lg p-3 border border-purple-200">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-semibold text-purple-900">{group.age} years</span>
-                    <span className="text-sm font-bold text-purple-600">{group.percentage}%</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
-                    <span>{group.travelers} travelers</span>
-                    <span className="font-semibold text-emerald-600">{group.spending}</span>
-                  </div>
-                  <div className="w-full bg-purple-200 rounded-full h-1.5">
-                    <div className="bg-purple-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${group.percentage * 2.5}%` }}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Travel Types */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 mb-3">
-              <MapPin className="w-4 h-4 text-blue-600" />
-              <h4 className="text-base font-bold text-gray-900">Travel Types</h4>
-            </div>
-            <div className="space-y-2">
-              {audienceData.travelTypes.map((type, index) => {
-                const Icon = type.icon
-                return (
-                  <div key={index} className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center space-x-2">
-                        <Icon className="w-3 h-3 text-blue-600" />
-                        <span className="text-sm font-semibold text-blue-900">{type.type}</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-sm font-bold text-blue-600">{type.percentage}%</span>
-                        <span className="text-xs text-emerald-600 ml-1">{type.growth}</span>
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-600 mb-2">
-                      <span>Avg Spend: <span className="font-semibold text-gray-900">{type.avgSpend}</span></span>
-                    </div>
-                    <div className="w-full bg-blue-200 rounded-full h-1.5">
-                      <div className="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${type.percentage * 2}%` }}></div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Traveler Group Types */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 mb-3">
-              <Users className="w-4 h-4 text-indigo-600" />
-              <h4 className="text-base font-bold text-gray-900">Traveler Groups</h4>
-            </div>
-            
-            {/* Traveler Types */}
-            <div className="space-y-2">
-              {audienceData.demographics.travelerTypes.map((traveler, index) => (
-                <div key={index} className="bg-indigo-50 rounded-lg p-2 border border-indigo-200">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-semibold text-indigo-900 text-xs">{traveler.type}</span>
-                    <span className="text-xs font-bold text-indigo-600">{traveler.percentage}%</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-indigo-700">{traveler.avgStay}</span>
-                    <span className="text-indigo-600 text-xs">{traveler.preference}</span>
-                  </div>
-                  <div className="w-full bg-indigo-200 rounded-full h-1">
-                    <div className="bg-indigo-500 h-1 rounded-full transition-all duration-500" style={{ width: `${traveler.percentage * 2.5}%` }}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Show More/Less Button */}
+        <div className="text-center">
+          <button
+            onClick={() => setShowExtendedDemographics(!showExtendedDemographics)}
+            className="flex items-center space-x-2 mx-auto px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+          >
+            <span className="text-sm font-medium">
+              {showExtendedDemographics ? 'Hide Extended Demographics' : 'Show Travel Types & Groups'}
+            </span>
+            {showExtendedDemographics ? 
+              <ChevronUp className="w-4 h-4" /> : 
+              <ChevronDown className="w-4 h-4" />
+            }
+          </button>
         </div>
-      </div>
 
-      {/* Consumer Behavior Evolution - Full Width */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-blue-600" />
+        {/* Extended Demographics - Progressive Disclosure */}
+        {showExtendedDemographics && (
+          <>
+            {/* Travel Types - Magazine Layout */}
+            <div className="mb-8 mt-6 border-t border-gray-200 pt-6">
+              <div className="mb-5">
+                <h4 className="text-xl font-light text-gray-900 mb-1">Travel <span className="font-bold">Types</span></h4>
+                <p className="text-gray-500 text-sm">Purpose and spending patterns</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                {audienceData.travelTypes.map((type, index) => {
+                  const Icon = type.icon
+                  const growthValue = parseInt(type.growth.replace('%', '').replace('+', ''))
+                  return (
+                    <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-3 transition-all duration-300">
+                      <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-gray-200 transition-colors">
+                        <Icon className="w-6 h-6 text-gray-600" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <h5 className="text-lg font-bold text-gray-900">{type.percentage}%</h5>
+                        <p className="text-sm font-medium text-gray-600">{type.type}</p>
+                        <p className="text-xs text-gray-500">{type.avgSpend}</p>
+                        <p className={`text-sm font-semibold ${growthValue > 50 ? 'text-green-600' : growthValue > 25 ? 'text-orange-500' : 'text-gray-500'}`}>
+                          {type.growth}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900">Consumer Behavior Evolution</h3>
-              <p className="text-sm text-gray-600">{marketRegion} • {currentPeriod} Booking Pattern Analysis</p>
+
+            {/* Traveler Groups - Magazine Layout */}
+            <div className="mb-6">
+              <div className="mb-5">
+                <h4 className="text-xl font-light text-gray-900 mb-1">Traveler <span className="font-bold">Groups</span></h4>
+                <p className="text-gray-500 text-sm">Group composition and preferences</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                {audienceData.demographics.travelerTypes.map((traveler, index) => (
+                  <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-3 transition-all duration-300">
+                    <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-gray-200 transition-colors">
+                      {traveler.type === 'Solo Travelers' ? <User className="w-6 h-6 text-gray-600" /> : 
+                       traveler.type === 'Couples' ? <Heart className="w-6 h-6 text-gray-600" /> :
+                       traveler.type === 'Families' ? <Home className="w-6 h-6 text-gray-600" /> :
+                       traveler.type === 'Friends Groups' ? <Users className="w-6 h-6 text-gray-600" /> : 
+                       <Briefcase className="w-6 h-6 text-gray-600" />}
+                    </div>
+                    <div className="space-y-0.5">
+                      <h5 className="text-lg font-bold text-gray-900">{traveler.percentage}%</h5>
+                      <p className="text-sm font-medium text-gray-600">{traveler.type}</p>
+                      <p className="text-xs text-gray-500">{traveler.avgStay}</p>
+                      <p className="text-xs text-gray-400 italic mt-1">"{traveler.preference}"</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="group relative">
-              <HelpCircle className="w-4 h-4 text-gray-400 hover:text-blue-600 cursor-help" />
-              <div className="absolute left-0 top-6 w-72 p-3 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                <p className="text-sm text-gray-700 mb-2">
-                  <strong>How to read this chart:</strong> Track changes in booking behaviors over time.
-                </p>
-                <div className="space-y-1 text-xs text-gray-600">
-                  <p><strong>Instant Booking:</strong> Same-day booking decisions</p>
-                  <p><strong>Advance Planning:</strong> Bookings made 30+ days ahead</p>
-                  <p><strong>Last Minute:</strong> Bookings within 7 days of travel</p>
-                </div>
+          </>
+        )}
+
+        {/* Key Insights - Magazine Footer */}
+        <div className="border-t border-gray-200 pt-4">
+          <div className="flex items-center space-x-3 mb-3">
+            <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+              <Lightbulb className="w-4 h-4 text-emerald-600" />
+            </div>
+            <h4 className="text-lg font-semibold text-gray-900">Key Insights</h4>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full mt-2"></div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Millennial Dominance</p>
+                <p className="text-xs text-gray-600">60% of visitors aged 25-44 drive core market</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full mt-2"></div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Premium Spending</p>
+                <p className="text-xs text-gray-600">45+ age group spends 40% more per visit</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full mt-2"></div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Bleisure Boom</p>
+                <p className="text-xs text-gray-600">89% growth in business-leisure mix</p>
               </div>
             </div>
           </div>
-          <div className="text-right text-sm text-gray-500">
-            <p>6-Month Trend Analysis</p>
-            <p>Jul - Dec 2024</p>
-            <p className="flex items-center justify-end text-xs">
-              <Database className="w-3 h-3 mr-1" />
-              Booking System • STR • Surveys
-            </p>
+        </div>
+      </div>
+
+      {/* Consumer Behavior Evolution - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-3xl font-light text-gray-900 mb-2">Consumer Behavior <span className="font-bold">Evolution</span></h3>
+              <p className="text-gray-500 text-sm">Booking pattern analysis • Jul - Dec 2024 • 6-month trends</p>
+            </div>
+            <button
+              onClick={() => setShowDataSources(true)}
+              className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Data Sources"
+            >
+              <HelpCircle className="w-4 h-4 text-gray-400" />
+            </button>
           </div>
         </div>
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={behaviorEvolution}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Line 
-              type="monotone" 
-              dataKey="instantBooking" 
-              stroke="#3B82F6" 
-              strokeWidth={3}
-              name="Instant Booking"
-              dot={{ fill: '#3B82F6', strokeWidth: 2, r: 6 }}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="advancePlanning" 
-              stroke="#10B981" 
-              strokeWidth={3}
-              name="Advance Planning"
-              dot={{ fill: '#10B981', strokeWidth: 2, r: 6 }}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="lastMinute" 
-              stroke="#F59E0B" 
-              strokeWidth={3}
-              name="Last Minute"
-              dot={{ fill: '#F59E0B', strokeWidth: 2, r: 6 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
         
-        {/* Behavior Insights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <h5 className="font-semibold text-blue-900">Instant Booking Trend</h5>
+        {/* Booking Behaviors - Magazine Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          {/* Instant Booking */}
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+              <Zap className="w-8 h-8 text-blue-600" />
             </div>
-            <p className="text-2xl font-bold text-blue-600 mb-1">+49%</p>
-            <p className="text-sm text-blue-700">Same-day decisions increasing, indicating growing consumer confidence and impulse travel behavior.</p>
+            <div className="space-y-2">
+              <h4 className="text-2xl font-bold text-gray-900">+49%</h4>
+              <p className="text-sm font-medium text-gray-600">Instant Booking</p>
+              <p className="text-xs text-gray-500">Same-day decisions</p>
+              <div className="w-16 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
+              <p className="text-xs text-gray-600 mt-3 italic">Growing confidence & impulse travel</p>
+            </div>
           </div>
-          <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-              <h5 className="font-semibold text-emerald-900">Advance Planning</h5>
+
+          {/* Advance Planning */}
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+              <Calendar className="w-8 h-8 text-emerald-600" />
             </div>
-            <p className="text-2xl font-bold text-emerald-600 mb-1">+23%</p>
-            <p className="text-sm text-emerald-700">Strategic planners remain strong, showing continued demand for planned travel experiences.</p>
+            <div className="space-y-2">
+              <h4 className="text-2xl font-bold text-gray-900">+23%</h4>
+              <p className="text-sm font-medium text-gray-600">Advance Planning</p>
+              <p className="text-xs text-gray-500">30+ days ahead</p>
+              <div className="w-16 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+              <p className="text-xs text-gray-600 mt-3 italic">Strategic planners remain strong</p>
+            </div>
           </div>
-          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-              <h5 className="font-semibold text-orange-900">Last Minute Bookings</h5>
+
+          {/* Last Minute */}
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
+              <Clock className="w-8 h-8 text-orange-600" />
             </div>
-            <p className="text-2xl font-bold text-orange-600 mb-1">+9%</p>
-            <p className="text-sm text-orange-700">Steady growth in spontaneous travel, creating opportunities for dynamic pricing strategies.</p>
+            <div className="space-y-2">
+              <h4 className="text-2xl font-bold text-gray-900">+9%</h4>
+              <p className="text-sm font-medium text-gray-600">Last Minute</p>
+              <p className="text-xs text-gray-500">Within 7 days</p>
+              <div className="w-16 h-1 bg-orange-500 rounded-full mx-auto mt-3"></div>
+              <p className="text-xs text-gray-600 mt-3 italic">Spontaneous travel growth</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Key Behavior Insights */}
+        <div className="border-t border-gray-200 pt-6">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-blue-600" />
+            </div>
+            <h4 className="text-lg font-semibold text-gray-900">Behavioral Insights</h4>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Confidence Driver</p>
+                <p className="text-xs text-gray-600">Instant bookings signal trust in travel infrastructure</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full mt-2"></div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Planning Persistence</p>
+                <p className="text-xs text-gray-600">Strategic travelers maintain advance booking habits</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Dynamic Opportunity</p>
+                <p className="text-xs text-gray-600">Last-minute growth enables flexible pricing</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1069,46 +1040,100 @@ const ConsumerTrends = () => {
 
 
 
-      {/* Strategic Insights Summary */}
-      <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-2xl p-8 text-white">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-bold">Strategic Consumer Insights</h3>
-          <div className="text-right text-sm text-emerald-100">
-            <p>{marketScope}</p>
-            <p>{currentPeriod} Key Findings</p>
+      {/* Strategic Insights Summary - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-200 pb-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-3xl font-light text-gray-900 mb-2">Strategic Consumer <span className="font-bold">Insights</span></h3>
+              <p className="text-gray-500 text-sm">{marketScope} • {currentPeriod} Key Findings</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-light text-emerald-600 mb-1">4</p>
+              <p className="text-xs text-gray-500">Key Opportunities</p>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <Leaf className="w-8 h-8 mb-3" />
-            <h4 className="font-semibold mb-2">Sustainability Focus</h4>
-            <p className="text-sm opacity-90">
-              156% growth in eco-conscious travel. Immediate opportunity for green certification programs.
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Sustainability Focus */}
+          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <Leaf className="w-8 h-8 text-emerald-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-xl font-bold text-gray-900 mb-2">Sustainability Focus</h4>
+                <p className="text-gray-600 text-sm">156% growth in eco-conscious travel</p>
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm">
+              Immediate opportunity for green certification programs and sustainable tourism packages.
             </p>
+            <div className="mt-4 flex items-center text-emerald-600">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              <span className="text-sm font-semibold">High Growth Opportunity</span>
+            </div>
           </div>
-          
-          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <Heart className="w-8 h-8 mb-3" />
-            <h4 className="font-semibold mb-2">Solo Female Travel</h4>
-            <p className="text-sm opacity-90">
-              124% increase in independent female travelers. Safety-focused packages showing high demand.
+
+          {/* Solo Female Travel */}
+          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="w-16 h-16 bg-rose-100 rounded-xl flex items-center justify-center">
+                <Heart className="w-8 h-8 text-rose-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-xl font-bold text-gray-900 mb-2">Solo Female Travel</h4>
+                <p className="text-gray-600 text-sm">124% increase in independent travelers</p>
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm">
+              Safety-focused packages and women-only experiences showing high demand and premium pricing.
             </p>
+            <div className="mt-4 flex items-center text-rose-600">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              <span className="text-sm font-semibold">Premium Market Segment</span>
+            </div>
           </div>
-          
-          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <Zap className="w-8 h-8 mb-3" />
-            <h4 className="font-semibold mb-2">Bleisure Revolution</h4>
-            <p className="text-sm opacity-90">
-              Business-leisure hybrid trips up 89%. Flexible accommodation packages needed.
+
+          {/* Bleisure Revolution */}
+          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center">
+                <Zap className="w-8 h-8 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-xl font-bold text-gray-900 mb-2">Bleisure Revolution</h4>
+                <p className="text-gray-600 text-sm">89% growth in business-leisure hybrid</p>
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm">
+              Flexible accommodation packages and extended stay options needed for business travelers.
             </p>
+            <div className="mt-4 flex items-center text-blue-600">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              <span className="text-sm font-semibold">Revenue Diversification</span>
+            </div>
           </div>
-          
-          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <Target className="w-8 h-8 mb-3" />
-            <h4 className="font-semibold mb-2">Digital Integration</h4>
-            <p className="text-sm opacity-90">
-              Social media influence at 95%. Digital detox demand creates unique positioning opportunity.
+
+          {/* Digital Integration */}
+          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
+                <Target className="w-8 h-8 text-purple-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-xl font-bold text-gray-900 mb-2">Digital Integration</h4>
+                <p className="text-gray-600 text-sm">95% social media influence on decisions</p>
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm">
+              Digital detox experiences create unique positioning while leveraging social influence.
             </p>
+            <div className="mt-4 flex items-center text-purple-600">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              <span className="text-sm font-semibold">Market Differentiation</span>
+            </div>
           </div>
         </div>
       </div>
