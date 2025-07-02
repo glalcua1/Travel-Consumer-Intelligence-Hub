@@ -330,6 +330,83 @@ const ConsumerTrends = () => {
           : businessInfo.type === 'airline'
           ? 'Launch sustainable aviation fuel programs, carbon offset options, and eco-friendly cabin amenities'
           : 'Transition to electric/hybrid fleet, implement carbon-neutral delivery, partner with eco-conscious suppliers',
+        campaigns: businessInfo.type === 'hotel' ? [
+          {
+            name: '"Green Luxury Dubai" Campaign',
+            description: 'Position as Dubai\'s leading eco-luxury destination',
+            channels: ['Instagram', 'LinkedIn', 'TikTok'],
+            budget: '$25K-40K',
+            duration: '6 weeks',
+            kpi: '40% increase in eco-conscious bookings'
+          },
+          {
+            name: '"Sustainable Stays" Influencer Program',
+            description: 'Partner with eco-travel influencers for authentic content',
+            channels: ['YouTube', 'Instagram', 'Blog partnerships'],
+            budget: '$15K-25K',
+            duration: '8 weeks',
+            kpi: '200K reach, 15% conversion rate'
+          },
+          {
+            name: '"Carbon Neutral Stay" Package Launch',
+            description: 'Launch premium packages with carbon offset included',
+            channels: ['Email', 'Website', 'OTA platforms'],
+            budget: '$10K-15K',
+            duration: '4 weeks',
+            kpi: '25% premium package uptake'
+          }
+        ] : businessInfo.type === 'restaurant' ? [
+          {
+            name: '"Farm to Fork Dubai" Campaign',
+            description: 'Showcase local sourcing and sustainable practices',
+            channels: ['Instagram', 'Facebook', 'Google Ads'],
+            budget: '$15K-25K',
+            duration: '6 weeks',
+            kpi: '30% increase in new customer visits'
+          },
+          {
+            name: '"Zero Waste Dining" Challenge',
+            description: 'Interactive campaign showing sustainability efforts',
+            channels: ['TikTok', 'Instagram Stories', 'YouTube Shorts'],
+            budget: '$10K-18K',
+            duration: '4 weeks',
+            kpi: '500K video views, 20% engagement rate'
+          }
+        ] : businessInfo.type === 'airline' ? [
+          {
+            name: '"Fly Green, Fly Responsible" Campaign',
+            description: 'Promote carbon offset programs and eco-initiatives',
+            channels: ['Google Ads', 'Facebook', 'LinkedIn'],
+            budget: '$40K-60K',
+            duration: '8 weeks',
+            kpi: '35% carbon offset program adoption'
+          },
+          {
+            name: '"Sustainable Skies" Content Series',
+            description: 'Educational content about aviation sustainability',
+            channels: ['YouTube', 'LinkedIn', 'Company blog'],
+            budget: '$20K-30K',
+            duration: '12 weeks',
+            kpi: '1M content views, brand sentiment +20%'
+          }
+        ] : [
+          {
+            name: '"Green Fleet Dubai" Campaign',
+            description: 'Showcase electric/hybrid vehicles and eco-practices',
+            channels: ['Google Ads', 'Instagram', 'LinkedIn'],
+            budget: '$20K-35K',
+            duration: '6 weeks',
+            kpi: '40% increase in premium eco-rentals'
+          },
+          {
+            name: '"Drive Sustainable" Partnership Campaign',
+            description: 'Partner with eco-hotels and sustainable tourism',
+            channels: ['Email', 'Partnership content', 'PR'],
+            budget: '$15K-25K',
+            duration: '8 weeks',
+            kpi: '25% cross-sell conversion rate'
+          }
+        ],
         steps: businessInfo.type === 'hotel' ? [
           'Apply for Green Key or EarthCheck certification',
           'Install LED lighting and smart thermostats',
@@ -380,6 +457,83 @@ const ConsumerTrends = () => {
           : businessInfo.type === 'airline'
           ? 'Develop women-only check-in, priority seating, and female crew assistance programs'
           : 'Implement female driver options, safety tracking, and women-focused vehicle features',
+        campaigns: businessInfo.type === 'hotel' ? [
+          {
+            name: '"She Travels Solo" Empowerment Campaign',
+            description: 'Celebrate independent female travelers with inspiring stories',
+            channels: ['Instagram', 'TikTok', 'YouTube'],
+            budget: '$20K-35K',
+            duration: '8 weeks',
+            kpi: '50% increase in solo female bookings'
+          },
+          {
+            name: '"Safe Haven Dubai" Safety Campaign',
+            description: 'Highlight security features and female-only amenities',
+            channels: ['Facebook', 'Google Ads', 'Travel blogs'],
+            budget: '$15K-25K',
+            duration: '6 weeks',
+            kpi: '35% increase in safety-related searches'
+          },
+          {
+            name: '"Women Connect" Community Campaign',
+            description: 'Create networking events for female business travelers',
+            channels: ['LinkedIn', 'Email', 'PR'],
+            budget: '$10K-18K',
+            duration: '12 weeks',
+            kpi: '300 community members, 25% repeat stays'
+          }
+        ] : businessInfo.type === 'restaurant' ? [
+          {
+            name: '"Dine Alone, Feel at Home" Campaign',
+            description: 'Normalize and celebrate solo dining experiences',
+            channels: ['Instagram', 'Facebook', 'TikTok'],
+            budget: '$12K-20K',
+            duration: '6 weeks',
+            kpi: '40% increase in solo female diners'
+          },
+          {
+            name: '"Women\'s Wednesday" Event Series',
+            description: 'Weekly events for female professionals and entrepreneurs',
+            channels: ['Instagram', 'LinkedIn', 'Local PR'],
+            budget: '$8K-15K',
+            duration: '8 weeks',
+            kpi: '60% event capacity, 30% return rate'
+          }
+        ] : businessInfo.type === 'airline' ? [
+          {
+            name: '"Female Flyers First" Campaign',
+            description: 'Premium services designed specifically for women travelers',
+            channels: ['LinkedIn', 'Instagram', 'Travel websites'],
+            budget: '$30K-45K',
+            duration: '10 weeks',
+            kpi: '45% increase in female business travelers'
+          },
+          {
+            name: '"Wings of Independence" Storytelling Campaign',
+            description: 'Share stories of successful female travelers and professionals',
+            channels: ['YouTube', 'LinkedIn', 'Company blog'],
+            budget: '$20K-30K',
+            duration: '12 weeks',
+            kpi: '2M story views, brand affinity +25%'
+          }
+        ] : [
+          {
+            name: '"Drive with Confidence" Safety Campaign',
+            description: 'Highlight female drivers and enhanced safety features',
+            channels: ['Instagram', 'Google Ads', 'Radio'],
+            budget: '$18K-28K',
+            duration: '6 weeks',
+            kpi: '50% increase in female driver requests'
+          },
+          {
+            name: '"Women on Wheels" Community Campaign',
+            description: 'Build community of female travelers and professionals',
+            channels: ['Facebook Groups', 'LinkedIn', 'WhatsApp'],
+            budget: '$10K-16K',
+            duration: '8 weeks',
+            kpi: '500 community members, 40% loyalty increase'
+          }
+        ],
         steps: businessInfo.type === 'hotel' ? [
           'Designate female-only floor or wing',
           'Install enhanced security features',
@@ -430,6 +584,83 @@ const ConsumerTrends = () => {
           : businessInfo.type === 'airline'
           ? 'Create flexible tickets combining business trips with leisure extensions'
           : 'Offer extended rental periods and premium vehicles for business travelers with leisure plans',
+        campaigns: businessInfo.type === 'hotel' ? [
+          {
+            name: '"Work Hard, Play Smart" Campaign',
+            description: 'Target professionals seeking productive business trips with leisure',
+            channels: ['LinkedIn', 'Google Ads', 'Business publications'],
+            budget: '$35K-50K',
+            duration: '10 weeks',
+            kpi: '60% increase in extended business stays'
+          },
+          {
+            name: '"Dubai Productivity Hub" Campaign',
+            description: 'Position as the ultimate destination for productive bleisure',
+            channels: ['YouTube', 'LinkedIn', 'Webinars'],
+            budget: '$25K-40K',
+            duration: '8 weeks',
+            kpi: '45% increase in corporate partnerships'
+          },
+          {
+            name: '"Extend Your Stay" Promotion Campaign',
+            description: 'Offer incentives for business travelers to add leisure days',
+            channels: ['Email', 'Direct sales', 'CRM'],
+            budget: '$15K-25K',
+            duration: '6 weeks',
+            kpi: '30% conversion on stay extensions'
+          }
+        ] : businessInfo.type === 'restaurant' ? [
+          {
+            name: '"Business & Bites" Co-working Campaign',
+            description: 'Promote restaurant as productive workspace during off-peak hours',
+            channels: ['LinkedIn', 'Google Ads', 'Local business networks'],
+            budget: '$18K-28K',
+            duration: '8 weeks',
+            kpi: '50% increase in daytime business bookings'
+          },
+          {
+            name: '"Meeting & Eating" Package Campaign',
+            description: 'Combine business meeting spaces with premium dining',
+            channels: ['LinkedIn', 'Email', 'Corporate partnerships'],
+            budget: '$12K-20K',
+            duration: '6 weeks',
+            kpi: '40% uptake in meeting packages'
+          }
+        ] : businessInfo.type === 'airline' ? [
+          {
+            name: '"Business + Paradise" Flex Campaign',
+            description: 'Promote flexible tickets for combining business with leisure',
+            channels: ['LinkedIn', 'Google Ads', 'Travel agencies'],
+            budget: '$45K-65K',
+            duration: '12 weeks',
+            kpi: '55% increase in flexible ticket sales'
+          },
+          {
+            name: '"Stopover & Explore" Campaign',
+            description: 'Encourage business travelers to extend layovers for Dubai experiences',
+            channels: ['In-flight magazines', 'Airport ads', 'Mobile app'],
+            budget: '$30K-45K',
+            duration: '8 weeks',
+            kpi: '40% increase in stopover packages'
+          }
+        ] : [
+          {
+            name: '"Business Drive, Leisure Ride" Campaign',
+            description: 'Premium rental upgrades for extended business trips',
+            channels: ['LinkedIn', 'Corporate partnerships', 'Hotel partnerships'],
+            budget: '$25K-35K',
+            duration: '8 weeks',
+            kpi: '45% increase in extended rentals'
+          },
+          {
+            name: '"Weekend Warrior" Extension Campaign',
+            description: 'Encourage business renters to extend for weekend exploration',
+            channels: ['Email', 'SMS', 'App notifications'],
+            budget: '$15K-22K',
+            duration: '6 weeks',
+            kpi: '35% weekend extension rate'
+          }
+        ],
         steps: businessInfo.type === 'hotel' ? [
           'Create flexible booking policies',
           'Design co-working spaces with leisure views',
@@ -567,7 +798,7 @@ const ConsumerTrends = () => {
 
 
       {/* Revenue-Driving Behavioral Trends - Magazine Style */}
-      <div className="bg-white rounded-2xl p-8 border border-gray-100 mb-8">
+      <div className="bg-white rounded-2xl p-8 border border-gray-100 mb-8" data-section="revenue-drivers">
         <div className="border-b border-gray-200 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
@@ -1594,11 +1825,16 @@ const ConsumerTrends = () => {
                           Edit Info
                         </button>
                       </div>
-                      <div className="grid grid-cols-3 gap-4">
+                      <div className="grid grid-cols-4 gap-3">
                         <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
                           <BarChart3 className="w-5 h-5 mb-1" />
                           <p className="text-xs text-teal-100">Opportunities</p>
                           <p className="text-lg font-bold">3</p>
+                        </div>
+                        <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
+                          <Target className="w-5 h-5 mb-1" />
+                          <p className="text-xs text-teal-100">Campaigns</p>
+                          <p className="text-lg font-bold">8</p>
                         </div>
                         <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
                           <TrendingUp className="w-5 h-5 mb-1" />
@@ -1655,6 +1891,43 @@ const ConsumerTrends = () => {
                               </div>
                             </div>
 
+                            {/* Campaign Ideas Section */}
+                            <div className="mb-6">
+                              <h5 className="font-semibold text-gray-900 mb-3 flex items-center text-sm">
+                                <Target className="w-4 h-4 text-orange-600 mr-1" />
+                                Campaign Ideas Based on This Trend
+                              </h5>
+                              <div className="grid grid-cols-1 gap-3">
+                                {recommendation.campaigns.slice(0, 2).map((campaign, i) => (
+                                  <div key={i} className="bg-white border border-gray-200 rounded-lg p-4">
+                                    <div className="flex items-start justify-between mb-2">
+                                      <h6 className="font-bold text-gray-900 text-sm">{campaign.name}</h6>
+                                      <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
+                                        {campaign.duration}
+                                      </span>
+                                    </div>
+                                    <p className="text-xs text-gray-600 mb-3">{campaign.description}</p>
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex flex-wrap gap-1">
+                                        {campaign.channels.slice(0, 3).map((channel, j) => (
+                                          <span key={j} className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                                            {channel}
+                                          </span>
+                                        ))}
+                                      </div>
+                                      <div className="text-right">
+                                        <p className="text-xs text-gray-500">Budget</p>
+                                        <p className="text-sm font-semibold text-green-600">{campaign.budget}</p>
+                                      </div>
+                                    </div>
+                                    <div className="mt-2 text-xs text-gray-600">
+                                      <strong>Target KPI:</strong> {campaign.kpi}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
                                 <h5 className="font-semibold text-gray-900 mb-2 flex items-center text-sm">
@@ -1687,6 +1960,21 @@ const ConsumerTrends = () => {
                                   ))}
                                 </div>
                               </div>
+                            </div>
+
+                            {/* Launch Campaign CTA */}
+                            <div className="mt-4 pt-4 border-t border-gray-200">
+                              <button
+                                className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 flex items-center justify-center space-x-2"
+                                onClick={() => {
+                                  // You can add actual campaign launch functionality here
+                                  alert(`Launching campaign for ${recommendation.trend}! This would typically integrate with your marketing automation platform.`)
+                                }}
+                              >
+                                <Target className="w-5 h-5" />
+                                <span>Launch Campaign</span>
+                                <ArrowRight className="w-5 h-5" />
+                              </button>
                             </div>
                           </div>
                         )

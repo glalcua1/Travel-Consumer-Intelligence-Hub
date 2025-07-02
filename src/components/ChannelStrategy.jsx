@@ -52,6 +52,7 @@ import {
   PolarRadiusAxis,
   Radar
 } from 'recharts'
+import DubaiHeroCard from './DubaiHeroCard'
 
 const ChannelStrategy = () => {
   const [showDataSources, setShowDataSources] = useState(false)
@@ -203,38 +204,8 @@ const ChannelStrategy = () => {
 
   return (
     <div className="space-y-6 p-6">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="p-3 bg-blue-100 rounded-xl">
-              <Network className="w-8 h-8 text-blue-600" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Channel Strategy Intelligence</h1>
-              <p className="text-gray-600 mt-1">Distribution channel optimization • {marketRegion} • {currentPeriod}</p>
-              <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
-                <Database className="w-3 h-3" />
-                <span>STR • Channel Analytics • Revenue Systems</span>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowDataSources(true)}
-              className="p-2 bg-white/50 hover:bg-white/80 rounded-lg transition-colors group"
-              title="Data Sources & KPI Methodology"
-            >
-              <HelpCircle className="w-4 h-4 text-gray-500 group-hover:text-blue-600" />
-            </button>
-          </div>
-          
-          <div className="text-right">
-            <div className="text-2xl font-bold text-emerald-600">$12.8M</div>
-            <div className="text-sm text-gray-600">Total Channel Revenue</div>
-            <div className="text-xs text-emerald-600 font-medium">+18% vs {previousPeriod}</div>
-            <div className="text-xs text-gray-500 mt-1">Last Updated: {dataLastUpdated}</div>
-          </div>
-        </div>
-      </div>
+      {/* Dubai Hero Card */}
+      <DubaiHeroCard activeSection="channel-evolution" />
 
       {/* Channel Evolution Intelligence */}
       <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
@@ -352,7 +323,7 @@ const ChannelStrategy = () => {
       </div>
 
       {/* Channel Performance Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-section="channel-performance">
         {channelPerformance.map((channel, index) => {
           const Icon = channel.icon
           return (

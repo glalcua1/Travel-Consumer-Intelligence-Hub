@@ -21,6 +21,7 @@ import {
   Lightbulb,
   BarChart3
 } from 'lucide-react'
+import DubaiHeroCard from './DubaiHeroCard'
 
 const ActionPlanner = () => {
   const [businessInfo, setBusinessInfo] = useState({
@@ -112,24 +113,29 @@ const ActionPlanner = () => {
 
   return (
     <div className="space-y-8 p-2">
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 border border-blue-100">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Actionable Business Intelligence
-            </h1>
-            <p className="text-gray-600 mt-2 text-lg">
-              Transform consumer insights into immediate business actions
-            </p>
-          </div>
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <Target className="w-8 h-8 text-white" />
-          </div>
-        </div>
-      </div>
+      {/* Dubai Hero Card */}
+      <DubaiHeroCard 
+        activeSection="action-planner" 
+        onExploreClick={() => {
+          if (!showRecommendations) {
+            // Focus on the business name input if form is visible
+            const nameInput = document.querySelector('input[type="text"]')
+            if (nameInput) {
+              nameInput.focus()
+              nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }
+          } else {
+            // If recommendations are shown, scroll to them
+            const recommendationsSection = document.querySelector('[data-section="recommendations"]')
+            if (recommendationsSection) {
+              recommendationsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+          }
+        }}
+      />
 
       {!showRecommendations && (
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100" data-section="business-form">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-blue-100 rounded-lg">
               <Building2 className="w-5 h-5 text-blue-600" />
@@ -224,7 +230,7 @@ const ActionPlanner = () => {
       )}
 
       {showRecommendations && (
-        <div className="space-y-8">
+        <div className="space-y-8" data-section="recommendations">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
             <div className="flex items-center justify-between mb-6">
               <div>

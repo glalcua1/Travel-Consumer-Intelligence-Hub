@@ -687,7 +687,7 @@ const ProductInsights = () => {
 
 
       {/* Behavioral Revenue Drivers - Magazine Style */}
-      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+      <div className="bg-white rounded-2xl p-8 border border-gray-100" data-section="product-performance">
         <div className="border-b border-gray-200 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
