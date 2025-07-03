@@ -184,9 +184,26 @@ const MarketingPage = ({ onSignup }) => {
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 py-20 overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0 w-full h-full">
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/freepik__a-smooth-dolly-shot-moves-forward-along-the-bustli__93803.mp4" type="video/mp4" />
+            {/* Fallback background */}
+            <div className="w-full h-full bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50"></div>
+          </video>
+          {/* Video overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-blue-900/15 to-purple-900/20"></div>
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/30">
               <div className="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <Zap className="w-4 h-4" />
                 <span>AI-Powered Travel Intelligence</span>
@@ -195,23 +212,23 @@ const MarketingPage = ({ onSignup }) => {
                 Turn Travel Data Into
                 <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent"> Revenue Growth</span>
               </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
                 Stop guessing. Start growing. Get real-time market intelligence, consumer trends, and actionable insights that drive 20-40% revenue increases for travel businesses.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <button
                   onClick={() => setShowSignupModal(true)}
-                  className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-emerald-700 hover:to-blue-700 transition-all duration-200 flex items-center justify-center space-x-2"
+                  className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-emerald-700 hover:to-blue-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
                 >
                   <span>Start Free Trial</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-200 flex items-center justify-center space-x-2">
+                <button className="border-2 border-gray-400 text-gray-800 bg-white/50 backdrop-blur-sm px-8 py-4 rounded-xl font-semibold text-lg hover:border-gray-500 hover:bg-white/70 transition-all duration-200 flex items-center justify-center space-x-2">
                   <Play className="w-5 h-5" />
                   <span>Watch Demo</span>
                 </button>
               </div>
-              <div className="flex items-center space-x-6 text-sm text-gray-500">
+              <div className="flex items-center space-x-6 text-sm text-gray-600">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4 text-emerald-500" />
                   <span>No credit card required</span>
@@ -227,8 +244,9 @@ const MarketingPage = ({ onSignup }) => {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                <div className="bg-gradient-to-r from-emerald-500 to-blue-600 rounded-xl p-4 text-white mb-4">
+              {/* Hero Card Content */}
+              <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30">
+                <div className="bg-gradient-to-r from-emerald-500 to-blue-600 rounded-xl p-4 text-white mb-4 shadow-lg">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-bold">Revenue Opportunity Detected</h3>
                     <Lightbulb className="w-6 h-6" />
@@ -237,15 +255,15 @@ const MarketingPage = ({ onSignup }) => {
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Potential Revenue Uplift</span>
+                    <span className="text-gray-700 font-medium">Potential Revenue Uplift</span>
                     <span className="font-bold text-green-600">+$285K</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Implementation Time</span>
+                    <span className="text-gray-700 font-medium">Implementation Time</span>
                     <span className="font-bold text-blue-600">15-30 days</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Success Probability</span>
+                    <span className="text-gray-700 font-medium">Success Probability</span>
                     <span className="font-bold text-purple-600">94%</span>
                   </div>
                 </div>
