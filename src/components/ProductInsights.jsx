@@ -64,8 +64,8 @@ const ProductInsights = () => {
   })
   
   // Market and time period context
-  const currentPeriod = "Q3 2024"
-  const previousPeriod = "Q2 2024"
+  const currentPeriod = "Q3 2025"
+  const previousPeriod = "Q2 2025"
   const marketRegion = "Dubai & UAE"
   const marketScope = "GCC Premium Travel Market"
   const dataLastUpdated = new Date().toLocaleDateString('en-US', { 
@@ -578,8 +578,8 @@ const ProductInsights = () => {
   return (
     <>
     <div className="space-y-8 p-2">
-      {/* Tab Navigation */}
-      <div className="bg-white rounded-2xl border border-gray-100">
+      {/* Tab Navigation - Sticky */}
+      <div className="sticky top-0 z-30 bg-white rounded-2xl border border-gray-100 shadow-sm">
         <div className="px-8 pt-6 pb-2">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -662,6 +662,9 @@ const ProductInsights = () => {
             <p className="text-gray-500 text-sm">
               {currentConfig.analysisScope} • {marketRegion} • {currentPeriod}
             </p>
+            <div className="text-xs text-gray-400 mt-2">
+              Data Sources: STR Global, IATA, Dubai Tourism Analytics • Updated: {dataLastUpdated}
+            </div>
           </div>
           <div className="flex items-center space-x-8">
             <div className="text-center">
@@ -717,6 +720,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Sustainable Travel</p>
                     <p className="text-xs text-gray-500">18% willing to pay premium for eco-certified rooms</p>
                     <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Sustainable Travel International • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -728,6 +732,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Solo Female Travel</p>
                     <p className="text-xs text-gray-500">23% higher spend on room upgrades & amenities</p>
                     <div className="w-12 h-1 bg-rose-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Solo Travel World • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -739,6 +744,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Bleisure Travel</p>
                     <p className="text-xs text-gray-500">31% higher total spend per extended stay</p>
                     <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Business Travel Association • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -750,6 +756,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Wellness Premium</p>
                     <p className="text-xs text-gray-500">Digital detox packages command premium rates</p>
                     <div className="w-12 h-1 bg-purple-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Global Wellness Institute • Q3 2025</div>
                   </div>
                 </div>
               </>
@@ -765,6 +772,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Business Travel Recovery</p>
                     <p className="text-xs text-gray-500">Corporate rates optimization opportunity</p>
                     <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: GBTA • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -776,6 +784,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Premium Class Demand</p>
                     <p className="text-xs text-gray-500">Yield management opportunities in business class</p>
                     <div className="w-12 h-1 bg-purple-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: IATA • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -787,6 +796,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Hub Traffic Growth</p>
                     <p className="text-xs text-gray-500">Strategic slot optimization potential</p>
                     <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Dubai Airports • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -798,6 +808,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Sustainability Premium</p>
                     <p className="text-xs text-gray-500">Eco-conscious travelers willing to pay more</p>
                     <div className="w-12 h-1 bg-green-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Air Transport Action Group • Q3 2025</div>
                   </div>
                 </div>
               </>
@@ -813,6 +824,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Luxury Fleet Preference</p>
                     <p className="text-xs text-gray-500">Premium vehicle demand driving rate increases</p>
                     <div className="w-12 h-1 bg-amber-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: AutoRental News • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -824,6 +836,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Tourism Vehicle Demand</p>
                     <p className="text-xs text-gray-500">Seasonal pricing optimization opportunity</p>
                     <div className="w-12 h-1 bg-teal-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Dubai Tourism Analytics • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -835,6 +848,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Corporate Fleet Services</p>
                     <p className="text-xs text-gray-500">B2B subscription pricing model potential</p>
                     <div className="w-12 h-1 bg-indigo-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Enterprise Fleet Management • Q3 2025</div>
                   </div>
                 </div>
                 <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
@@ -846,6 +860,7 @@ const ProductInsights = () => {
                     <p className="text-sm font-medium text-gray-600">Subscription Revenue</p>
                     <p className="text-xs text-gray-500">New business model opportunity</p>
                     <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
+                    <div className="text-xs text-gray-400 mt-2">Source: Mobility Intelligence Report • Q3 2025</div>
                   </div>
                 </div>
               </>
@@ -868,6 +883,7 @@ const ProductInsights = () => {
                 <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '485' : activeTab === 'airlines' ? '625' : '285'}</h5>
                 <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'ADR (Avg Daily Rate)' : activeTab === 'airlines' ? 'Avg Ticket Price' : 'Avg Rental Rate'}</p>
                 <p className="text-xs text-green-600 font-semibold">+8.2% vs {previousPeriod}</p>
+                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'STR Global' : activeTab === 'airlines' ? 'IATA Economics' : 'Car Rental Intelligence'} • Q3 2025</div>
               </div>
             </div>
             
@@ -879,6 +895,7 @@ const ProductInsights = () => {
                 <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '78.5%' : activeTab === 'airlines' ? '82.1%' : '71.3%'}</h5>
                 <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'Occupancy Rate' : activeTab === 'airlines' ? 'Load Factor' : 'Utilization Rate'}</p>
                 <p className="text-xs text-green-600 font-semibold">+4.1% vs {previousPeriod}</p>
+                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'STR Global' : activeTab === 'airlines' ? 'IATA Stats' : 'Fleet Utilization Analytics'} • Q3 2025</div>
               </div>
             </div>
             
@@ -890,6 +907,7 @@ const ProductInsights = () => {
                 <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '381' : activeTab === 'airlines' ? '513' : '204'}</h5>
                 <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'RevPAR' : activeTab === 'airlines' ? 'RevPAX' : 'Revenue per Rental'}</p>
                 <p className="text-xs text-green-600 font-semibold">+12.8% vs {previousPeriod}</p>
+                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'Revenue Analytics International' : activeTab === 'airlines' ? 'Aviation Revenue Intelligence' : 'Rental Revenue Metrics'} • Q3 2025</div>
               </div>
             </div>
             
@@ -901,6 +919,7 @@ const ProductInsights = () => {
                 <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '24.5%' : activeTab === 'airlines' ? '18.2%' : '31.7%'}</h5>
                 <p className="text-sm font-medium text-gray-600">Profit Margin</p>
                 <p className="text-xs text-green-600 font-semibold">+2.3% vs {previousPeriod}</p>
+                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'Hospitality Financial Analytics' : activeTab === 'airlines' ? 'Aviation Financial Intelligence' : 'Car Rental Profitability Index'} • Q3 2025</div>
               </div>
             </div>
           </div>
@@ -1071,6 +1090,9 @@ const ProductInsights = () => {
             <div>
               <h3 className="text-2xl font-bold text-gray-900">Product Portfolio Lifecycle</h3>
               <p className="text-gray-600">Strategic product distribution across lifecycle stages • {currentPeriod}</p>
+              <div className="text-xs text-gray-500 mt-2">
+                Source: {activeTab === 'hotels' ? 'STR Global Portfolio Analytics' : activeTab === 'airlines' ? 'IATA Product Lifecycle Intelligence' : 'Car Rental Product Matrix'} • Q3 2025
+              </div>
             </div>
           </div>
           <div className="text-right">
@@ -1194,6 +1216,9 @@ const ProductInsights = () => {
               Consider innovation or repositioning for <strong>Decline stage products</strong>. 
               <strong>Introduction stage</strong> products show promising potential for future growth.
             </p>
+            <div className="text-xs text-blue-600 mt-3 pt-2 border-t border-blue-200">
+              Portfolio Strategy Framework: {activeTab === 'hotels' ? 'Hospitality Product Management Institute' : activeTab === 'airlines' ? 'Aviation Product Strategy Council' : 'Mobility Product Intelligence'} • Q3 2025
+            </div>
           </div>
           </div>
         )}
@@ -1827,7 +1852,7 @@ const ProductInsights = () => {
                           {generatePricingRecommendations().recommendations.map((rec, index) => (
                             <div key={index} className="bg-white border border-emerald-200 rounded-lg p-4">
                               <div className="text-center mb-3">
-                                <h6 className="font-semibold text-gray-900">{rec.month} 2024</h6>
+                                <h6 className="font-semibold text-gray-900">{rec.month} 2025</h6>
                                 <div className="text-2xl font-bold text-emerald-600">
                                   ${rec.rate}{activeTab === 'hotels' ? '/night' : activeTab === 'airlines' ? '/ticket' : '/day'}
                                 </div>

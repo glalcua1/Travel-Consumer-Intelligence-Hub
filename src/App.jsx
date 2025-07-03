@@ -5,6 +5,7 @@ import ConsumerTrends from './components/ConsumerTrends'
 import ProductInsights from './components/ProductInsights'
 import ActionPlanner from './components/ActionPlanner'
 import ChannelStrategy from './components/ChannelStrategy'
+import MarketingPage from './components/MarketingPage'
 
 // Placeholder components for other sections
 
@@ -115,9 +116,24 @@ const SocialListening = () => (
 function App() {
   const [activeSection, setActiveSection] = useState('overview')
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userInfo, setUserInfo] = useState(null)
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(prev => !prev)
+  }
+
+  const handleSignup = (signupData) => {
+    // In a real app, this would send data to backend
+    console.log('User signed up:', signupData)
+    setUserInfo(signupData)
+    setIsLoggedIn(true)
+  }
+
+  const handleLogout = () => {
+    setUserInfo(null)
+    setIsLoggedIn(false)
+    setActiveSection('overview') // Reset to overview when logging out
   }
 
   const renderContent = () => {
@@ -145,6 +161,12 @@ function App() {
     }
   }
 
+  // Show marketing page if not logged in
+  if (!isLoggedIn) {
+    return <MarketingPage onSignup={handleSignup} />
+  }
+
+  // Show dashboard if logged in
   return (
     <div className="flex h-screen bg-slate-200">
       {/* Sidebar */}
@@ -153,6 +175,8 @@ function App() {
         setActiveSection={setActiveSection}
         isCollapsed={isSidebarCollapsed}
         toggleSidebar={toggleSidebar}
+        userInfo={userInfo}
+        onLogout={handleLogout}
       />
       
       {/* Main Content */}

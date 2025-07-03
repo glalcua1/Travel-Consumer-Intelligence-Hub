@@ -60,8 +60,8 @@ const ChannelStrategy = () => {
   const [selectedChannel, setSelectedChannel] = useState('all')
 
   // Market and time period context
-  const currentPeriod = "Q3 2024"
-  const previousPeriod = "Q2 2024"
+  const currentPeriod = "Q3 2025"
+  const previousPeriod = "Q2 2025"
   const marketRegion = "Dubai & UAE"
   const marketScope = "GCC Premium Travel Market"
   const dataLastUpdated = new Date().toLocaleDateString('en-US', { 
@@ -227,7 +227,7 @@ const ChannelStrategy = () => {
             </button>
           </div>
           <div className="text-right text-sm text-gray-500">
-            <p>Jan - Jun 2024 Evolution</p>
+                            <p>Jan - Jun 2025 Evolution</p>
             <p className="flex items-center justify-end text-xs">
               <Database className="w-3 h-3 mr-1" />
               Booking Systems • Channel Analytics

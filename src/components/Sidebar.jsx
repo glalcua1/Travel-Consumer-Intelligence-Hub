@@ -14,7 +14,7 @@ import {
   ChevronRight
 } from 'lucide-react'
 
-const Sidebar = ({ activeSection, setActiveSection, isCollapsed, toggleSidebar }) => {
+const Sidebar = ({ activeSection, setActiveSection, isCollapsed, toggleSidebar, userInfo, onLogout }) => {
   const menuItems = [
     { 
       id: 'overview', 
@@ -121,15 +121,28 @@ const Sidebar = ({ activeSection, setActiveSection, isCollapsed, toggleSidebar }
       {/* User Info */}
       {!isCollapsed && (
         <div className="p-4 border-b border-slate-700 opacity-100 transition-opacity duration-300">
-          <div className="flex items-center space-x-3">
+          <button 
+            onClick={onLogout}
+            className="w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-800/50 transition-colors duration-200 group"
+            title="Click to logout"
+          >
             <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-md">
               <Crown className="w-5 h-5" />
             </div>
-            <div>
-              <p className="text-sm font-semibold text-slate-200">Senior Vice President</p>
-              <p className="text-xs text-slate-400">Dubai Premium Hotels</p>
+            <div className="flex-1 text-left">
+              <p className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">
+                {userInfo?.name || 'Guest User'}
+              </p>
+              <p className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
+                {userInfo?.company || 'Travel Business'}
+              </p>
             </div>
-          </div>
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </div>
+          </button>
         </div>
       )}
 

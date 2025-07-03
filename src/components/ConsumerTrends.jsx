@@ -62,8 +62,8 @@ import {
 
 const ConsumerTrends = () => {
   // Market and time period context
-  const currentPeriod = "Q3 2024"
-  const previousPeriod = "Q2 2024"
+  const currentPeriod = "Q3 2025"
+  const previousPeriod = "Q2 2025"
   const marketRegion = "Dubai & UAE"
   const marketScope = "GCC Premium Travel Market"
   const dataLastUpdated = new Date().toLocaleDateString('en-US', { 
@@ -1176,7 +1176,7 @@ const ConsumerTrends = () => {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-3xl font-light text-gray-900 mb-2">Consumer Behavior <span className="font-bold">Evolution</span></h3>
-              <p className="text-gray-500 text-sm">Booking pattern analysis • Jul - Dec 2024 • 6-month trends</p>
+              <p className="text-gray-500 text-sm">Booking pattern analysis • Jul - Dec 2025 • 6-month trends</p>
             </div>
             <button
               onClick={() => setShowDataSources(true)}

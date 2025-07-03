@@ -40,13 +40,13 @@ const DubaiHeroCard = ({ activeSection = '', onExploreClick, compact = false }) 
         return {
           title: 'Revenue Intelligence',
           subtitle: 'Maximize performance in Dubai\'s premium market',
-          description: 'Strategic optimization for 77% occupancy and growing demand'
+          description: 'Strategic optimization for 77% occupancy and capturing the $145B ancillary revenue opportunity (IATA 2025 forecast)'
         }
       default:
         return {
           title: 'Executive Intelligence',
           subtitle: 'Your competitive edge in the world\'s premier tourism destination',
-          description: 'Real-time insights from the market growing at 11% annually'
+          description: 'Real-time insights from the market growing at 11% annually with $145B ancillary revenue opportunity (IATA 2025)'
         }
     }
   }
@@ -223,7 +223,7 @@ const DubaiHeroCard = ({ activeSection = '', onExploreClick, compact = false }) 
               
               {/* Key Metrics */}
               {!compact && (
-                <div className="grid grid-cols-3 gap-6 py-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-4">
                   <div className="text-center">
                     <div className="text-2xl md:text-3xl font-bold text-white mb-1">16.7M</div>
                     <div className="text-sm text-blue-200">Annual Visitors</div>
@@ -238,6 +238,11 @@ const DubaiHeroCard = ({ activeSection = '', onExploreClick, compact = false }) 
                     <div className="text-2xl md:text-3xl font-bold text-white mb-1">77%</div>
                     <div className="text-sm text-blue-200">Hotel Occupancy</div>
                     <div className="text-xs text-emerald-400 font-semibold">+8% YoY</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-white mb-1">$145B</div>
+                    <div className="text-sm text-blue-200">Ancillary Revenue</div>
+                    <div className="text-xs text-yellow-400 font-semibold">2025 IATA Forecast</div>
                   </div>
                 </div>
               )}

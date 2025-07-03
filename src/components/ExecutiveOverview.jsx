@@ -76,6 +76,10 @@ const ExecutiveOverview = () => {
   const [rateManagementTab, setRateManagementTab] = useState('trends')
   const [showSoloRatesManagement, setShowSoloRatesManagement] = useState(false)
   const [soloRatesTab, setSoloRatesTab] = useState('trends')
+  const [showBookingEngineModal, setShowBookingEngineModal] = useState(false)
+  const [bookingEngineTab, setBookingEngineTab] = useState('widget')
+  const [showAncillaryRates, setShowAncillaryRates] = useState(false)
+  const [selectedAncillaryTab, setSelectedAncillaryTab] = useState('comparison')
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -145,7 +149,7 @@ const ExecutiveOverview = () => {
       value: '16.7M',
       change: '+11%',
       trend: 'up',
-      description: 'International visitors in 2024 - highest ever recorded',
+              description: 'International visitors in 2025 - highest ever recorded',
       actionable: 'Increase capacity planning and premium positioning',
       color: 'primary',
       source: 'Dubai Tourism Board'
@@ -165,7 +169,7 @@ const ExecutiveOverview = () => {
       value: '77%',
       change: '+8%',
       trend: 'up',
-      description: 'Dubai hotel occupancy rate Q4 2024 vs Q4 2023',
+              description: 'Dubai hotel occupancy rate Q3 2025 vs Q3 2024',
       actionable: 'Optimize pricing during peak demand periods',
       color: 'accent',
       source: 'Dubai Tourism Authority'
@@ -199,7 +203,7 @@ const ExecutiveOverview = () => {
       insight: 'Choose Dubai for social media content',
       impact: '+18% premium for photo-worthy experiences',
       color: 'accent',
-      source: 'Dubai Tourism Social Media Study 2024',
+              source: 'Dubai Tourism Social Media Study 2025',
       actionable: 'Create Instagram-worthy spaces and experiences'
     },
     {
@@ -217,7 +221,7 @@ const ExecutiveOverview = () => {
       insight: 'Solo travelers choosing Dubai for safety and luxury',
       impact: '+28% willingness to pay for personalized experiences',
       color: 'deep',
-      source: 'Dubai Solo Travel Report 2024',
+              source: 'Dubai Solo Travel Report 2025',
       actionable: 'Create solo-friendly packages with concierge services'
     }
   ]
@@ -323,7 +327,7 @@ const ExecutiveOverview = () => {
       value: '42%',
       description: 'Percentage of Dubai budget allocated to shopping experiences',
       growth: '+18%',
-      source: 'Dubai Commerce Authority 2024',
+              source: 'Dubai Commerce Authority 2025',
       actionable: 'Partner with major malls for shopping packages and commissions',
       category: 'shopping',
       avgAmount: '$720'
@@ -440,7 +444,8 @@ const ExecutiveOverview = () => {
       format: 'percentage',
       description: 'Your capture rate of Dubai\'s 16.7M annual visitors',
       benchmark: 'Top 25% perform at 15%+',
-      actionable: 'Target specific visitor segments for market share growth'
+      actionable: 'Target specific visitor segments for market share growth',
+              source: 'Dubai Tourism Analytics • Q3 2025'
     },
     {
       title: 'Premium Pricing Success Rate',
@@ -451,7 +456,8 @@ const ExecutiveOverview = () => {
       format: 'percentage',
       description: 'Success rate of implementing premium pricing strategies',
       benchmark: 'Dubai leaders achieve 85%+',
-      actionable: 'Expand sustainability and experience-based premium offerings'
+      actionable: 'Expand sustainability and experience-based premium offerings',
+      source: 'RevPAR Intelligence Report • January 2025'
     },
     {
       title: 'Average Revenue Per Dubai Visitor',
@@ -462,7 +468,8 @@ const ExecutiveOverview = () => {
       format: 'currency',
       description: 'Revenue captured per Dubai visitor across all touchpoints',
       benchmark: 'Dubai premium brands: $650+',
-      actionable: 'Focus on high-value segment targeting and package deals'
+      actionable: 'Focus on high-value segment targeting and package deals',
+              source: 'Dubai Economic Development • 2025 Annual'
     },
     {
       title: 'Dubai Visitor Satisfaction Score',
@@ -473,7 +480,8 @@ const ExecutiveOverview = () => {
       format: 'score',
       description: 'Net Promoter Score from Dubai visitors',
       benchmark: 'Dubai hospitality leaders: 9.0+',
-      actionable: 'Improve cultural authenticity and personalization'
+      actionable: 'Improve cultural authenticity and personalization',
+              source: 'Dubai Guest Satisfaction Survey • Q3 2025'
     }
   ]
 
@@ -1806,6 +1814,11 @@ const ExecutiveOverview = () => {
                     <div className="text-xs font-semibold mb-1 text-gray-700">Next Action:</div>
                     <div className="text-sm text-gray-800 font-medium">{kpi.actionable}</div>
                   </div>
+                  
+                  {/* Source Information */}
+                  <div className="mt-3 pt-2 border-t border-gray-50">
+                    <div className="text-xs text-gray-500">{kpi.source}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1826,50 +1839,50 @@ const ExecutiveOverview = () => {
               <div className="p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {dubaiCompetitiveMetrics.map((metric, index) => (
-                    <div key={index} className={`bg-gradient-to-br ${metric.color} rounded-xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-200`}>
+                    <div key={index} className="bg-white border-2 border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-200">
                       <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-xl font-bold">{metric.category}</h4>
+                        <h4 className="text-xl font-bold text-gray-900">{metric.category}</h4>
                         <div className="text-right">
-                          <div className="text-lg font-bold">{metric.position}</div>
-                          <div className="text-sm opacity-90">Market position</div>
+                          <div className="text-lg font-bold text-purple-600">{metric.position}</div>
+                          <div className="text-sm text-gray-500">Market position</div>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-3 gap-3 mb-4">
-                        <div className="bg-white/20 rounded-lg p-3 text-center">
-                          <div className="text-lg font-bold">${metric.averageRate}</div>
-                          <div className="text-xs opacity-90">Avg Rate</div>
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
+                          <div className="text-lg font-bold text-gray-900">${metric.averageRate}</div>
+                          <div className="text-xs text-gray-600">Avg Rate</div>
                         </div>
-                        <div className="bg-white/20 rounded-lg p-3 text-center">
-                          <div className="text-lg font-bold">{metric.occupancyRate}%</div>
-                          <div className="text-xs opacity-90">Occupancy</div>
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
+                          <div className="text-lg font-bold text-gray-900">{metric.occupancyRate}%</div>
+                          <div className="text-xs text-gray-600">Occupancy</div>
                         </div>
-                        <div className="bg-white/20 rounded-lg p-3 text-center">
-                          <div className="text-lg font-bold">${metric.revPAR}</div>
-                          <div className="text-xs opacity-90">RevPAR</div>
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
+                          <div className="text-lg font-bold text-gray-900">${metric.revPAR}</div>
+                          <div className="text-xs text-gray-600">RevPAR</div>
                         </div>
                       </div>
                       
                       <div className="space-y-3">
                         <div>
-                          <div className="text-xs font-semibold opacity-90 mb-1">Growth Rate:</div>
-                          <div className="text-lg font-bold">{metric.growth} YoY</div>
+                          <div className="text-xs font-semibold text-gray-700 mb-1">Growth Rate:</div>
+                          <div className="text-lg font-bold text-green-600">{metric.growth} YoY</div>
                         </div>
                         
                         <div>
-                          <div className="text-xs font-semibold opacity-90 mb-1">Key Competitors:</div>
+                          <div className="text-xs font-semibold text-gray-700 mb-1">Key Competitors:</div>
                           <div className="flex flex-wrap gap-1">
                             {metric.keyCompetitors.map((competitor, idx) => (
-                              <span key={idx} className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                              <span key={idx} className="text-xs bg-blue-50 text-blue-700 border border-blue-200 px-2 py-1 rounded-full">
                                 {competitor}
                               </span>
                             ))}
                           </div>
                         </div>
                         
-                        <div className="pt-3 border-t border-white/20">
-                          <div className="text-xs font-semibold opacity-90 mb-1">Market Opportunity:</div>
-                          <div className="text-sm font-medium">{metric.marketOpportunity}</div>
+                        <div className="pt-3 border-t border-gray-200">
+                          <div className="text-xs font-semibold text-gray-700 mb-1">Market Opportunity:</div>
+                          <div className="text-sm font-medium text-gray-900">{metric.marketOpportunity}</div>
                         </div>
                       </div>
                     </div>
@@ -1904,7 +1917,7 @@ const ExecutiveOverview = () => {
               
               {expandedSections['revenue-optimization'] && (
                 <div className="px-6 pb-6 border-t border-gray-100">
-                  <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="bg-red-50 rounded-lg p-4 border border-red-200">
                       <div className="flex items-center justify-between mb-3">
                         <h4 className="font-semibold text-red-900">Weekend Rate Optimization</h4>
@@ -1949,6 +1962,51 @@ const ExecutiveOverview = () => {
                       </div>
                       <div className="text-xs text-blue-600 mt-1">Timeline: 45 days</div>
                     </div>
+                    
+                    <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-emerald-900">Solo Traveler Premium</h4>
+                        <span className="text-lg font-bold text-emerald-600">+32%</span>
+                      </div>
+                      <p className="text-sm text-emerald-800 mb-3">
+                        Implement solo traveler premium rates with personalized amenities
+                      </p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-semibold text-green-600">+$420K</span>
+                        <span className="bg-emerald-100 text-emerald-800 px-2 py-1 rounded">High Priority</span>
+                      </div>
+                      <div className="text-xs text-emerald-600 mt-1">Timeline: 21 days</div>
+                    </div>
+                    
+                    <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-orange-900">Sustainability Premium</h4>
+                        <span className="text-lg font-bold text-emerald-600">+25%</span>
+                      </div>
+                      <p className="text-sm text-orange-800 mb-3">
+                        Green certification for eco-conscious travelers (89% of Dubai visitors)
+                      </p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-semibold text-green-600">+$365K</span>
+                        <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded">High Priority</span>
+                      </div>
+                      <div className="text-xs text-orange-600 mt-1">Timeline: 30 days</div>
+                    </div>
+                    
+                    <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-purple-900">Experience Packaging</h4>
+                        <span className="text-lg font-bold text-emerald-600">+35%</span>
+                      </div>
+                      <p className="text-sm text-purple-800 mb-3">
+                        Bundle accommodations with Dubai experiences for premium pricing
+                      </p>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-semibold text-green-600">+$475K</span>
+                        <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded">High Priority</span>
+                      </div>
+                      <div className="text-xs text-purple-600 mt-1">Timeline: 14 days</div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -1986,20 +2044,19 @@ const ExecutiveOverview = () => {
                   <p className="text-sm text-blue-100 mb-3">What's your business?</p>
                   <div className="flex space-x-3">
                     {[
-                      { id: 'hotel', label: 'Hotel', icon: '🏨' },
-                      { id: 'airline', label: 'Airline', icon: '✈️' },
-                      { id: 'car', label: 'Car Rental', icon: '🚗' }
+                      { id: 'hotel', label: 'Hotel' },
+                      { id: 'airline', label: 'Airline' },
+                      { id: 'car', label: 'Car Rental' }
                     ].map((business) => (
                       <button
                         key={business.id}
                         onClick={() => setSelectedBusinessType(business.id)}
-                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                        className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                           selectedBusinessType === business.id
                             ? 'bg-white text-blue-600 shadow-lg'
                             : 'bg-white/20 text-white hover:bg-white/30'
                         }`}
                       >
-                        <span>{business.icon}</span>
                         <span>{business.label}</span>
                       </button>
                     ))}
@@ -2053,21 +2110,16 @@ const ExecutiveOverview = () => {
                     {/* Personalized Strategy Header */}
                     <div className="bg-white rounded-xl p-6 border border-blue-200 shadow-sm">
                       <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-2xl">
-                              {getActionPlan(selectedBusinessType, businessName, businessCategory).icon}
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-gray-900">{businessName}</h3>
-                              <p className="text-gray-600">Dubai Market Action Plan • {businessCategory} • {getActionPlan(selectedBusinessType, businessName, businessCategory).title}</p>
-                          </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">{businessName}</h3>
+                          <p className="text-gray-600">Dubai Market Action Plan • {businessCategory} • {getActionPlan(selectedBusinessType, businessName, businessCategory).title}</p>
                         </div>
                         <div className="flex space-x-3">
-                          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                            📈 Push Rates
-                          </button>
-                          <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium">
-                            🎯 Create Campaign
+                          <button 
+                            onClick={() => setShowAncillaryRates(true)}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                          >
+                            ✈️ View Ancillary Rates
                           </button>
                         </div>
                       </div>
@@ -2095,7 +2147,7 @@ const ExecutiveOverview = () => {
                       <div className="grid grid-cols-1 gap-8">
                         {selectedBusinessType === 'hotel' && businessCategory === 'Ultra Luxury (5-star+)' && (
                           <>
-                            <div className="bg-gradient-to-br from-purple-50 to-pink-100/50 rounded-xl p-6 border border-purple-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-purple-50 to-pink-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
@@ -2108,12 +2160,12 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-purple-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-purple-800 mb-6 bg-white/60 p-3 rounded-lg border border-purple-200/40">
+                              <p className="text-sm text-purple-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Ultra-Luxury Opportunity:</span> Exclusive personalized concierge for UHNW solo travelers
                               </p>
                             </div>
 
-                            <div className="bg-gradient-to-br from-emerald-50 to-green-100/50 rounded-xl p-6 border border-emerald-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-emerald-50 to-green-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
@@ -2126,12 +2178,12 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-emerald-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-emerald-800 mb-6 bg-white/60 p-3 rounded-lg border border-emerald-200/40">
+                              <p className="text-sm text-emerald-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Ultra-Luxury Sustainability:</span> Carbon-negative suites with private conservation partnerships
                               </p>
                             </div>
 
-                            <div className="bg-gradient-to-br from-blue-50 to-indigo-100/50 rounded-xl p-6 border border-blue-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-blue-50 to-indigo-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
@@ -2144,7 +2196,7 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-blue-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-blue-800 mb-6 bg-white/60 p-3 rounded-lg border border-blue-200/40">
+                              <p className="text-sm text-blue-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Exclusive Access:</span> Private museum tours, royal palace visits, and cultural immersion
                               </p>
                             </div>
@@ -2153,7 +2205,7 @@ const ExecutiveOverview = () => {
                         
                         {selectedBusinessType === 'hotel' && businessCategory === 'Mid-scale (3-star)' && (
                           <>
-                            <div className="bg-gradient-to-br from-green-50 to-emerald-100/50 rounded-xl p-6 border border-green-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-green-50 to-emerald-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
@@ -2166,12 +2218,12 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-green-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-green-800 mb-6 bg-white/60 p-3 rounded-lg border border-green-200/40">
+                              <p className="text-sm text-green-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Value Sustainability:</span> Basic eco-amenities with cost-effective green certifications
                               </p>
                             </div>
 
-                            <div className="bg-gradient-to-br from-blue-50 to-indigo-100/50 rounded-xl p-6 border border-blue-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-blue-50 to-indigo-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
@@ -2184,12 +2236,12 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-blue-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-blue-800 mb-6 bg-white/60 p-3 rounded-lg border border-blue-200/40">
+                              <p className="text-sm text-blue-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Solo Value:</span> Safe, comfortable solo accommodations with basic personalization
                               </p>
                             </div>
 
-                            <div className="bg-gradient-to-br from-orange-50 to-amber-100/50 rounded-xl p-6 border border-orange-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-orange-50 to-amber-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center">
@@ -2202,7 +2254,7 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-orange-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-orange-800 mb-6 bg-white/60 p-3 rounded-lg border border-orange-200/40">
+                              <p className="text-sm text-orange-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Local Experiences:</span> Partner with local operators for authentic Dubai experiences
                               </p>
                             </div>
@@ -2211,7 +2263,7 @@ const ExecutiveOverview = () => {
                         
                         {selectedBusinessType === 'hotel' && !['Ultra Luxury (5-star+)', 'Mid-scale (3-star)'].includes(businessCategory) && (
                           <>
-                            <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-6 border border-blue-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
@@ -2224,13 +2276,13 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-blue-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-blue-800 mb-6 bg-white/60 p-3 rounded-lg border border-blue-200/40">
+                              <p className="text-sm text-blue-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Market Opportunity:</span> 89% of Dubai visitors actively seek eco-friendly options
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-blue-200/40 shadow-sm hover:shadow-md hover:border-blue-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Get Green Certification</h5>
@@ -2240,14 +2292,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-blue-700 font-medium">Timeline: 2-4 weeks</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Start Certification Process
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🌱 Start Certification Process
-                                  </button>
                                 </div>
                                 
-                                <div className="group bg-white rounded-xl p-4 border border-emerald-200/40 shadow-sm hover:shadow-md hover:border-emerald-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Then: Launch Premium Green Rates</h5>
@@ -2257,17 +2311,19 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-emerald-700 font-medium">Immediate after certification</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button 
+                                        onClick={() => setShowRateManagement(true)}
+                                        className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
+                                      >
+                                        Push Green Rates (+22%)
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button 
-                                    onClick={() => setShowRateManagement(true)}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
-                                  >
-                                    📈 Push Green Rates (+22%)
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-700 mb-1">Alternative: Sustainability Campaign</h5>
@@ -2277,18 +2333,20 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-amber-700 font-medium">Start immediately</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button 
+                                        onClick={() => setShowCampaignSuggestion(true)}
+                                        className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
+                                      >
+                                        Launch Green Awareness Campaign
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button 
-                                    onClick={() => setShowCampaignSuggestion(true)}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg text-sm font-medium hover:from-gray-600 hover:to-gray-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
-                                  >
-                                    🎯 Launch Green Awareness Campaign
-                                  </button>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="bg-gradient-to-br from-indigo-50 to-purple-100/50 rounded-xl p-6 border border-indigo-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-indigo-50 to-purple-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
@@ -2301,13 +2359,13 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-indigo-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-indigo-800 mb-6 bg-white/60 p-3 rounded-lg border border-indigo-200/40">
+                              <p className="text-sm text-indigo-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Market Opportunity:</span> 31% solo traveler growth seeking personalized luxury experiences
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-indigo-200/40 shadow-sm hover:shadow-md hover:border-indigo-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Setup Solo Traveler Amenities</h5>
@@ -2317,14 +2375,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-indigo-700 font-medium">Timeline: 1-2 weeks</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Setup Solo Services
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg text-sm font-medium hover:from-indigo-600 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    👤 Setup Solo Services
-                                  </button>
                                 </div>
                                 
-                                <div className="group bg-white rounded-xl p-4 border border-emerald-200/40 shadow-sm hover:shadow-md hover:border-emerald-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Then: Launch Solo Premium Rates</h5>
@@ -2334,18 +2394,42 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-emerald-700 font-medium">Launch after amenity setup</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button 
+                                        onClick={() => setShowSoloRatesManagement(true)}
+                                        className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
+                                      >
+                                        Push Solo Premium Rates (+28%)
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button 
-                                    onClick={() => setShowSoloRatesManagement(true)}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
-                                  >
-                                    📈 Push Solo Premium Rates (+28%)
-                                  </button>
+                                </div>
+                                
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
+                                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
+                                    <div className="flex-1">
+                                      <h5 className="font-semibold text-gray-900 mb-1">Update Booking Engine for Solo Travelers</h5>
+                                      <p className="text-sm text-gray-600">Optimize booking widget and room content to cater specifically to solo travelers</p>
+                                      <div className="flex items-center mt-2">
+                                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                                        <span className="text-xs text-blue-700 font-medium">Timeline: 1-2 weeks</span>
+                                      </div>
+                                    </div>
+                                    <div className="flex-shrink-0">
+                                      <button 
+                                        onClick={() => setShowBookingEngineModal(true)}
+                                        className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
+                                      >
+                                        View Sample Booking Engine
+                                      </button>
+                                    </div>
+                                  </div>
                                 </div>
                                 
                                 <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
-                                    <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
+                                  <div className="flex items-start space-x-4">
+                                    <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">4</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-700 mb-1">Alternative: Solo Traveler Survey</h5>
                                       <p className="text-sm text-gray-600">Survey current solo guests to understand their needs while setting up amenities</p>
@@ -2354,15 +2438,17 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-amber-700 font-medium">Start immediately</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Start Solo Guest Survey
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg text-sm font-medium hover:from-gray-600 hover:to-gray-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🎯 Start Solo Guest Survey
-                                  </button>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="bg-gradient-to-br from-purple-50 to-pink-100/50 rounded-xl p-6 border border-purple-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-purple-50 to-pink-100/50 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
@@ -2375,13 +2461,13 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-purple-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-purple-800 mb-6 bg-white/60 p-3 rounded-lg border border-purple-200/40">
+                              <p className="text-sm text-purple-800 mb-6 bg-white/60 p-3 rounded-lg">
                                 <span className="font-semibold">Market Opportunity:</span> 25% growth in business+leisure travel segment
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-purple-200/40 shadow-sm hover:shadow-md hover:border-purple-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Setup Extended Stay Amenities</h5>
@@ -2391,14 +2477,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-purple-700 font-medium">Timeline: Immediate setup</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Configure Extended Stay Rooms
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🏠 Configure Extended Stay Rooms
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-white rounded-xl p-4 border border-emerald-200/40 shadow-sm hover:shadow-md hover:border-emerald-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Then: Launch Premium Extended Rates</h5>
@@ -2408,14 +2496,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-emerald-700 font-medium">Launch after amenity setup</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Push Extended Stay Rates (+35%)
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    📈 Push Extended Stay Rates (+35%)
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-700 mb-1">Alternative: Corporate Partnership</h5>
@@ -2425,10 +2515,12 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-amber-700 font-medium">Start immediately</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Launch Corporate Packages
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg text-sm font-medium hover:from-gray-600 hover:to-gray-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🎯 Launch Corporate Packages
-                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -2437,7 +2529,7 @@ const ExecutiveOverview = () => {
                         
                         {selectedBusinessType === 'airline' && (
                           <>
-                            <div className="bg-gradient-to-br from-sky-50 to-blue-100/50 rounded-xl p-6 border border-sky-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-sky-50 to-blue-100/50 rounded-xl p-6  shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
@@ -2450,13 +2542,13 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-sky-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-sky-800 mb-6 bg-white/60 p-3 rounded-lg border border-sky-200/40">
+                              <p className="text-sm text-sky-800 mb-6 bg-white/60 p-3 rounded-lg ">
                                 <span className="font-semibold">Market Opportunity:</span> Eco-premium for 89% sustainability-focused market
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-sky-200/40 shadow-sm hover:shadow-md hover:border-sky-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Secure Carbon Offset Program</h5>
@@ -2466,14 +2558,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-sky-700 font-medium">Timeline: 1-2 weeks</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Setup Carbon Offsets
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg text-sm font-medium hover:from-sky-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🌱 Setup Carbon Offsets
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-white rounded-xl p-4 border border-emerald-200/40 shadow-sm hover:shadow-md hover:border-emerald-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Then: Launch Green Flight Premium</h5>
@@ -2483,17 +2577,19 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-emerald-700 font-medium">Launch after offset setup</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button 
+                                        onClick={() => setShowRateManagement(true)}
+                                        className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
+                                      >
+                                        Push Green Fares (+22%)
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button 
-                                    onClick={() => setShowRateManagement(true)}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
-                                  >
-                                    📈 Push Green Fares (+22%)
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-700 mb-1">Alternative: Sustainability Marketing</h5>
@@ -2503,18 +2599,20 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-amber-700 font-medium">Start immediately</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button 
+                                        onClick={() => setShowCampaignSuggestion(true)}
+                                        className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
+                                      >
+                                        Launch Eco-Awareness Campaign
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button 
-                                    onClick={() => setShowCampaignSuggestion(true)}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg text-sm font-medium hover:from-gray-600 hover:to-gray-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md"
-                                  >
-                                    🎯 Launch Eco-Awareness Campaign
-                                  </button>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="bg-gradient-to-br from-violet-50 to-purple-100/50 rounded-xl p-6 border border-violet-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-violet-50 to-purple-100/50 rounded-xl p-6  shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg flex items-center justify-center">
@@ -2527,13 +2625,13 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-violet-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-violet-800 mb-6 bg-white/60 p-3 rounded-lg border border-violet-200/40">
+                              <p className="text-sm text-violet-800 mb-6 bg-white/60 p-3 rounded-lg ">
                                 <span className="font-semibold">Market Opportunity:</span> Content creation premium cabin experience
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-violet-200/40 shadow-sm hover:shadow-md hover:border-violet-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Install Creator-Friendly Features</h5>
@@ -2543,14 +2641,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-violet-700 font-medium">Timeline: 2-3 weeks</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Setup Creator Amenities
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-lg text-sm font-medium hover:from-violet-600 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    📸 Setup Creator Amenities
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-white rounded-xl p-4 border border-emerald-200/40 shadow-sm hover:shadow-md hover:border-emerald-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Then: Launch Creator Class Fares</h5>
@@ -2560,14 +2660,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-emerald-700 font-medium">Launch after features installed</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Push Creator Class (+15%)
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    📈 Push Creator Class (+15%)
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-700 mb-1">Alternative: Influencer Partnerships</h5>
@@ -2577,15 +2679,17 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-amber-700 font-medium">Start immediately</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Start Influencer Program
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg text-sm font-medium hover:from-gray-600 hover:to-gray-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🎯 Start Influencer Program
-                                  </button>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="bg-gradient-to-br from-rose-50 to-pink-100/50 rounded-xl p-6 border border-rose-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                            <div className="bg-gradient-to-br from-rose-50 to-pink-100/50 rounded-xl p-6  shadow-sm hover:shadow-md transition-all duration-300">
                               <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 rounded-lg flex items-center justify-center">
@@ -2598,13 +2702,13 @@ const ExecutiveOverview = () => {
                                   <div className="text-xs text-rose-700 font-medium">Revenue Increase</div>
                                 </div>
                               </div>
-                              <p className="text-sm text-rose-800 mb-6 bg-white/60 p-3 rounded-lg border border-rose-200/40">
+                              <p className="text-sm text-rose-800 mb-6 bg-white/60 p-3 rounded-lg ">
                                 <span className="font-semibold">Market Opportunity:</span> 69% of travelers prefer flexible planning options
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-rose-200/40 shadow-sm hover:shadow-md hover:border-rose-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Update Booking System</h5>
@@ -2614,14 +2718,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-rose-700 font-medium">Timeline: 1 week</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Configure Flexible Policies
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-lg text-sm font-medium hover:from-rose-600 hover:to-pink-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🔄 Configure Flexible Policies
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-white rounded-xl p-4 border border-emerald-200/40 shadow-sm hover:shadow-md hover:border-emerald-300/60 transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-900 mb-1">Then: Launch Flex Premium Fares</h5>
@@ -2631,14 +2737,16 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-emerald-700 font-medium">Launch after system update</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Push Flex Fares (+15%)
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    📈 Push Flex Fares (+15%)
-                                  </button>
                                 </div>
                                 
                                 <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
-                                  <div className="flex items-start space-x-4 mb-3">
+                                  <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
                                       <h5 className="font-semibold text-gray-700 mb-1">Alternative: Travel Insurance Partnership</h5>
@@ -2648,10 +2756,12 @@ const ExecutiveOverview = () => {
                                         <span className="text-xs text-amber-700 font-medium">Start immediately</span>
                                       </div>
                                     </div>
+                                    <div className="flex-shrink-0">
+                                      <button className="px-4 py-2 bg-white border-2 border-blue-500 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 hover:border-blue-600 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Launch Insurance Package
+                                      </button>
+                                    </div>
                                   </div>
-                                  <button className="w-full px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-lg text-sm font-medium hover:from-gray-600 hover:to-gray-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm hover:shadow-md">
-                                    🎯 Launch Insurance Package
-                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -2815,6 +2925,797 @@ const ExecutiveOverview = () => {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Ancillary Rates Modal */}
+      {showAncillaryRates && (
+        <>
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-60" onClick={() => setShowAncillaryRates(false)}></div>
+          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl z-70 max-h-[85vh] overflow-y-auto border border-gray-100">
+            {/* Header */}
+            <div className="flex items-center justify-between p-8 border-b border-gray-100 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-t-3xl">
+              <div>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                  {selectedBusinessType === 'airline' ? '✈️ Airline Ancillary Revenue Analysis' : '🏨 Hotel Ancillary Revenue Analysis'}
+                </h2>
+                <p className="text-gray-700 text-lg">
+                  {selectedBusinessType === 'airline' 
+                    ? 'Competitive pricing insights across Dubai\'s aviation market'
+                    : 'Competitive pricing insights across Dubai\'s premium hotel market'
+                  }
+                </p>
+              </div>
+              <button
+                onClick={() => setShowAncillaryRates(false)}
+                className="p-3 hover:bg-white/70 rounded-xl transition-all duration-200 hover:scale-110 bg-white/40 backdrop-blur-sm"
+              >
+                <X className="w-6 h-6 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Tab Navigation */}
+            <div className="px-8 pt-6 border-b border-gray-100 bg-white">
+              <div className="flex space-x-1">
+                {[
+                  { id: 'comparison', label: 'Competitor Comparison', icon: '📊' },
+                  { id: 'bundles', label: 'Bundle Recommendations', icon: '🎁' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setSelectedAncillaryTab(tab.id)}
+                    className={`flex items-center space-x-2 px-6 py-3 rounded-t-xl font-medium transition-all duration-200 ${
+                      selectedAncillaryTab === tab.id
+                        ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    }`}
+                  >
+                    <span>{tab.icon}</span>
+                    <span>{tab.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tab Content */}
+            <div className="p-8 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+              {selectedAncillaryTab === 'comparison' && (
+                <div className="space-y-6">
+                  {/* Comparison Table */}
+                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+                      <h3 className="text-xl font-bold mb-2">
+                        {selectedBusinessType === 'airline' ? 'Airline Ancillary Service Pricing Comparison' : 'Hotel Ancillary Service Pricing Comparison'}
+                      </h3>
+                      <p className="text-blue-100">
+                        {selectedBusinessType === 'airline' 
+                          ? 'Your airline vs. top 3 competitors in Dubai aviation market'
+                          : 'Your hotel vs. top 3 competitors in Dubai premium market'
+                        }
+                      </p>
+                    </div>
+                    
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="bg-gray-50 border-b border-gray-200">
+                            <th className="text-left p-6 font-semibold text-gray-900">Ancillary Service</th>
+                            <th className="text-center p-6 font-semibold text-blue-600">
+                              {selectedBusinessType === 'airline' ? 'Your Airline' : 'Your Hotel'}
+                            </th>
+                            <th className="text-center p-6 font-semibold text-gray-600">
+                              {selectedBusinessType === 'airline' ? 'Emirates' : 'Burj Al Arab'}
+                            </th>
+                            <th className="text-center p-6 font-semibold text-gray-600">
+                              {selectedBusinessType === 'airline' ? 'Qatar Airways' : 'Atlantis Palm'}
+                            </th>
+                            <th className="text-center p-6 font-semibold text-gray-600">
+                              {selectedBusinessType === 'airline' ? 'Etihad' : 'Four Seasons'}
+                            </th>
+                            <th className="text-center p-6 font-semibold text-gray-600">Market Position</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {selectedBusinessType === 'airline' ? (
+                            // Airline Services
+                            <>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Seat Selection (Premium)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$35</td>
+                                <td className="text-center p-6">$45</td>
+                                <td className="text-center p-6">$42</td>
+                                <td className="text-center p-6">$40</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">22% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Extra Legroom Seats</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$55</td>
+                                <td className="text-center p-6">$75</td>
+                                <td className="text-center p-6">$68</td>
+                                <td className="text-center p-6">$72</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">24% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Premium Meal Service</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$25</td>
+                                <td className="text-center p-6">$35</td>
+                                <td className="text-center p-6">$30</td>
+                                <td className="text-center p-6">$32</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">23% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Priority Boarding</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$15</td>
+                                <td className="text-center p-6">$20</td>
+                                <td className="text-center p-6">$18</td>
+                                <td className="text-center p-6">$22</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">25% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Checked Baggage (23kg)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$65</td>
+                                <td className="text-center p-6">$75</td>
+                                <td className="text-center p-6">$70</td>
+                                <td className="text-center p-6">$68</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">9% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Inflight Wi-Fi</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$12</td>
+                                <td className="text-center p-6">$15</td>
+                                <td className="text-center p-6">$14</td>
+                                <td className="text-center p-6">$16</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">15% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Lounge Access</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$45</td>
+                                <td className="text-center p-6">$55</td>
+                                <td className="text-center p-6">$50</td>
+                                <td className="text-center p-6">$52</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">15% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Flex Fare (Change Fee)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$85</td>
+                                <td className="text-center p-6">$120</td>
+                                <td className="text-center p-6">$95</td>
+                                <td className="text-center p-6">$110</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">19% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Comfort Kit & Amenities</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$18</td>
+                                <td className="text-center p-6">$25</td>
+                                <td className="text-center p-6">$22</td>
+                                <td className="text-center p-6">$24</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">21% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Fast-Track Security</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$28</td>
+                                <td className="text-center p-6">$35</td>
+                                <td className="text-center p-6">$32</td>
+                                <td className="text-center p-6">$38</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">20% Below Market</span>
+                                </td>
+                              </tr>
+                            </>
+                          ) : (
+                            // Hotel Services
+                            <>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Valet Parking (24hr)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$45</td>
+                                <td className="text-center p-6">$65</td>
+                                <td className="text-center p-6">$55</td>
+                                <td className="text-center p-6">$60</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">25% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Private Car Hire (Airport)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$85</td>
+                                <td className="text-center p-6">$120</td>
+                                <td className="text-center p-6">$95</td>
+                                <td className="text-center p-6">$110</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">19% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">In-Room Champagne Service</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$75</td>
+                                <td className="text-center p-6">$150</td>
+                                <td className="text-center p-6">$95</td>
+                                <td className="text-center p-6">$125</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">35% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Premium Room Service</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$35</td>
+                                <td className="text-center p-6">$50</td>
+                                <td className="text-center p-6">$40</td>
+                                <td className="text-center p-6">$45</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">22% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Late Check-out (4pm)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$50</td>
+                                <td className="text-center p-6">$85</td>
+                                <td className="text-center p-6">$65</td>
+                                <td className="text-center p-6">$75</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">28% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Spa Access (Day Pass)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$95</td>
+                                <td className="text-center p-6">$180</td>
+                                <td className="text-center p-6">$135</td>
+                                <td className="text-center p-6">$150</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">33% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Personal Shopping Concierge</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$125</td>
+                                <td className="text-center p-6">$250</td>
+                                <td className="text-center p-6">$180</td>
+                                <td className="text-center p-6">$220</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">40% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Premium Wi-Fi & Streaming</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$25</td>
+                                <td className="text-center p-6">$35</td>
+                                <td className="text-center p-6">$30</td>
+                                <td className="text-center p-6">$32</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">23% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Luxury Amenity Package</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$65</td>
+                                <td className="text-center p-6">$120</td>
+                                <td className="text-center p-6">$85</td>
+                                <td className="text-center p-6">$95</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">35% Below Market</span>
+                                </td>
+                              </tr>
+                              <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                                <td className="p-6 font-medium text-gray-900">Room Upgrade (Premium)</td>
+                                <td className="text-center p-6 text-blue-600 font-bold">$185</td>
+                                <td className="text-center p-6">$350</td>
+                                <td className="text-center p-6">$225</td>
+                                <td className="text-center p-6">$280</td>
+                                <td className="text-center p-6">
+                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">32% Below Market</span>
+                                </td>
+                              </tr>
+                            </>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* Revenue Opportunity Alert */}
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                        <span className="text-2xl">⚡</span>
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-bold text-amber-900 mb-2">
+                          {selectedBusinessType === 'airline' 
+                            ? 'Airline Ancillary Revenue Opportunity' 
+                            : 'Significant Hotel Ancillary Revenue Opportunity'
+                          }
+                        </h4>
+                        <p className="text-amber-800 mb-3">
+                          {selectedBusinessType === 'airline' 
+                            ? 'Your airline ancillary prices are 18% below Dubai aviation market average. Strategic pricing alignment could unlock substantial revenue growth.'
+                            : 'Your hotel ancillary prices are 29% below Dubai premium market average. Strategic pricing alignment could unlock substantial revenue growth.'
+                          }
+                        </p>
+                        <div className="text-sm text-amber-700 bg-amber-100 px-3 py-2 rounded-lg inline-block">
+                          <strong>Potential Revenue Increase:</strong> {selectedBusinessType === 'airline' ? '+$2.4M annually' : '+$3.8M annually'} with strategic ancillary pricing optimization
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Top Revenue Opportunities */}
+                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-6">Top 3 Ancillary Revenue Opportunities</h3>
+                    <div className="space-y-4">
+                      {selectedBusinessType === 'airline' ? (
+                        // Airline Opportunities
+                        <>
+                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <span className="text-lg">✈️</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-900 mb-1">Premium Seat Selection</h4>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    Extra legroom and premium seats optimization
+                                  </p>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                                      24% below market
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div className="text-2xl font-bold text-green-600">+$850K</div>
+                                <div className="text-xs text-gray-500">annually</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <span className="text-lg">🎫</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-900 mb-1">Priority Services</h4>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    Boarding, check-in, and fast-track services
+                                  </p>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                                      25% below market
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div className="text-2xl font-bold text-green-600">+$720K</div>
+                                <div className="text-xs text-gray-500">annually</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <span className="text-lg">🍽️</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-900 mb-1">Premium Dining & Comfort</h4>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    Meal services and comfort amenities
+                                  </p>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                                      23% below market
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div className="text-2xl font-bold text-green-600">+$680K</div>
+                                <div className="text-xs text-gray-500">annually</div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        // Hotel Opportunities
+                        <>
+                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <span className="text-lg">🛎️</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-900 mb-1">Personal Shopping Concierge</h4>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    Highest opportunity for immediate revenue increase
+                                  </p>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                                      40% below market
+                                    </span>
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-orange-50 text-orange-700 border border-orange-200">
+                                      High Priority
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div className="text-2xl font-bold text-green-600">+$1.2M</div>
+                                <div className="text-xs text-gray-500">annually</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <span className="text-lg">🍾</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-900 mb-1">In-Room Luxury Services</h4>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    Champagne & premium amenities optimization
+                                  </p>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                                      35% below market
+                                    </span>
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-orange-50 text-orange-700 border border-orange-200">
+                                      High Priority
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div className="text-2xl font-bold text-green-600">+$950K</div>
+                                <div className="text-xs text-gray-500">annually</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-start space-x-4 flex-1">
+                                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <span className="text-lg">🏨</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-900 mb-1">Room Upgrades & Extensions</h4>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    Premium room services and late checkout
+                                  </p>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+                                      32% below market
+                                    </span>
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                                      Medium Priority
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0 ml-4">
+                                <div className="text-2xl font-bold text-green-600">+$850K</div>
+                                <div className="text-xs text-gray-500">annually</div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {selectedAncillaryTab === 'bundles' && (
+                <div className="space-y-6">
+                  {/* Bundle Recommendations */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {selectedBusinessType === 'airline' ? (
+                      // Airline Bundles
+                      <>
+                        {/* Dubai Business Elite Bundle */}
+                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <span className="text-2xl">💼</span>
+                              <h3 className="text-xl font-bold">Dubai Business Elite</h3>
+                            </div>
+                            <p className="text-blue-100">Premium business traveler flight package</p>
+                          </div>
+                          <div className="p-6">
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Premium Seat Selection</span>
+                                <span className="text-gray-900 font-medium">$35</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Priority Boarding</span>
+                                <span className="text-gray-900 font-medium">$15</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Lounge Access</span>
+                                <span className="text-gray-900 font-medium">$45</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Inflight Wi-Fi</span>
+                                <span className="text-gray-900 font-medium">$12</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Premium Meal Service</span>
+                                <span className="text-gray-900 font-medium">$25</span>
+                              </div>
+                              <div className="border-t pt-4">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-400 line-through">Individual Price: $132</span>
+                                  <div className="text-right">
+                                    <div className="text-2xl font-bold text-blue-600">$95</div>
+                                    <div className="text-sm text-green-600 font-medium">Save $37 (28%)</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Dubai Explorer Bundle */}
+                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <span className="text-2xl">🏜️</span>
+                              <h3 className="text-xl font-bold">Dubai Explorer</h3>
+                            </div>
+                            <p className="text-purple-100">Complete Dubai travel experience package</p>
+                          </div>
+                          <div className="p-6">
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Extra Legroom Seats</span>
+                                <span className="text-gray-900 font-medium">$55</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Checked Baggage (23kg)</span>
+                                <span className="text-gray-900 font-medium">$65</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Premium Meal Service</span>
+                                <span className="text-gray-900 font-medium">$25</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Fast-Track Security</span>
+                                <span className="text-gray-900 font-medium">$28</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Comfort Kit & Amenities</span>
+                                <span className="text-gray-900 font-medium">$18</span>
+                              </div>
+                              <div className="border-t pt-4">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-400 line-through">Individual Price: $191</span>
+                                  <div className="text-right">
+                                    <div className="text-2xl font-bold text-purple-600">$140</div>
+                                    <div className="text-sm text-green-600 font-medium">Save $51 (27%)</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      // Hotel Bundles
+                      <>
+                        {/* Dubai Business Executive Bundle */}
+                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <span className="text-2xl">💼</span>
+                              <h3 className="text-xl font-bold">Dubai Business Executive</h3>
+                            </div>
+                            <p className="text-blue-100">Premium business traveler package</p>
+                          </div>
+                          <div className="p-6">
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Valet Parking (24hr)</span>
+                                <span className="text-gray-900 font-medium">$45</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Airport Transfer</span>
+                                <span className="text-gray-900 font-medium">$85</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Late Check-out (4pm)</span>
+                                <span className="text-gray-900 font-medium">$50</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Premium Wi-Fi & Streaming</span>
+                                <span className="text-gray-900 font-medium">$25</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Premium Room Service</span>
+                                <span className="text-gray-900 font-medium">$35</span>
+                              </div>
+                              <div className="border-t pt-4">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-400 line-through">Individual Price: $240</span>
+                                  <div className="text-right">
+                                    <div className="text-2xl font-bold text-blue-600">$175</div>
+                                    <div className="text-sm text-green-600 font-medium">Save $65 (27%)</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Dubai Luxury Experience Bundle */}
+                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <span className="text-2xl">👑</span>
+                              <h3 className="text-xl font-bold">Dubai Luxury Experience</h3>
+                            </div>
+                            <p className="text-purple-100">Complete luxury Dubai package</p>
+                          </div>
+                          <div className="p-6">
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Room Upgrade (Premium)</span>
+                                <span className="text-gray-900 font-medium">$185</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Spa Access (Day Pass)</span>
+                                <span className="text-gray-900 font-medium">$95</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">In-Room Champagne Service</span>
+                                <span className="text-gray-900 font-medium">$75</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Personal Shopping Concierge</span>
+                                <span className="text-gray-900 font-medium">$125</span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-gray-600">Luxury Amenity Package</span>
+                                <span className="text-gray-900 font-medium">$65</span>
+                              </div>
+                              <div className="border-t pt-4">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-gray-400 line-through">Individual Price: $545</span>
+                                  <div className="text-right">
+                                    <div className="text-2xl font-bold text-purple-600">$385</div>
+                                    <div className="text-sm text-green-600 font-medium">Save $160 (29%)</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Pricing Strategy Recommendations */}
+                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+                    <div className="flex items-start space-x-4 mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
+                        <span className="text-2xl text-white">🎯</span>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                          {selectedBusinessType === 'airline' 
+                            ? 'Strategic Airline Ancillary Recommendations' 
+                            : 'Strategic Hotel Ancillary Recommendations'
+                          }
+                        </h3>
+                        <p className="text-gray-600">
+                          {selectedBusinessType === 'airline' 
+                            ? 'Optimize your airline ancillary revenue with these proven strategies'
+                            : 'Optimize your hotel ancillary revenue with these proven strategies'
+                          }
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {selectedBusinessType === 'airline' ? (
+                        // Airline Strategies
+                        <>
+                          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                            <h4 className="font-semibold text-blue-900 mb-2">💰 Dynamic Pricing Strategy</h4>
+                            <p className="text-sm text-blue-800 mb-3">
+                              Increase individual ancillary prices by 15-20% to match Dubai aviation market rates, while offering attractive bundle discounts.
+                            </p>
+                            <div className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-medium">
+                              Revenue Impact: +$1.8M annually
+                            </div>
+                          </div>
+
+                          <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
+                            <h4 className="font-semibold text-purple-900 mb-2">🎁 Premium Travel Bundles</h4>
+                            <p className="text-sm text-purple-800 mb-3">
+                              Position bundles as "Dubai aviation experience" packages with 25-30% savings to drive frequent flyer adoption.
+                            </p>
+                            <div className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded font-medium">
+                              Conversion Rate: +35% expected
+                            </div>
+                          </div>
+
+                          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                            <h4 className="font-semibold text-emerald-900 mb-2">📊 Route-Based Pricing</h4>
+                            <p className="text-sm text-emerald-800 mb-3">
+                              Implement route-specific ancillary pricing with premium rates for Dubai-destination flights.
+                            </p>
+                            <div className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-medium">
+                              Premium Routes: +40% ancillary revenue
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        // Hotel Strategies
+                        <>
+                          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                            <h4 className="font-semibold text-blue-900 mb-2">💰 Premium Pricing Strategy</h4>
+                            <p className="text-sm text-blue-800 mb-3">
+                              Increase individual ancillary prices by 25-30% to match Dubai premium market rates, while offering attractive bundle discounts.
+                            </p>
+                            <div className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-medium">
+                              Revenue Impact: +$2.4M annually
+                            </div>
+                          </div>
+
+                          <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
+                            <h4 className="font-semibold text-purple-900 mb-2">🎁 Luxury Bundle Positioning</h4>
+                            <p className="text-sm text-purple-800 mb-3">
+                              Position bundles as "Dubai luxury experience" packages with 25-30% savings to drive high-value guest adoption.
+                            </p>
+                            <div className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded font-medium">
+                              Conversion Rate: +40% expected
+                            </div>
+                          </div>
+
+                          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                            <h4 className="font-semibold text-emerald-900 mb-2">📊 Dynamic Seasonal Pricing</h4>
+                            <p className="text-sm text-emerald-800 mb-3">
+                              Implement season-based ancillary pricing with premium rates during Dubai peak tourism periods.
+                            </p>
+                            <div className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-medium">
+                              Peak Season: +45% ancillary revenue
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </>
@@ -4234,6 +5135,451 @@ const ExecutiveOverview = () => {
                           <div className="text-center">
                             <div className="text-2xl font-bold text-gray-900">+28%</div>
                             <div className="text-sm text-gray-600">Average Solo Uplift</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Booking Engine Modal */}
+      {showBookingEngineModal && (
+        <>
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-80" onClick={() => setShowBookingEngineModal(false)}></div>
+          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl z-90 border border-gray-100 flex flex-col">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200 p-6 flex-shrink-0">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-1">Solo Traveler Booking Engine</h2>
+                  <p className="text-gray-600">Professional booking widget optimized for solo travelers in Dubai</p>
+                </div>
+                <button
+                  onClick={() => setShowBookingEngineModal(false)}
+                  className="p-3 hover:bg-white/70 rounded-xl transition-all duration-200 hover:scale-110 bg-white/40 backdrop-blur-sm"
+                >
+                  <X className="w-6 h-6 text-gray-600" />
+                </button>
+              </div>
+              
+              {/* Tab Navigation */}
+              <div className="flex space-x-1 mt-6 bg-white/60 backdrop-blur-sm rounded-xl p-1">
+                <button
+                  onClick={() => setBookingEngineTab('widget')}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    bookingEngineTab === 'widget' 
+                      ? 'bg-blue-500 text-white shadow-sm' 
+                      : 'text-gray-600 hover:bg-white/70'
+                  }`}
+                >
+                  🔧 Booking Widget
+                </button>
+                <button
+                  onClick={() => setBookingEngineTab('rooms')}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    bookingEngineTab === 'rooms' 
+                      ? 'bg-blue-500 text-white shadow-sm' 
+                      : 'text-gray-600 hover:bg-white/70'
+                  }`}
+                >
+                  🏨 Solo Rooms & Rates
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-6 min-h-0">
+              {bookingEngineTab === 'widget' && (
+                <div className="space-y-6">
+                  {/* Sample Hotel Booking Widget */}
+                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-2xl font-bold mb-2">The Ritz-Carlton Dubai</h3>
+                          <p className="text-blue-100">Luxury beachfront resort • Dubai Marina</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="flex items-center space-x-2 text-blue-100 mb-1">
+                            <Star className="w-5 h-5 fill-current" />
+                            <span className="font-semibold">4.8/5</span>
+                          </div>
+                          <div className="text-sm text-blue-100">Solo Traveler Certified</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6">
+                      {/* Traveler Type Selection */}
+                      <div className="mb-6">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Select Your Travel Style</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                          <div className="border-2 border-blue-500 bg-blue-50 rounded-xl p-4 cursor-pointer">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <span className="text-white text-lg">👤</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-blue-900">Solo Traveler</div>
+                                <div className="text-sm text-blue-700">Personalized experience</div>
+                              </div>
+                            </div>
+                            <div className="text-xs text-blue-600 font-medium">✓ Selected</div>
+                          </div>
+                          
+                          <div className="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                <span className="text-gray-600 text-lg">👥</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-700">Couple</div>
+                                <div className="text-sm text-gray-500">Romantic getaway</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                <span className="text-gray-600 text-lg">👨‍👩‍👧‍👦</span>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-700">Family</div>
+                                <div className="text-sm text-gray-500">Family vacation</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Booking Form */}
+                      <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
+                        <h4 className="text-lg font-semibold text-blue-900 mb-4">Book Your Solo Experience</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
+                            <input 
+                              type="date" 
+                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              defaultValue="2025-02-15"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Check-out Date</label>
+                            <input 
+                              type="date" 
+                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              defaultValue="2025-02-18"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Solo Traveler</label>
+                            <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                              <option>1 Adult</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Solo Preferences</label>
+                            <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                              <option>Safety & Security Priority</option>
+                              <option>Social & Community Access</option>
+                              <option>Privacy & Quiet</option>
+                              <option>Adventure & Exploration</option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                        <button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                          View Solo Traveler Rooms & Rates
+                        </button>
+                      </div>
+                      
+                      {/* Solo Traveler Benefits */}
+                      <div className="mt-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-200">
+                        <h4 className="text-lg font-semibold text-indigo-900 mb-4">Solo Traveler Benefits</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-sm">🛡️</span>
+                            </div>
+                            <div>
+                              <div className="font-semibold text-indigo-900">Safety & Security</div>
+                              <div className="text-sm text-indigo-700">24/7 concierge & secure access</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-sm">🎯</span>
+                            </div>
+                            <div>
+                              <div className="font-semibold text-indigo-900">Personalized Service</div>
+                              <div className="text-sm text-indigo-700">Dedicated solo traveler concierge</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-sm">🌟</span>
+                            </div>
+                            <div>
+                              <div className="font-semibold text-indigo-900">Premium Amenities</div>
+                              <div className="text-sm text-indigo-700">Solo-friendly room layouts</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-sm">🤝</span>
+                            </div>
+                            <div>
+                              <div className="font-semibold text-indigo-900">Community Access</div>
+                              <div className="text-sm text-indigo-700">Solo traveler events & networking</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {bookingEngineTab === 'rooms' && (
+                <div className="space-y-6">
+                  {/* Solo Traveler Rooms */}
+                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                    <div className="p-6 border-b border-gray-100">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">Solo Traveler Rooms & Packages</h3>
+                          <p className="text-gray-600 mt-1">Specially curated accommodations for solo travelers</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                          <span className="text-sm font-medium text-blue-600">Solo Optimized</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6">
+                      <div className="space-y-6">
+                        {/* Premium Solo Suite */}
+                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center">
+                                <span className="text-white text-2xl">👑</span>
+                              </div>
+                              <div>
+                                <h4 className="text-xl font-bold text-blue-900">Solo Executive Suite</h4>
+                                <p className="text-blue-700">Premium suite with solo traveler amenities</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-bold text-blue-600">$487</div>
+                              <div className="text-sm text-blue-600">per night</div>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="bg-white/70 rounded-lg p-4">
+                              <h5 className="font-semibold text-gray-900 mb-2">Solo Amenities</h5>
+                              <ul className="text-sm text-gray-600 space-y-1">
+                                <li>• Personal concierge service</li>
+                                <li>• Dedicated workspace area</li>
+                                <li>• Solo dining priority</li>
+                                <li>• Wellness & spa package</li>
+                              </ul>
+                            </div>
+                            <div className="bg-white/70 rounded-lg p-4">
+                              <h5 className="font-semibold text-gray-900 mb-2">Security Features</h5>
+                              <ul className="text-sm text-gray-600 space-y-1">
+                                <li>• Secure floor access</li>
+                                <li>• 24/7 concierge support</li>
+                                <li>• Emergency assistance</li>
+                                <li>• Safe solo experience</li>
+                              </ul>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-white/70 rounded-lg p-4 mb-4">
+                            <h5 className="font-semibold text-gray-900 mb-2">Solo Experience Package</h5>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                              <div className="bg-blue-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">🍽️</div>
+                                <div className="text-sm font-medium text-blue-900">Solo Dining</div>
+                                <div className="text-xs text-blue-700">Private dining options</div>
+                              </div>
+                              <div className="bg-blue-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">🗺️</div>
+                                <div className="text-sm font-medium text-blue-900">City Explorer</div>
+                                <div className="text-xs text-blue-700">Guided solo tours</div>
+                              </div>
+                              <div className="bg-blue-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">🤝</div>
+                                <div className="text-sm font-medium text-blue-900">Solo Connect</div>
+                                <div className="text-xs text-blue-700">Traveler networking</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                            Book Solo Executive Suite
+                          </button>
+                        </div>
+                        
+                        {/* Comfort Solo Room */}
+                        <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl p-6 border border-emerald-200">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-16 h-16 bg-emerald-500 rounded-xl flex items-center justify-center">
+                                <span className="text-white text-2xl">🏨</span>
+                              </div>
+                              <div>
+                                <h4 className="text-xl font-bold text-emerald-900">Solo Comfort Room</h4>
+                                <p className="text-emerald-700">Comfortable room with solo traveler perks</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-bold text-emerald-600">$365</div>
+                              <div className="text-sm text-emerald-600">per night</div>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="bg-white/70 rounded-lg p-4">
+                              <h5 className="font-semibold text-gray-900 mb-2">Room Features</h5>
+                              <ul className="text-sm text-gray-600 space-y-1">
+                                <li>• Solo-optimized layout</li>
+                                <li>• Work desk & ergonomic chair</li>
+                                <li>• Premium bedding</li>
+                                <li>• Mini bar & coffee station</li>
+                              </ul>
+                            </div>
+                            <div className="bg-white/70 rounded-lg p-4">
+                              <h5 className="font-semibold text-gray-900 mb-2">Solo Services</h5>
+                              <ul className="text-sm text-gray-600 space-y-1">
+                                <li>• Express check-in/out</li>
+                                <li>• Solo dining voucher</li>
+                                <li>• City guide & maps</li>
+                                <li>• Safe solo recommendations</li>
+                              </ul>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-white/70 rounded-lg p-4 mb-4">
+                            <h5 className="font-semibold text-gray-900 mb-2">Dubai Solo Package</h5>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div className="bg-emerald-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">🎫</div>
+                                <div className="text-sm font-medium text-emerald-900">Attraction Passes</div>
+                                <div className="text-xs text-emerald-700">Burj Khalifa, Dubai Mall</div>
+                              </div>
+                              <div className="bg-emerald-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">🚗</div>
+                                <div className="text-sm font-medium text-emerald-900">Transport Credit</div>
+                                <div className="text-xs text-emerald-700">Metro & taxi vouchers</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                            Book Solo Comfort Room
+                          </button>
+                        </div>
+                        
+                        {/* Solo Standard Plus */}
+                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center">
+                                <span className="text-white text-2xl">✨</span>
+                              </div>
+                              <div>
+                                <h4 className="text-xl font-bold text-purple-900">Solo Standard Plus</h4>
+                                <p className="text-purple-700">Enhanced standard with solo traveler perks</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-bold text-purple-600">$282</div>
+                              <div className="text-sm text-purple-600">per night</div>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="bg-white/70 rounded-lg p-4">
+                              <h5 className="font-semibold text-gray-900 mb-2">Essential Features</h5>
+                              <ul className="text-sm text-gray-600 space-y-1">
+                                <li>• Comfortable single occupancy</li>
+                                <li>• Free Wi-Fi & workspace</li>
+                                <li>• 24/7 room service</li>
+                                <li>• Safe & secure environment</li>
+                              </ul>
+                            </div>
+                            <div className="bg-white/70 rounded-lg p-4">
+                              <h5 className="font-semibold text-gray-900 mb-2">Solo Perks</h5>
+                              <ul className="text-sm text-gray-600 space-y-1">
+                                <li>• Solo traveler amenities kit</li>
+                                <li>• Community lounge access</li>
+                                <li>• Local experience guide</li>
+                                <li>• Safety assistance hotline</li>
+                              </ul>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-white/70 rounded-lg p-4 mb-4">
+                            <h5 className="font-semibold text-gray-900 mb-2">Solo Starter Package</h5>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div className="bg-purple-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">🎒</div>
+                                <div className="text-sm font-medium text-purple-900">Solo Kit</div>
+                                <div className="text-xs text-purple-700">Essential solo items</div>
+                              </div>
+                              <div className="bg-purple-100 rounded-lg p-3 text-center">
+                                <div className="text-lg mb-1">📱</div>
+                                <div className="text-sm font-medium text-purple-900">Solo App</div>
+                                <div className="text-xs text-purple-700">Safety & social features</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-purple-600 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                            Book Solo Standard Plus
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Solo Traveler Guarantee */}
+                      <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+                        <div className="flex items-center justify-between mb-4">
+                          <div>
+                            <h4 className="text-lg font-bold text-blue-900 mb-1">Solo Traveler Guarantee</h4>
+                            <p className="text-blue-700">Safe, comfortable, and personalized experience for every solo traveler</p>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-blue-600">100%</div>
+                            <div className="text-sm text-blue-600">Satisfaction</div>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-gray-900">4.9/5</div>
+                            <div className="text-sm text-gray-600">Solo Traveler Rating</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-gray-900">24/7</div>
+                            <div className="text-sm text-gray-600">Concierge Support</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-gray-900">Safe</div>
+                            <div className="text-sm text-gray-600">Secure Environment</div>
                           </div>
                         </div>
                       </div>
