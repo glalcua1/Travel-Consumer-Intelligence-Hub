@@ -20,7 +20,7 @@ const KPICard = ({ title, value, change, changeType, icon: Icon, format = 'numbe
   const TrendIcon = isPositive ? TrendingUp : TrendingDown
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className={`p-3 rounded-lg ${isPositive ? 'bg-green-100' : 'bg-red-100'}`}>

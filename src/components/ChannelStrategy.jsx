@@ -208,7 +208,7 @@ const ChannelStrategy = () => {
       <DubaiHeroCard activeSection="channel-evolution" />
 
       {/* Channel Evolution Intelligence */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+      <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <div className="p-2 bg-purple-100 rounded-lg">
@@ -292,7 +292,7 @@ const ChannelStrategy = () => {
         {/* Evolution Insights */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
           {evolutionInsights.map((insight, index) => (
-            <div key={index} className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200 hover:shadow-lg transition-all duration-300">
+            <div key={index} className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-100 hover:shadow-sm transition-all duration-300">
               <div className="flex items-center justify-between mb-3">
                 <h5 className="font-bold text-gray-900 text-sm">{insight.trend}</h5>
                 <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -327,7 +327,7 @@ const ChannelStrategy = () => {
         {channelPerformance.map((channel, index) => {
           const Icon = channel.icon
           return (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <div className={`p-3 rounded-xl bg-gradient-to-br ${channel.color}`}>
                   <Icon className="w-6 h-6 text-white" />
@@ -371,7 +371,7 @@ const ChannelStrategy = () => {
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-medium text-gray-700">Commission</span>
                     <span className="text-lg font-bold text-gray-600">{channel.commission}%</span>
@@ -393,11 +393,11 @@ const ChannelStrategy = () => {
       {showDataSources && (
         <>
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setShowDataSources(false)}></div>
-          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
             showDataSources ? 'translate-x-0' : 'translate-x-full'
           }`}>
             {/* Drawer Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50">
               <div className="flex items-center space-x-3">
                 <div className="p-3 bg-blue-100 rounded-xl">
                   <Database className="w-6 h-6 text-blue-600" />

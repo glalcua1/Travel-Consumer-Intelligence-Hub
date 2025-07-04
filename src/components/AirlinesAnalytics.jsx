@@ -111,7 +111,7 @@ const AirlinesAnalytics = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl p-6 shadow-lg">
+      <div className="bg-white rounded-xl p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Airlines Analytics</h1>
@@ -139,7 +139,7 @@ const AirlinesAnalytics = () => {
       {/* Airline Partnership Revenue */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue by Airline Partner */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Revenue by Airline Partner</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={airlineRevenueData}>
@@ -156,7 +156,7 @@ const AirlinesAnalytics = () => {
         </div>
 
         {/* Market Share */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Airline Market Share (Guest Arrivals)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -193,12 +193,12 @@ const AirlinesAnalytics = () => {
       </div>
 
       {/* Route Performance Analysis */}
-      <div className="bg-white rounded-xl p-6 shadow-lg">
+      <div className="bg-white rounded-xl p-6 shadow-sm">
         <h3 className="text-lg font-bold text-gray-900 mb-4">Top Flight Routes Performance</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200">
+              <tr className="border-b border-gray-100">
                 <th className="text-left py-3 px-4 font-semibold text-gray-900">Route</th>
                 <th className="text-right py-3 px-4 font-semibold text-gray-900">Total Passengers</th>
                 <th className="text-right py-3 px-4 font-semibold text-gray-900">Hotel Bookings</th>
@@ -241,7 +241,7 @@ const AirlinesAnalytics = () => {
       {/* Travel Patterns Analysis */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Peak Travel Times */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Peak Travel Times (DXB)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <ComposedChart data={peakTravelData}>
@@ -267,7 +267,7 @@ const AirlinesAnalytics = () => {
         </div>
 
         {/* Seasonal Flight Patterns */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Seasonal Flight Passenger Types</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={seasonalFlights}>
@@ -304,7 +304,7 @@ const AirlinesAnalytics = () => {
       {/* Partnership Opportunities */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Current Partnerships */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Active Partnerships</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
@@ -349,7 +349,7 @@ const AirlinesAnalytics = () => {
         </div>
 
         {/* Revenue Metrics */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Partnership Metrics</h3>
           <div className="space-y-4">
             <div className="border-b border-gray-100 pb-3">
@@ -380,7 +380,7 @@ const AirlinesAnalytics = () => {
         </div>
 
         {/* Optimization Opportunities */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Growth Opportunities</h3>
           <div className="space-y-3">
             <div className="p-3 bg-yellow-50 rounded-lg">

@@ -21,12 +21,12 @@ const BrandAffinity = () => (
             Community engagement insights & user-generated content analysis
           </p>
         </div>
-        <div className="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
+        <div className="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-sm">
           <span className="text-2xl">❤️</span>
         </div>
       </div>
     </div>
-    <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
       <p className="text-gray-600">
         <strong>Coming Soon:</strong> Deep analysis of consumer communities, user-generated content mining, 
         brand sentiment tracking, and engagement optimization strategies for enhanced brand affinity.
@@ -47,12 +47,12 @@ const AudienceAnalytics = () => (
             Detailed demographic analysis & behavioral insights
           </p>
         </div>
-        <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl flex items-center justify-center shadow-lg">
+        <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl flex items-center justify-center shadow-sm">
           <span className="text-2xl">👥</span>
         </div>
       </div>
     </div>
-    <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
       <p className="text-gray-600">
         <strong>Coming Soon:</strong> Advanced audience segmentation, demographic analysis, 
         behavioral pattern recognition, and targeted marketing insights.
@@ -73,12 +73,12 @@ const MarketIntelligence = () => (
             Competitive landscape & market opportunity analysis
           </p>
         </div>
-        <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+        <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-sm">
           <span className="text-2xl">🎯</span>
         </div>
       </div>
     </div>
-    <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
       <p className="text-gray-600">
         <strong>Coming Soon:</strong> Comprehensive competitive intelligence, market share analysis, 
         opportunity identification, and strategic positioning insights.
@@ -99,12 +99,12 @@ const SocialListening = () => (
             Real-time social sentiment & conversation analysis
           </p>
         </div>
-        <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
+        <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-sm">
           <span className="text-2xl">💬</span>
         </div>
       </div>
     </div>
-    <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+    <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
       <p className="text-gray-600">
         <strong>Coming Soon:</strong> Advanced social media monitoring, sentiment analysis, 
         conversation tracking, and brand mention insights across all platforms.
@@ -139,7 +139,7 @@ function App() {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':
-        return <ExecutiveOverview />
+        return <ExecutiveOverview userInfo={userInfo} />
       case 'consumer-trends':
         return <ConsumerTrends />
       case 'product-insights':
@@ -157,7 +157,7 @@ function App() {
       case 'social-listening':
         return <SocialListening />
       default:
-        return <ExecutiveOverview />
+        return <ExecutiveOverview userInfo={userInfo} />
     }
   }
 
@@ -168,7 +168,7 @@ function App() {
 
   // Show dashboard if logged in
   return (
-    <div className="flex h-screen bg-slate-200">
+    <div className="flex h-screen bg-stone-100">
       {/* Sidebar */}
       <Sidebar 
         activeSection={activeSection} 

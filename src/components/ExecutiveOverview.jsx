@@ -19,6 +19,7 @@ import {
   ChevronDown,
   ChevronUp,
   Calculator,
+  Leaf,
   Database,
   PlayCircle,
   X,
@@ -54,9 +55,9 @@ import {
 } from 'recharts'
 import KPICard from './KPICard'
 import DubaiHeroCard from './DubaiHeroCard'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-const ExecutiveOverview = () => {
+const ExecutiveOverview = ({ userInfo }) => {
   const [activeTab, setActiveTab] = useState('overview')
   const [expandedSections, setExpandedSections] = useState({
     'consumer-behavior': false,
@@ -80,6 +81,22 @@ const ExecutiveOverview = () => {
   const [bookingEngineTab, setBookingEngineTab] = useState('widget')
   const [showAncillaryRates, setShowAncillaryRates] = useState(false)
   const [selectedAncillaryTab, setSelectedAncillaryTab] = useState('comparison')
+  const [businessNameDropdownOpen, setBusinessNameDropdownOpen] = useState(false)
+  const [businessCategoryDropdownOpen, setBusinessCategoryDropdownOpen] = useState(false)
+  const [showAncillarySpendingDrawer, setShowAncillarySpendingDrawer] = useState(false)
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.dropdown-container')) {
+        setBusinessNameDropdownOpen(false)
+        setBusinessCategoryDropdownOpen(false)
+      }
+    }
+    
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -1052,7 +1069,7 @@ const ExecutiveOverview = () => {
   return (
     <div className="min-h-screen">
             {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
         <div className="px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
@@ -1075,7 +1092,7 @@ const ExecutiveOverview = () => {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowActionPlan(true)}
-                className="flex items-center space-x-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
+                className="flex items-center space-x-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-sm transition-all duration-200"
               >
                 <Brain className="w-4 h-4" />
                 <span>Get Action Plan</span>
@@ -1083,7 +1100,7 @@ const ExecutiveOverview = () => {
               </button>
               <button
                 onClick={() => setShowDataSources(true)}
-                className="flex items-center space-x-2 px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center space-x-2 px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-100 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <Database className="w-4 h-4" />
                 <span>Sources</span>
@@ -1124,6 +1141,7 @@ const ExecutiveOverview = () => {
             {/* Dubai Hero Card */}
             <DubaiHeroCard 
               activeSection="overview" 
+              userInfo={userInfo}
               onExploreClick={() => {
                 // Scroll to market opportunities section
                 const opportunitiesSection = document.querySelector('[data-section="market-opportunities"]')
@@ -1136,11 +1154,8 @@ const ExecutiveOverview = () => {
             {/* Dubai Market Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-section="market-metrics">
               {dubaiMarketMetrics.map((metric, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-pointer group">
+                <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="p-2 bg-blue-50 rounded-lg border border-blue-100 group-hover:bg-blue-100 transition-colors">
-                      <TrendingUp className="w-5 h-5 text-blue-600" />
-                    </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-gray-900">{metric.value}</div>
                       <div className="text-sm text-emerald-600 font-semibold">{metric.change} YoY</div>
@@ -1150,9 +1165,9 @@ const ExecutiveOverview = () => {
                   <p className="text-sm text-gray-600 mb-3">{metric.description}</p>
                   
                   {/* What This Means Section */}
-                  <div className="bg-gray-50 rounded-lg p-3 mb-3">
-                    <div className="text-xs font-semibold text-gray-700 mb-1">What This Means:</div>
-                    <div className="text-sm text-gray-800">{metric.actionable}</div>
+                  <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-100">
+                    <div className="text-xs font-semibold text-blue-700 mb-1">What This Means:</div>
+                    <div className="text-sm text-blue-800">{metric.actionable}</div>
                   </div>
                   
                   <div className="text-xs text-gray-500">Source: {metric.source}</div>
@@ -1160,165 +1175,519 @@ const ExecutiveOverview = () => {
               ))}
             </div>
 
-            {/* Market Opportunities & Actions */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" data-section="market-opportunities">
-              {/* Top Market Opportunities */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-                <div className="p-6 border-b border-gray-200">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <Target className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">Top 3 Dubai Market Opportunities</h3>
-                      <p className="text-gray-600">Immediate revenue growth potential</p>
-                    </div>
+            {/* Dubai Demand Seasonality & Events Chart */}
+            <div className="bg-white rounded-xl border border-gray-200" data-section="market-opportunities">
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Dubai Demand Seasonality & Revenue Periods</h3>
+                    <p className="text-gray-600">Annual demand patterns, major events, and optimal pricing windows</p>
                   </div>
-                </div>
-                <div className="p-6 space-y-4">
-                  <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-blue-900">Sustainability Premium</h4>
-                      <span className="text-lg font-bold text-blue-600">+22%</span>
-                    </div>
-                    <p className="text-sm text-blue-800 mb-2">
-                      89% of Dubai visitors actively seek eco-friendly options - highest sustainability interest globally
-                    </p>
-                    <div className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full inline-block">
-                      Revenue Impact: +$2.4M annually for mid-size hotel
-                    </div>
-                  </div>
-                  
-                  <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-indigo-900">Social Media Experiences</h4>
-                      <span className="text-lg font-bold text-indigo-600">+15%</span>
-                    </div>
-                    <p className="text-sm text-indigo-800 mb-2">
-                      Dubai's Instagram appeal drives 62% of Gen-Z travel decisions - create shareable moments
-                    </p>
-                    <div className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full inline-block">
-                      Revenue Impact: +$1.8M annually through premium experiences
-                    </div>
-                  </div>
-                  
-                  <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-purple-900">Extended Stay Packages</h4>
-                      <span className="text-lg font-bold text-purple-600">+35%</span>
-                    </div>
-                    <p className="text-sm text-purple-800 mb-2">
-                      Dubai's business+leisure blend growing 28% annually - target extended stay premiums
-                    </p>
-                    <div className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full inline-block">
-                      Revenue Impact: +$3.1M annually for extended stay positioning
-                    </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-500">Peak Season</div>
+                    <div className="text-lg font-bold text-emerald-600">+45% Revenue</div>
                   </div>
                 </div>
               </div>
+              <div className="p-6">
+                {/* Demand Chart */}
+                <div className="mb-6">
+                  <ResponsiveContainer width="100%" height={300}>
+                                         <ComposedChart
+                       data={[
+                         { 
+                           month: 'Jan', 
+                           demand: 95, 
+                           events: 85,
+                           baseline: 70,
+                           visitors: 1.65,
+                           eventName: 'Dubai Shopping Festival',
+                           description: 'Major shopping event drives 25% visitor increase'
+                         },
+                         { 
+                           month: 'Feb', 
+                           demand: 88, 
+                           events: 75,
+                           baseline: 70,
+                           visitors: 1.52,
+                           eventName: 'Food Festival',
+                           description: 'Culinary tourism peak period'
+                         },
+                         { 
+                           month: 'Mar', 
+                           demand: 92, 
+                           events: 90,
+                           baseline: 70,
+                           visitors: 1.58,
+                           eventName: 'Art Season',
+                           description: 'Gallery openings and cultural events'
+                         },
+                         { 
+                           month: 'Apr', 
+                           demand: 85, 
+                           events: 70,
+                           baseline: 70,
+                           visitors: 1.45,
+                           eventName: 'Business Season',
+                           description: 'Conference and corporate travel'
+                         },
+                         { 
+                           month: 'May', 
+                           demand: 65, 
+                           events: 50,
+                           baseline: 70,
+                           visitors: 1.12,
+                           eventName: 'Low Season',
+                           description: 'Heat begins, tourism slows'
+                         },
+                         { 
+                           month: 'Jun', 
+                           demand: 55, 
+                           events: 45,
+                           baseline: 70,
+                           visitors: 0.95,
+                           eventName: 'Summer Deals',
+                           description: 'Promotion period for residents'
+                         },
+                         { 
+                           month: 'Jul', 
+                           demand: 50, 
+                           events: 40,
+                           baseline: 70,
+                           visitors: 0.88,
+                           eventName: 'Lowest Demand',
+                           description: 'Peak summer heat period'
+                         },
+                         { 
+                           month: 'Aug', 
+                           demand: 58, 
+                           events: 45,
+                           baseline: 70,
+                           visitors: 1.02,
+                           eventName: 'Back to School',
+                           description: 'Family travel resumes'
+                         },
+                         { 
+                           month: 'Sep', 
+                           demand: 70, 
+                           events: 65,
+                           baseline: 70,
+                           visitors: 1.22,
+                           eventName: 'Season Restart',
+                           description: 'Weather improves, demand returns'
+                         },
+                         { 
+                           month: 'Oct', 
+                           demand: 85, 
+                           events: 80,
+                           baseline: 70,
+                           visitors: 1.48,
+                           eventName: 'GITEX Tech Week',
+                           description: 'Major technology conference'
+                         },
+                         { 
+                           month: 'Nov', 
+                           demand: 90, 
+                           events: 85,
+                           baseline: 70,
+                           visitors: 1.55,
+                           eventName: 'COP29 Climate Summit',
+                           description: '25K delegates, premium demand'
+                         },
+                         { 
+                           month: 'Dec', 
+                           demand: 98, 
+                           events: 95,
+                           baseline: 70,
+                           visitors: 1.72,
+                           eventName: 'NYE & Holidays',
+                           description: 'Peak holiday season, highest rates'
+                         }
+                       ]}
+                       margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                       barCategoryGap={20}
+                     >
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                      <XAxis 
+                        dataKey="month" 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fontSize: 12, fill: '#6b7280' }}
+                      />
+                      <YAxis 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fontSize: 12, fill: '#6b7280' }}
+                        domain={[30, 100]}
+                      />
+                                             <Tooltip 
+                         content={({ active, payload, label }) => {
+                           if (active && payload && payload.length) {
+                             const data = payload[0].payload
+                             return (
+                               <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
+                                 <p className="font-semibold text-gray-900">{label} - {data.eventName}</p>
+                                 <p className="text-sm text-gray-600 mb-2">{data.description}</p>
+                                 <div className="space-y-1">
+                                   <p className="text-sm">
+                                     <span className="text-blue-600">Demand: {data.demand}%</span>
+                                     {data.events && <span className="text-emerald-600 ml-2">Event Impact: {data.events}%</span>}
+                                   </p>
+                                   <p className="text-sm">
+                                     <span className="text-purple-600">Visitors: {data.visitors}M</span>
+                                   </p>
+                                 </div>
+                               </div>
+                             )
+                           }
+                           return null
+                         }}
+                       />
+                      <Area
+                        type="monotone"
+                        dataKey="demand"
+                        fill="url(#demandGradient)"
+                        stroke="#3b82f6"
+                        strokeWidth={2}
+                        fillOpacity={0.3}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="baseline"
+                        stroke="#9ca3af"
+                        strokeWidth={1}
+                        strokeDasharray="5 5"
+                        dot={false}
+                      />
+                                             <Bar dataKey="events" fill="#10b981" fillOpacity={0.6} radius={[4, 4, 0, 0]} barSize={20} />
+                      <defs>
+                        <linearGradient id="demandGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1}/>
+                        </linearGradient>
+                      </defs>
+                    </ComposedChart>
+                  </ResponsiveContainer>
+                </div>
 
-              {/* Immediate Actions */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-                <div className="p-6 border-b border-gray-200">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-indigo-100 rounded-lg">
-                      <Zap className="w-6 h-6 text-indigo-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">Next 30 Days: Quick Wins</h3>
-                      <p className="text-gray-600">Start capturing Dubai's growth immediately</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 space-y-4">
-                                    <div className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
-                    <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">1</div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Launch Sustainability Messaging</h4>
-                      <p className="text-sm text-gray-600 mb-2">Highlight eco-initiatives to capture 89% sustainability-focused market</p>
-                      <div className="text-xs text-blue-600 font-medium">Impact: +$420K monthly | Timeline: 5 days</div>
-                    </div>
-                  </div>
-                    
-                  <div className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition-colors">
-                    <div className="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">2</div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Create Instagram-Worthy Spaces</h4>
-                      <p className="text-sm text-gray-600 mb-2">Design photo opportunities for social media content creation</p>
-                      <div className="text-xs text-indigo-600 font-medium">Impact: +$315K monthly | Timeline: 15 days</div>
-                    </div>
-                  </div>
-                    
-                  <div className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-purple-50 transition-colors">
-                    <div className="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">3</div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Optimize Peak Season Pricing</h4>
-                      <p className="text-sm text-gray-600 mb-2">Leverage 77% occupancy rate with dynamic weekend premiums</p>
-                      <div className="text-xs text-purple-600 font-medium">Impact: +$285K monthly | Timeline: 7 days</div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-emerald-600" />
-                      <span className="text-sm font-semibold text-gray-900">Total 30-Day Impact: +$1.02M monthly revenue</span>
-                    </div>
-                  </div>
-                </div>
+                                 {/* Chart Legend & Key Insights */}
+                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                   <div className="rounded-lg p-4">
+                     <div className="flex items-center space-x-2 mb-2">
+                       <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                       <span className="text-sm font-semibold text-gray-900">Demand Curve</span>
+                     </div>
+                     <p className="text-xs text-gray-700">
+                       Shows overall tourism demand throughout the year. Peak season (Nov-Mar) offers 
+                       +30-45% pricing opportunities vs summer months.
+                     </p>
+                   </div>
+                   
+                   <div className="rounded-lg p-4">
+                     <div className="flex items-center space-x-2 mb-2">
+                       <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                       <span className="text-sm font-semibold text-gray-900">Event Impact</span>
+                     </div>
+                     <p className="text-xs text-gray-700">
+                       Major events create demand spikes. Shopping Festival (+25%), COP29 (+180M impact), 
+                       and NYE (+50%) drive premium pricing windows.
+                     </p>
+                   </div>
+                   
+                   <div className="rounded-lg p-4">
+                     <div className="flex items-center space-x-2 mb-2">
+                       <div className="w-3 h-1 bg-gray-400 rounded-full"></div>
+                       <span className="text-sm font-semibold text-gray-900">Baseline Demand</span>
+                     </div>
+                     <p className="text-xs text-gray-700">
+                       70% represents normal demand. Periods below this line (May-Aug) require 
+                       promotional pricing and resident-focused packages.
+                     </p>
+                   </div>
+                 </div>
+
+                                 {/* Pricing Strategy Recommendations */}
+                 <div className="mt-6 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                   <div className="mb-2">
+                     <h4 className="font-semibold text-blue-900">Strategic Pricing Windows</h4>
+                   </div>
+                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                     <div className="text-center">
+                       <div className="text-lg font-bold text-emerald-600">Nov - Mar</div>
+                       <div className="text-sm text-gray-600">Peak Season</div>
+                       <div className="text-xs text-emerald-700 font-medium">+30-45% Premium</div>
+                     </div>
+                     <div className="text-center">
+                       <div className="text-lg font-bold text-blue-600">Apr, Sep-Oct</div>
+                       <div className="text-sm text-gray-600">Shoulder Season</div>
+                       <div className="text-xs text-blue-700 font-medium">+10-20% Premium</div>
+                     </div>
+                     <div className="text-center">
+                       <div className="text-lg font-bold text-orange-600">May - Aug</div>
+                       <div className="text-sm text-gray-600">Low Season</div>
+                       <div className="text-xs text-orange-700 font-medium">Promotion Period</div>
+                     </div>
+                   </div>
+                 </div>
               </div>
             </div>
 
             {/* Strategic Intelligence Summary */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
+            <div className="bg-white rounded-xl border border-gray-200">
+              <div className="p-6 border-b border-gray-100">
                 <h2 className="text-xl font-bold text-gray-900">Dubai Market Intelligence Summary</h2>
                 <p className="text-gray-600 mt-1">Key insights and their business implications for {currentPeriod}</p>
               </div>
               <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <Users className="w-6 h-6 text-blue-600" />
-                    </div>
+                <div className="flex flex-col md:flex-row">
+                  <div className="text-left p-4 flex-1">
                     <h3 className="font-semibold text-gray-900 mb-2">Record Tourism Growth</h3>
                     <p className="text-sm text-gray-600 mb-3">16.7M visitors (+11%) creating unprecedented demand and pricing power</p>
-                                        <button 
+                    
+                    {/* What This Means Section */}
+                    <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-100">
+                      <div className="text-xs font-semibold text-blue-700 mb-1">What This Means:</div>
+                      <div className="text-sm text-blue-800">Higher demand creates pricing power opportunities</div>
+                    </div>
+                    
+                    <button 
                       onClick={() => setActiveTab('consumer-insights')}
-                      className="text-blue-600 text-sm font-medium hover:text-blue-700 flex items-center space-x-1 mx-auto"
+                      className="text-gray-600 text-sm font-medium hover:text-gray-700 flex items-center space-x-1"
                     >
                       <span>View Consumer Insights</span>
                       <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
                   
-                  <div className="text-center p-4 bg-indigo-50 rounded-lg border border-indigo-200">
-                    <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <DollarSign className="w-6 h-6 text-indigo-600" />
-                    </div>
+                  {/* Divider 1 - Vertical on desktop, Horizontal on mobile */}
+                  <div className="hidden md:block border-l border-dotted border-gray-300 mx-2"></div>
+                  <div className="md:hidden border-t border-dotted border-gray-300 my-4"></div>
+                  
+                  <div className="text-left p-4 flex-1">
                     <h3 className="font-semibold text-gray-900 mb-2">Premium Spending Power</h3>
                     <p className="text-sm text-gray-600 mb-3">$1,728 average daily spend (+15%) enables premium positioning strategies</p>
-                    <button 
-                      onClick={() => setActiveTab('financial-intelligence')}
-                      className="text-indigo-600 text-sm font-medium hover:text-indigo-700 flex items-center space-x-1 mx-auto"
-                    >
-                      <span>View Financial Intelligence</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  </div>
                     
-                  <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <Brain className="w-6 h-6 text-purple-600" />
+                    {/* What This Means Section */}
+                    <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-100">
+                      <div className="text-xs font-semibold text-blue-700 mb-1">What This Means:</div>
+                      <div className="text-sm text-blue-800">Luxury positioning generates higher revenue per visitor</div>
                     </div>
+                    
+                    <div className="space-y-2">
+                      <button 
+                        onClick={() => setActiveTab('financial-intelligence')}
+                        className="text-gray-600 text-sm font-medium hover:text-gray-700 flex items-center space-x-1"
+                      >
+                        <span>View Financial Intelligence</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+                      <button 
+                        onClick={() => setShowAncillarySpendingDrawer(true)}
+                        className="text-gray-600 text-sm font-medium hover:text-gray-700 flex items-center space-x-1"
+                      >
+                        <span>View Ancillary Spending Data</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Divider 2 - Vertical on desktop, Horizontal on mobile */}
+                  <div className="hidden md:block border-l border-dotted border-gray-300 mx-2"></div>
+                  <div className="md:hidden border-t border-dotted border-gray-300 my-4"></div>
+                    
+                  <div className="text-left p-4 flex-1">
                     <h3 className="font-semibold text-gray-900 mb-2">Strategic Action Plan</h3>
                     <p className="text-sm text-gray-600 mb-3">Get specific strategies to capture Dubai's growth for your business type</p>
+                    
+                    {/* What This Means Section */}
+                    <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-100">
+                      <div className="text-xs font-semibold text-blue-700 mb-1">What This Means:</div>
+                      <div className="text-sm text-blue-800">Tailored strategies maximize market opportunity capture</div>
+                    </div>
+                    
                     <button 
                       onClick={() => setShowActionPlan(true)}
-                      className="text-purple-600 text-sm font-medium hover:text-purple-700 flex items-center space-x-1 mx-auto"
+                      className="text-gray-600 text-sm font-medium hover:text-gray-700 flex items-center space-x-1"
                     >
                       <span>Get Action Plan</span>
                       <ArrowRight className="w-3 h-3" />
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Dubai Travel News & Revenue Impact */}
+            <div className="bg-white rounded-xl border border-gray-200">
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Dubai Travel News & Revenue Impact</h3>
+                    <p className="text-gray-600">Latest developments affecting tourism revenue and pricing strategies</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-500">Last updated</div>
+                    <div className="text-xs text-gray-400">{dataLastUpdated}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {[
+                    {
+                      title: "Dubai Airports Announces 15% Capacity Increase",
+                      summary: "Dubai International Airport completes Terminal 4 expansion, adding 15 million passenger capacity annually.",
+                      impact: "Revenue Opportunity",
+                      impactValue: "+18% demand surge",
+                      category: "Infrastructure",
+                      date: "3 days ago",
+                      source: "Dubai Airports",
+                      revenueImplication: "Higher airport capacity drives increased visitor arrivals. Implement dynamic pricing 2-3 weeks ahead to capture surge demand.",
+                      color: "emerald",
+                      urgency: "high"
+                    },
+                    {
+                      title: "Dubai Shopping Festival 2025 Extended to 45 Days",
+                      summary: "Dubai Tourism extends annual shopping festival by 2 weeks due to record international visitor interest.",
+                      impact: "Revenue Boost",
+                      impactValue: "+25% visitor spend",
+                      category: "Events",
+                      date: "1 week ago",
+                      source: "Dubai Tourism Board",
+                      revenueImplication: "Extended festival period creates longer high-demand window. Shopping-focused packages can command premium pricing.",
+                      color: "blue",
+                      urgency: "high"
+                    },
+                    {
+                      title: "New Visa-Free Policy for 12 Additional Countries",
+                      summary: "UAE announces visa-free entry for citizens from Brazil, Argentina, and 10 other countries effective Q1 2025.",
+                      impact: "Market Expansion",
+                      impactValue: "+8.2M potential visitors",
+                      category: "Policy",
+                      date: "2 weeks ago",
+                      source: "UAE Government",
+                      revenueImplication: "New market access creates demand from previously visa-restricted travelers. Target new geographies with intro packages.",
+                      color: "purple",
+                      urgency: "medium"
+                    },
+                    {
+                      title: "Dubai Metro Blue Line Opens to Al Maktoum Airport",
+                      summary: "New metro connection reduces travel time to DWC airport by 40 minutes, enhancing accessibility.",
+                      impact: "Accessibility Boost",
+                      impactValue: "+12% south Dubai bookings",
+                      category: "Transportation",
+                      date: "5 days ago",
+                      source: "RTA Dubai",
+                      revenueImplication: "Improved airport connectivity increases appeal of southern Dubai hotels. Adjust pricing for newly accessible properties.",
+                      color: "indigo",
+                      urgency: "medium"
+                    },
+                    {
+                      title: "COP29 Climate Summit Confirmed for Dubai 2025",
+                      summary: "Dubai selected to host major climate conference, expecting 25,000+ international delegates and media.",
+                      impact: "Demand Spike",
+                      impactValue: "+$180M delegate spend",
+                      category: "Conferences",
+                      date: "1 day ago",
+                      source: "UNFCCC",
+                      revenueImplication: "Major conference creates high-value business traveler demand. Corporate and executive-level accommodations can implement significant premiums.",
+                      color: "green",
+                      urgency: "high"
+                    },
+                    {
+                      title: "Dubai Launches Electric Air Taxi Service",
+                      summary: "World's first commercial electric air taxi service begins operation between key Dubai destinations.",
+                      impact: "Premium Transport",
+                      impactValue: "+35% luxury segment",
+                      category: "Innovation",
+                      date: "4 days ago",
+                      source: "Dubai Future Foundation",
+                      revenueImplication: "Revolutionary transport option attracts premium travelers. Partner with air taxi services for exclusive packages.",
+                      color: "orange",
+                      urgency: "medium"
+                    }
+                  ].map((news, index) => (
+                    <div key={index} className="border border-gray-200 rounded-lg p-6 hover:border-gray-300 transition-all duration-200">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                              news.urgency === 'high' ? 'bg-red-100 text-red-800' : 
+                              news.urgency === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {news.category}
+                            </span>
+                            <span className="text-xs text-gray-500">{news.date}</span>
+                          </div>
+                          <h4 className="text-lg font-bold text-gray-900 mb-2">{news.title}</h4>
+                          <p className="text-sm text-gray-600 mb-3">{news.summary}</p>
+                        </div>
+                      </div>
+                      
+                                             <div className="grid grid-cols-2 gap-4 mb-4">
+                         <div className={`rounded-lg p-3 ${
+                           news.color === 'emerald' ? 'bg-emerald-50 border border-emerald-100' :
+                           news.color === 'blue' ? 'bg-blue-50 border border-blue-100' :
+                           news.color === 'purple' ? 'bg-purple-50 border border-purple-100' :
+                           news.color === 'indigo' ? 'bg-indigo-50 border border-indigo-100' :
+                           news.color === 'green' ? 'bg-green-50 border border-green-100' :
+                           news.color === 'orange' ? 'bg-orange-50 border border-orange-100' :
+                           'bg-gray-50 border border-gray-100'
+                         }`}>
+                           <div className="text-xs font-semibold text-gray-700 mb-1">{news.impact}:</div>
+                           <div className={`text-sm font-bold ${
+                             news.color === 'emerald' ? 'text-emerald-600' :
+                             news.color === 'blue' ? 'text-blue-600' :
+                             news.color === 'purple' ? 'text-purple-600' :
+                             news.color === 'indigo' ? 'text-indigo-600' :
+                             news.color === 'green' ? 'text-green-600' :
+                             news.color === 'orange' ? 'text-orange-600' :
+                             'text-gray-600'
+                           }`}>{news.impactValue}</div>
+                         </div>
+                        <div className="bg-gray-50 rounded-lg p-3">
+                          <div className="text-xs font-semibold text-gray-700 mb-1">Source:</div>
+                          <div className="text-sm font-medium text-gray-800">{news.source}</div>
+                        </div>
+                      </div>
+                      
+                      <div className="rounded-lg p-4">
+                        <div className="text-xs font-semibold text-gray-700 mb-2">Revenue Strategy Impact:</div>
+                        <div className="text-sm text-gray-800">{news.revenueImplication}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* News Summary */}
+                <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <TrendingUp className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h4 className="font-semibold text-blue-900">Market Intelligence Summary</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-emerald-600">+32%</div>
+                      <div className="text-sm text-gray-600">Expected Q1 2025 demand increase</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-600">$485M</div>
+                      <div className="text-sm text-gray-600">Additional market value from developments</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-600">6</div>
+                      <div className="text-sm text-gray-600">High-impact developments this month</div>
+                    </div>
+                  </div>
+                  <div className="mt-4 p-3 bg-white rounded-lg border border-blue-200">
+                    <div className="text-xs font-semibold text-blue-700 mb-1">Strategic Recommendation:</div>
+                    <div className="text-sm text-blue-800">
+                      Current market developments create optimal conditions for premium pricing strategies. 
+                      Implement dynamic pricing 2-3 weeks ahead of major events and leverage new infrastructure 
+                      developments for targeted marketing campaigns.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1333,6 +1702,7 @@ const ExecutiveOverview = () => {
             <DubaiHeroCard 
               activeSection="consumer-trends" 
               compact={true}
+              userInfo={userInfo}
               onExploreClick={() => {
                 // Scroll to consumer trends grid
                 const trendsSection = document.querySelector('[data-section="consumer-trends"]')
@@ -1345,7 +1715,7 @@ const ExecutiveOverview = () => {
             {/* Dubai Consumer Trends Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-section="consumer-trends">
               {dubaiConsumerTrends.map((trend, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 cursor-pointer group">
+                <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`p-2 bg-gradient-to-br ${getColorClasses(trend.color)} rounded-lg group-hover:scale-105 transition-transform`}>
                       <TrendingUp className="w-5 h-5 text-white" />
@@ -1375,25 +1745,20 @@ const ExecutiveOverview = () => {
             </div>
 
             {/* Dubai Traveler Profiles */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Users className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">Dubai Traveler Profiles</h3>
-                    <p className="text-gray-600">Detailed personas with spending patterns and targeting strategies</p>
-                  </div>
+            <div className="bg-white rounded-xl border border-gray-200">
+              <div className="p-6 border-b border-gray-100">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">Dubai Traveler Profiles</h3>
+                  <p className="text-gray-600">Detailed personas with spending patterns and targeting strategies</p>
                 </div>
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {dubaiTravelerProfiles.map((profile, index) => (
-                    <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
+                    <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-200">
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center space-x-4">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${profile.color} rounded-xl flex items-center justify-center text-2xl shadow-sm`}>
+                          <div className={`w-12 h-12 bg-gradient-to-br ${profile.color} rounded-xl flex items-center justify-center text-2xl`}>
                             {profile.icon}
                           </div>
                           <div>
@@ -1447,7 +1812,7 @@ const ExecutiveOverview = () => {
             </div>
 
             {/* Detailed Consumer Behavior Analysis */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+            <div className="bg-white rounded-xl border border-gray-200">
               <button
                 onClick={() => toggleSection('consumer-behavior')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
@@ -1570,6 +1935,7 @@ const ExecutiveOverview = () => {
             <DubaiHeroCard 
               activeSection="financial-intelligence" 
               compact={true}
+              userInfo={userInfo}
               onExploreClick={() => {
                 // Scroll to spending patterns
                 const spendingSection = document.querySelector('[data-section="spending-patterns"]')
@@ -1582,7 +1948,7 @@ const ExecutiveOverview = () => {
             {/* Dubai Spending Categories Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-section="spending-patterns">
               {dubaiFinancialPatterns.map((pattern, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-200 cursor-pointer group">
+                <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
                       <DollarSign className="w-6 h-6 text-blue-600" />
@@ -1612,31 +1978,21 @@ const ExecutiveOverview = () => {
             </div>
 
             {/* Dubai Spending Behavior by Segment */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <BarChart3 className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">Spending Behavior by Visitor Segment</h3>
-                    <p className="text-gray-600">Detailed financial patterns and payment preferences for strategic targeting</p>
-                  </div>
+            <div className="bg-white rounded-xl border border-gray-200">
+              <div className="p-6 border-b border-gray-100">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">Spending Behavior by Visitor Segment</h3>
+                  <p className="text-gray-600">Detailed financial patterns and payment preferences for strategic targeting</p>
                 </div>
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {dubaiSpendingBehaviors.map((behavior, index) => (
-                    <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
+                    <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-200">
                       <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center space-x-4">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${behavior.color} rounded-xl flex items-center justify-center shadow-sm`}>
-                            <DollarSign className="w-6 h-6 text-white" />
-                          </div>
-                          <div>
-                            <h4 className="text-xl font-bold text-gray-900">{behavior.segment}</h4>
-                            <div className="text-sm text-gray-600">Visitor spending profile</div>
-                          </div>
+                        <div>
+                          <h4 className="text-xl font-bold text-gray-900">{behavior.segment}</h4>
+                          <div className="text-sm text-gray-600">Visitor spending profile</div>
                         </div>
                         <div className="text-right">
                           <div className="text-2xl font-bold text-gray-900">${behavior.totalSpend}</div>
@@ -1649,7 +2005,7 @@ const ExecutiveOverview = () => {
                           <div className="text-sm font-semibold text-gray-700 mb-3">Spending Breakdown:</div>
                           <div className="space-y-2">
                         {Object.entries(behavior.breakdown).map(([category, data]) => (
-                              <div key={category} className="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-200">
+                              <div key={category} className="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-100">
                                 <div className="capitalize text-sm font-medium text-gray-900">{category}</div>
                             <div className="text-right">
                                   <div className="text-sm font-bold text-gray-900">${data.amount}</div>
@@ -1685,7 +2041,7 @@ const ExecutiveOverview = () => {
             </div>
 
             {/* Financial Behavior Deep Dive */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+            <div className="bg-white rounded-xl border border-gray-200">
               <button
                 onClick={() => toggleSection('financial-patterns')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
@@ -1756,7 +2112,7 @@ const ExecutiveOverview = () => {
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
                     <h4 className="font-semibold text-gray-900 mb-2">Revenue Strategy Implications</h4>
                     <p className="text-sm text-gray-700">
                       Premium card holders demonstrate 77% higher willingness to prioritize experience over cost, 
@@ -1777,6 +2133,7 @@ const ExecutiveOverview = () => {
             <DubaiHeroCard 
               activeSection="revenue-performance" 
               compact={true}
+              userInfo={userInfo}
               onExploreClick={() => {
                 // Scroll to revenue optimization
                 const revenueSection = document.querySelector('[data-section="revenue-optimization"]')
@@ -1789,7 +2146,7 @@ const ExecutiveOverview = () => {
             {/* Enhanced KPI Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-section="revenue-optimization">
               {dubaiRevenueKPIs.map((kpi, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-200 cursor-pointer group">
+                <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 cursor-pointer group">
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
                       <kpi.icon className="w-6 h-6 text-blue-600" />
@@ -1824,8 +2181,8 @@ const ExecutiveOverview = () => {
             </div>
 
             {/* Dubai Competitive Positioning */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-              <div className="p-6 border-b border-gray-200">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="p-6 border-b border-gray-100">
                 <div className="flex items-center space-x-3">
                   <div className="p-2 bg-purple-100 rounded-lg">
                     <Target className="w-6 h-6 text-purple-600" />
@@ -1839,7 +2196,7 @@ const ExecutiveOverview = () => {
               <div className="p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {dubaiCompetitiveMetrics.map((metric, index) => (
-                    <div key={index} className="bg-white border-2 border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-200">
+                    <div key={index} className="bg-white border-2 border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-200">
                       <div className="flex items-center justify-between mb-4">
                         <h4 className="text-xl font-bold text-gray-900">{metric.category}</h4>
                         <div className="text-right">
@@ -1849,15 +2206,15 @@ const ExecutiveOverview = () => {
                       </div>
                       
                       <div className="grid grid-cols-3 gap-3 mb-4">
-                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
+                        <div className="bg-gray-50 border border-gray-100 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
                           <div className="text-lg font-bold text-gray-900">${metric.averageRate}</div>
                           <div className="text-xs text-gray-600">Avg Rate</div>
                         </div>
-                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
+                        <div className="bg-gray-50 border border-gray-100 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
                           <div className="text-lg font-bold text-gray-900">{metric.occupancyRate}%</div>
                           <div className="text-xs text-gray-600">Occupancy</div>
                         </div>
-                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
+                        <div className="bg-gray-50 border border-gray-100 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors">
                           <div className="text-lg font-bold text-gray-900">${metric.revPAR}</div>
                           <div className="text-xs text-gray-600">RevPAR</div>
                         </div>
@@ -1880,7 +2237,7 @@ const ExecutiveOverview = () => {
                           </div>
                         </div>
                         
-                        <div className="pt-3 border-t border-gray-200">
+                        <div className="pt-3 border-t border-gray-100">
                           <div className="text-xs font-semibold text-gray-700 mb-1">Market Opportunity:</div>
                           <div className="text-sm font-medium text-gray-900">{metric.marketOpportunity}</div>
                         </div>
@@ -1892,7 +2249,7 @@ const ExecutiveOverview = () => {
             </div>
 
             {/* Revenue Optimization Opportunities */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
               <button
                 onClick={() => toggleSection('revenue-optimization')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
@@ -1948,7 +2305,7 @@ const ExecutiveOverview = () => {
                       <div className="text-xs text-red-600 mt-1">Timeline: 7 days</div>
                     </div>
                     
-                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
                       <div className="flex items-center justify-between mb-3">
                         <h4 className="font-semibold text-gray-900">Corporate Rate Optimization</h4>
                         <span className="text-lg font-bold text-emerald-600">+18%</span>
@@ -2019,21 +2376,21 @@ const ExecutiveOverview = () => {
       {showActionPlan && (
         <>
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300" onClick={() => setShowActionPlan(false)}></div>
-          <div className={`fixed right-0 top-0 h-full w-full max-w-6xl bg-white shadow-2xl transform transition-transform duration-500 ease-out z-50 ${
+          <div className={`fixed right-0 top-0 h-full w-full max-w-6xl bg-white shadow-lg transform transition-transform duration-500 ease-out z-50 ${
             showActionPlan ? 'translate-x-0' : 'translate-x-full'
           }`}>
             {/* Drawer Header */}
-            <div className="bg-blue-600 text-white p-6 sticky top-0 z-10">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-100 border-b border-blue-200 p-6 sticky top-0 z-10">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold mb-2">Personalized Action Plan</h2>
-                  <p className="text-blue-100">AI-powered strategy for your specific business in Dubai</p>
+                  <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">Personalized Action Plan</h2>
+                  <p className="text-blue-600">AI-powered strategy for your specific business in Dubai</p>
                 </div>
                 <button
                   onClick={() => setShowActionPlan(false)}
-                  className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+                  className="p-2 bg-white/80 hover:bg-white rounded-lg transition-colors shadow-sm border border-blue-200"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-6 h-6 text-blue-600" />
                 </button>
               </div>
               
@@ -2041,7 +2398,7 @@ const ExecutiveOverview = () => {
               <div className="space-y-4">
                 {/* Business Type Selector */}
                 <div>
-                  <p className="text-sm text-blue-100 mb-3">What's your business?</p>
+                  <p className="text-sm text-blue-700 mb-3 font-medium">What's your business?</p>
                   <div className="flex space-x-3">
                     {[
                       { id: 'hotel', label: 'Hotel' },
@@ -2053,8 +2410,8 @@ const ExecutiveOverview = () => {
                         onClick={() => setSelectedBusinessType(business.id)}
                         className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                           selectedBusinessType === business.id
-                            ? 'bg-white text-blue-600 shadow-lg'
-                            : 'bg-white/20 text-white hover:bg-white/30'
+                            ? 'bg-blue-600 text-white shadow-sm'
+                            : 'bg-white/80 text-blue-600 hover:bg-white border border-blue-200'
                         }`}
                       >
                         <span>{business.label}</span>
@@ -2065,38 +2422,77 @@ const ExecutiveOverview = () => {
 
                 {/* Business Name Dropdown */}
                 <div>
-                  <label className="block text-sm text-blue-100 mb-2">
+                  <label className="block text-sm text-blue-700 mb-2 font-medium">
                     {selectedBusinessType === 'hotel' ? 'Hotel Name' : 
                      selectedBusinessType === 'airline' ? 'Airline Name' : 'Car Rental Company Name'}
-                  </label>
-                  <select
-                    value={businessName}
-                    onChange={(e) => setBusinessName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-                  >
-                    <option value="">Select your business...</option>
-                    {businessOptions[selectedBusinessType].map((business) => (
-                      <option key={business} value={business}>{business}</option>
-                    ))}
-                  </select>
+                                      </label>
+                  <div className="relative dropdown-container">
+                    <button
+                      onClick={() => setBusinessNameDropdownOpen(!businessNameDropdownOpen)}
+                      className="w-full px-4 py-3 rounded-lg text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors flex items-center justify-between"
+                    >
+                      <span className={businessName ? 'text-gray-900' : 'text-gray-500'}>
+                        {businessName || 'Select your business...'}
+                      </span>
+                      <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${
+                        businessNameDropdownOpen ? 'rotate-180' : ''
+                      }`} />
+                    </button>
+                    {businessNameDropdownOpen && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                        {businessOptions[selectedBusinessType].map((business) => (
+                          <button
+                            key={business}
+                            onClick={() => {
+                              setBusinessName(business)
+                              setBusinessNameDropdownOpen(false)
+                              setBusinessCategory('')
+                            }}
+                            className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors text-gray-900 border-b border-gray-100 last:border-b-0"
+                          >
+                            {business}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Business Category Selection */}
                 {businessName && (
                   <div>
-                    <label className="block text-sm text-blue-100 mb-2">
+                    <label className="block text-sm text-blue-700 mb-2 font-medium">
                       Business Category
-                    </label>
-                    <select
-                      value={businessCategory}
-                      onChange={(e) => setBusinessCategory(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-                    >
-                      <option value="">Select category...</option>
-                      {businessCategories[selectedBusinessType].map((category) => (
-                        <option key={category} value={category}>{category}</option>
-                      ))}
-                    </select>
+                                          </label>
+                    <div className="relative dropdown-container">
+                      <button
+                        onClick={() => setBusinessCategoryDropdownOpen(!businessCategoryDropdownOpen)}
+                        className="w-full px-4 py-3 rounded-lg text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors flex items-center justify-between"
+                      >
+                        <span className={businessCategory ? 'text-gray-900' : 'text-gray-500'}>
+                          {businessCategory || 'Select category...'}
+                        </span>
+                        <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${
+                          businessCategoryDropdownOpen ? 'rotate-180' : ''
+                        }`} />
+                      </button>
+                      {businessCategoryDropdownOpen && (
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                          {businessCategories[selectedBusinessType].map((category) => (
+                            <button
+                              key={category}
+                              onClick={() => {
+                                setBusinessCategory(category)
+                                setBusinessCategoryDropdownOpen(false)
+                              }}
+                              className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors text-gray-900 border-b border-gray-100 last:border-b-0"
+                            >
+                              {category}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
@@ -2133,7 +2529,7 @@ const ExecutiveOverview = () => {
                     </div>
 
                     {/* Revenue Opportunities */}
-                    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                       <div className="flex items-center space-x-3 mb-6">
                         <div className="p-2 bg-emerald-100 rounded-lg">
                           <TrendingUp className="w-6 h-6 text-emerald-600" />
@@ -2281,7 +2677,7 @@ const ExecutiveOverview = () => {
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
@@ -2300,7 +2696,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
@@ -2322,7 +2718,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-100/60 shadow-sm hover:shadow-md transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
@@ -2364,7 +2760,7 @@ const ExecutiveOverview = () => {
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
@@ -2383,7 +2779,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">2</div>
                                     <div className="flex-1">
@@ -2405,7 +2801,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
@@ -2427,7 +2823,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-100/60 shadow-sm hover:shadow-md transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">4</div>
                                     <div className="flex-1">
@@ -2466,7 +2862,7 @@ const ExecutiveOverview = () => {
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
@@ -2504,7 +2900,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-100/60 shadow-sm hover:shadow-md transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
@@ -2547,7 +2943,7 @@ const ExecutiveOverview = () => {
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
@@ -2588,7 +2984,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-100/60 shadow-sm hover:shadow-md transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
@@ -2630,7 +3026,7 @@ const ExecutiveOverview = () => {
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
@@ -2668,7 +3064,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-100/60 shadow-sm hover:shadow-md transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
@@ -2707,7 +3103,7 @@ const ExecutiveOverview = () => {
                               </p>
                               
                               <div className="space-y-4">
-                                <div className="group bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
+                                <div className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">1</div>
                                     <div className="flex-1">
@@ -2745,7 +3141,7 @@ const ExecutiveOverview = () => {
                                   </div>
                                 </div>
                                 
-                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-200/60 shadow-sm hover:shadow-md transition-all duration-300">
+                                <div className="group bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 border border-gray-100/60 shadow-sm hover:shadow-md transition-all duration-300">
                                   <div className="flex items-start space-x-4">
                                     <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">3</div>
                                     <div className="flex-1">
@@ -2800,7 +3196,7 @@ const ExecutiveOverview = () => {
                                   </button>
                                 </div>
                                 
-                                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
                                   <div className="flex items-center space-x-3 mb-2">
                                     <div className="w-6 h-6 bg-gray-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
                                     <h5 className="font-semibold text-gray-700">Alternative: Hybrid Premium</h5>
@@ -2843,7 +3239,7 @@ const ExecutiveOverview = () => {
                                   </button>
                                 </div>
                                 
-                                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
                                   <div className="flex items-center space-x-3 mb-2">
                                     <div className="w-6 h-6 bg-gray-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
                                     <h5 className="font-semibold text-gray-700">Alternative: Influencer Collaboration</h5>
@@ -2886,7 +3282,7 @@ const ExecutiveOverview = () => {
                                   </button>
                                 </div>
                                 
-                                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
                                   <div className="flex items-center space-x-3 mb-2">
                                     <div className="w-6 h-6 bg-gray-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
                                     <h5 className="font-semibold text-gray-700">Alternative: Weekly Discounts</h5>
@@ -2934,7 +3330,7 @@ const ExecutiveOverview = () => {
       {showAncillaryRates && (
         <>
           <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-60" onClick={() => setShowAncillaryRates(false)}></div>
-          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl z-70 max-h-[85vh] overflow-y-auto border border-gray-100">
+          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-6xl mx-auto bg-white rounded-3xl shadow-lg z-70 max-h-[85vh] overflow-y-auto border border-gray-100">
             {/* Header */}
             <div className="flex items-center justify-between p-8 border-b border-gray-100 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-t-3xl">
               <div>
@@ -2984,7 +3380,7 @@ const ExecutiveOverview = () => {
               {selectedAncillaryTab === 'comparison' && (
                 <div className="space-y-6">
                   {/* Comparison Table */}
-                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
                     <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
                       <h3 className="text-xl font-bold mb-2">
                         {selectedBusinessType === 'airline' ? 'Airline Ancillary Service Pricing Comparison' : 'Hotel Ancillary Service Pricing Comparison'}
@@ -3000,7 +3396,7 @@ const ExecutiveOverview = () => {
                     <div className="overflow-x-auto">
                       <table className="w-full">
                         <thead>
-                          <tr className="bg-gray-50 border-b border-gray-200">
+                          <tr className="bg-gray-50 border-b border-gray-100">
                             <th className="text-left p-6 font-semibold text-gray-900">Ancillary Service</th>
                             <th className="text-center p-6 font-semibold text-blue-600">
                               {selectedBusinessType === 'airline' ? 'Your Airline' : 'Your Hotel'}
@@ -3259,13 +3655,13 @@ const ExecutiveOverview = () => {
                   </div>
 
                   {/* Top Revenue Opportunities */}
-                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+                  <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-6">Top 3 Ancillary Revenue Opportunities</h3>
                     <div className="space-y-4">
                       {selectedBusinessType === 'airline' ? (
                         // Airline Opportunities
                         <>
-                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                          <div className="bg-white border border-gray-100 rounded-lg p-5 hover:shadow-sm transition-shadow duration-200">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-4 flex-1">
                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -3290,7 +3686,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
 
-                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                          <div className="bg-white border border-gray-100 rounded-lg p-5 hover:shadow-sm transition-shadow duration-200">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-4 flex-1">
                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -3315,7 +3711,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
 
-                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                          <div className="bg-white border border-gray-100 rounded-lg p-5 hover:shadow-sm transition-shadow duration-200">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-4 flex-1">
                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -3343,7 +3739,7 @@ const ExecutiveOverview = () => {
                       ) : (
                         // Hotel Opportunities
                         <>
-                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                          <div className="bg-white border border-gray-100 rounded-lg p-5 hover:shadow-sm transition-shadow duration-200">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-4 flex-1">
                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -3371,7 +3767,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
 
-                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                          <div className="bg-white border border-gray-100 rounded-lg p-5 hover:shadow-sm transition-shadow duration-200">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-4 flex-1">
                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -3399,7 +3795,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
 
-                          <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-shadow duration-200">
+                          <div className="bg-white border border-gray-100 rounded-lg p-5 hover:shadow-sm transition-shadow duration-200">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start space-x-4 flex-1">
                                 <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -3441,7 +3837,7 @@ const ExecutiveOverview = () => {
                       // Airline Bundles
                       <>
                         {/* Dubai Business Elite Bundle */}
-                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
                           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
                             <div className="flex items-center space-x-3 mb-2">
                               <span className="text-2xl">💼</span>
@@ -3485,7 +3881,7 @@ const ExecutiveOverview = () => {
                         </div>
 
                         {/* Dubai Explorer Bundle */}
-                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
                           <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
                             <div className="flex items-center space-x-3 mb-2">
                               <span className="text-2xl">🏜️</span>
@@ -3532,7 +3928,7 @@ const ExecutiveOverview = () => {
                       // Hotel Bundles
                       <>
                         {/* Dubai Business Executive Bundle */}
-                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
                           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
                             <div className="flex items-center space-x-3 mb-2">
                               <span className="text-2xl">💼</span>
@@ -3576,7 +3972,7 @@ const ExecutiveOverview = () => {
                         </div>
 
                         {/* Dubai Luxury Experience Bundle */}
-                        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
                           <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
                             <div className="flex items-center space-x-3 mb-2">
                               <span className="text-2xl">👑</span>
@@ -3623,7 +4019,7 @@ const ExecutiveOverview = () => {
                   </div>
 
                   {/* Pricing Strategy Recommendations */}
-                  <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
+                  <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
                     <div className="flex items-start space-x-4 mb-6">
                       <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
                         <span className="text-2xl text-white">🎯</span>
@@ -3725,8 +4121,8 @@ const ExecutiveOverview = () => {
       {showDataSources && (
         <>
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={() => setShowDataSources(false)}></div>
-          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl z-50 max-h-[80vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-4xl mx-auto bg-white rounded-2xl shadow-lg z-50 max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">Data Sources & Methodology</h2>
                 <p className="text-gray-600">Comprehensive data sourcing and calculation transparency</p>
@@ -3774,68 +4170,60 @@ const ExecutiveOverview = () => {
              setShowCampaignSuggestion(false)
              setShowBudgetBreakdown(false)
            }}></div>
-          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl z-70 max-h-[85vh] overflow-y-auto border border-gray-100">
-            <div className="flex items-center justify-between p-8 border-b border-gray-100 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-t-3xl">
+          <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-6xl mx-auto bg-white rounded-2xl shadow-lg z-70 max-h-[85vh] overflow-y-auto border border-gray-100">
+            <div className="flex items-center justify-between p-8 border-b border-gray-100 bg-gradient-to-r from-green-50 to-emerald-50">
                              <div>
-                 <h2 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-2">🌱 Green Awareness Campaign Strategy</h2>
-                 <p className="text-gray-700 text-lg">Ready-to-launch sustainability campaign for Dubai market</p>
+                 <h2 className="text-3xl font-bold text-green-800 mb-2">Green Awareness Campaign Strategy</h2>
+                 <p className="text-green-600 text-lg">Ready-to-launch sustainability campaign for Dubai market</p>
                </div>
                                 <button
                    onClick={() => {
                      setShowCampaignSuggestion(false)
                      setShowBudgetBreakdown(false)
                    }}
-                   className="p-3 hover:bg-white/70 rounded-xl transition-all duration-200 hover:scale-110 bg-white/40 backdrop-blur-sm"
+                   className="p-3 hover:bg-gray-100 rounded-xl transition-all duration-200 text-gray-500 hover:text-gray-700"
                  >
-                   <X className="w-6 h-6 text-gray-600" />
+                   <X className="w-6 h-6" />
                  </button>
             </div>
             
-                         <div className="p-8 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-               {/* Campaign Header - Premium Redesign */}
-               <div className="relative overflow-hidden bg-white rounded-3xl shadow-2xl border border-gray-100/50 mb-10">
-                 {/* Animated Background */}
-                 <div className="absolute inset-0">
-                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-green-500/5 to-teal-500/5"></div>
-                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400"></div>
-                   <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-emerald-200/20 to-green-200/20 rounded-full blur-xl"></div>
-                   <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-teal-200/20 to-emerald-200/20 rounded-full blur-xl"></div>
-                 </div>
-                 
-                 <div className="relative z-10 p-8">
+                         <div className="p-8 bg-white">
+               {/* Campaign Header - Clean Design */}
+               <div className="bg-white rounded-xl border border-gray-100 mb-8">
+                 <div className="p-8">
                    {/* Header Section */}
                    <div className="flex items-start justify-between mb-8">
                      <div className="flex-1">
-                       <div className="flex items-center mb-3">
-                         <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
-                           <span className="text-2xl">🌱</span>
+                       <div className="flex items-center mb-4">
+                         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                           <Leaf className="w-6 h-6 text-green-600" />
                          </div>
                          <div>
-                           <div className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-1">Premium Campaign Strategy</div>
+                           <div className="text-xs font-medium text-green-600 uppercase tracking-wider mb-1">Premium Campaign Strategy</div>
                            <h3 className="text-2xl font-bold text-gray-900 leading-tight">"Dubai's Greenest Stay Experience"</h3>
                          </div>
                        </div>
-                       <div className="flex items-center space-x-4 text-sm text-gray-600">
+                       <div className="flex items-center space-x-6 text-sm text-gray-600">
                          <div className="flex items-center space-x-2">
-                           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                           <Calendar className="w-4 h-4" />
                            <span className="font-medium">60-Day Strategy</span>
                          </div>
                          <div className="flex items-center space-x-2">
-                           <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                           <Network className="w-4 h-4" />
                            <span className="font-medium">Multi-Channel</span>
                          </div>
                          <div className="flex items-center space-x-2">
-                           <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                           <Zap className="w-4 h-4" />
                            <span className="font-medium">AI-Optimized</span>
                          </div>
                        </div>
                      </div>
                      
                      {/* Performance Badge */}
-                     <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-200/50 shadow-sm min-w-[140px]">
+                     <div className="bg-green-50 rounded-xl p-6 border border-green-200 min-w-[140px]">
                        <div className="text-center">
-                         <div className="text-3xl font-black bg-gradient-to-br from-emerald-600 to-green-700 bg-clip-text text-transparent mb-1">+22%</div>
-                         <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Revenue Growth</div>
+                         <div className="text-3xl font-bold text-green-800 mb-1">+22%</div>
+                         <div className="text-xs font-medium text-green-600 uppercase tracking-wider">Revenue Growth</div>
                          <div className="text-xs text-gray-500 mt-1">Projected Increase</div>
                        </div>
                      </div>
@@ -3845,61 +4233,55 @@ const ExecutiveOverview = () => {
                    <div className="grid grid-cols-3 gap-4">
                      <div 
                        onClick={() => setShowBudgetBreakdown(!showBudgetBreakdown)}
-                       className="group bg-white rounded-2xl p-6 border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer hover:border-emerald-300/50 hover:-translate-y-1"
+                       className="group bg-gray-50 rounded-lg p-6 border border-gray-100 hover:border-gray-300 transition-all duration-200 cursor-pointer"
                        title="Click for detailed budget breakdown"
                      >
                        <div className="flex items-start justify-between mb-4">
-                         <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-sm">
-                           <span className="text-white text-lg">💰</span>
+                         <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
+                           <Calculator className="w-5 h-5 text-gray-600" />
                          </div>
                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                           <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
-                             <span className="text-xs">📊</span>
-                           </div>
+                           <BarChart3 className="w-4 h-4 text-gray-400" />
                          </div>
                        </div>
-                       <div className="text-2xl font-black text-gray-900 mb-1">$150K</div>
-                       <div className="text-sm font-semibold text-gray-600 mb-2">Campaign Investment</div>
-                       <div className="text-xs bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 px-3 py-1 rounded-full font-medium border border-blue-200/50">
-                         {showBudgetBreakdown ? '👆 Hide breakdown' : '💡 View breakdown'}
+                       <div className="text-2xl font-bold text-gray-900 mb-1">$150K</div>
+                       <div className="text-sm font-medium text-gray-600 mb-2">Campaign Investment</div>
+                       <div className="text-xs bg-white text-gray-600 px-3 py-1 rounded-md font-medium border border-gray-100">
+                         {showBudgetBreakdown ? 'Hide breakdown' : 'View breakdown'}
                        </div>
                      </div>
                      
-                     <div className="bg-white rounded-2xl p-6 border border-gray-200/50 shadow-sm">
+                     <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
                        <div className="flex items-start justify-between mb-4">
-                         <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-sm">
-                           <span className="text-white text-lg">📈</span>
+                         <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
+                           <TrendingUp className="w-5 h-5 text-gray-600" />
                          </div>
-                         <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center">
-                           <span className="text-xs">🎯</span>
-                         </div>
+                         <Target className="w-4 h-4 text-gray-400" />
                        </div>
-                       <div className="text-2xl font-black text-gray-900 mb-1">425%</div>
-                       <div className="text-sm font-semibold text-gray-600 mb-2">Expected ROI</div>
-                       <div className="text-xs bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 px-3 py-1 rounded-full font-medium border border-emerald-200/50">
+                       <div className="text-2xl font-bold text-gray-900 mb-1">425%</div>
+                       <div className="text-sm font-medium text-gray-600 mb-2">Expected ROI</div>
+                       <div className="text-xs bg-white text-gray-600 px-3 py-1 rounded-md font-medium border border-gray-100">
                          Industry Leading
                        </div>
                      </div>
                      
-                     <div className="bg-white rounded-2xl p-6 border border-gray-200/50 shadow-sm">
+                     <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
                        <div className="flex items-start justify-between mb-4">
-                         <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-sm">
-                           <span className="text-white text-lg">⏱️</span>
+                         <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
+                           <Calendar className="w-5 h-5 text-gray-600" />
                          </div>
-                         <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
-                           <span className="text-xs">🚀</span>
-                         </div>
+                         <ArrowRight className="w-4 h-4 text-gray-400" />
                        </div>
-                       <div className="text-2xl font-black text-gray-900 mb-1">60</div>
-                       <div className="text-sm font-semibold text-gray-600 mb-2">Campaign Days</div>
-                       <div className="text-xs bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700 px-3 py-1 rounded-full font-medium border border-purple-200/50">
+                       <div className="text-2xl font-bold text-gray-900 mb-1">60</div>
+                       <div className="text-sm font-medium text-gray-600 mb-2">Campaign Days</div>
+                       <div className="text-xs bg-white text-gray-600 px-3 py-1 rounded-md font-medium border border-gray-100">
                          Fast Launch
                        </div>
                      </div>
                    </div>
                    
                    {/* Quick Stats Bar */}
-                   <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl border border-gray-200/50">
+                   <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
                      <div className="flex items-center justify-between text-sm">
                        <div className="flex items-center space-x-6">
                          <div className="text-gray-600">
@@ -3909,9 +4291,9 @@ const ExecutiveOverview = () => {
                            <span className="font-medium text-gray-900">Reach:</span> 2.5M+ Dubai visitors annually
                          </div>
                        </div>
-                       <div className="flex items-center space-x-2 text-emerald-600">
-                         <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                         <span className="font-semibold">Ready to Launch</span>
+                       <div className="flex items-center space-x-2 text-green-600">
+                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                         <span className="font-medium">Ready to Launch</span>
                        </div>
                      </div>
                    </div>
@@ -3920,8 +4302,8 @@ const ExecutiveOverview = () => {
 
                {/* Budget Breakdown */}
                {showBudgetBreakdown && (
-               <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm mb-6 animate-in slide-in-from-top duration-300">
-                 <h4 className="text-lg font-bold text-gray-900 mb-4">💰 Campaign Budget Breakdown ($150K)</h4>
+               <div className="bg-white rounded-xl p-6 border border-gray-100 mb-6">
+                 <h4 className="text-lg font-bold text-gray-900 mb-4">Campaign Budget Breakdown ($150K)</h4>
                  <div className="text-sm text-gray-600 mb-4">
                    <strong>Reasoning:</strong> Dubai's premium market requires high-quality content and strategic ad spend to reach affluent travelers. Budget calculated for {businessCategory || 'mid-size hotel'} targeting 89% sustainability-focused market.
                  </div>
@@ -3930,15 +4312,15 @@ const ExecutiveOverview = () => {
                    <div className="space-y-3">
                      <h5 className="font-semibold text-gray-800">Content & Creative ($45K - 30%)</h5>
                      <div className="space-y-2 text-sm">
-                       <div className="flex justify-between items-center bg-blue-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Professional photography/videography</span>
                          <span className="font-medium">$25K</span>
                        </div>
-                       <div className="flex justify-between items-center bg-blue-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Social media content creation</span>
                          <span className="font-medium">$12K</span>
                        </div>
-                       <div className="flex justify-between items-center bg-blue-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Graphic design & branding</span>
                          <span className="font-medium">$8K</span>
                        </div>
@@ -3948,15 +4330,15 @@ const ExecutiveOverview = () => {
                    <div className="space-y-3">
                      <h5 className="font-semibold text-gray-800">Paid Advertising ($75K - 50%)</h5>
                      <div className="space-y-2 text-sm">
-                       <div className="flex justify-between items-center bg-emerald-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Instagram/Facebook ads (Dubai targeting)</span>
                          <span className="font-medium">$35K</span>
                        </div>
-                       <div className="flex justify-between items-center bg-emerald-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Google Ads (sustainability keywords)</span>
                          <span className="font-medium">$25K</span>
                        </div>
-                       <div className="flex justify-between items-center bg-emerald-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>LinkedIn ads (business travelers)</span>
                          <span className="font-medium">$15K</span>
                        </div>
@@ -3966,11 +4348,11 @@ const ExecutiveOverview = () => {
                    <div className="space-y-3">
                      <h5 className="font-semibold text-gray-800">Influencer Partnerships ($20K - 13%)</h5>
                      <div className="space-y-2 text-sm">
-                       <div className="flex justify-between items-center bg-purple-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>3 Dubai eco-travel influencers</span>
                          <span className="font-medium">$15K</span>
                        </div>
-                       <div className="flex justify-between items-center bg-purple-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Content creation support</span>
                          <span className="font-medium">$5K</span>
                        </div>
@@ -3980,11 +4362,11 @@ const ExecutiveOverview = () => {
                    <div className="space-y-3">
                      <h5 className="font-semibold text-gray-800">Management & Analytics ($10K - 7%)</h5>
                      <div className="space-y-2 text-sm">
-                       <div className="flex justify-between items-center bg-orange-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Campaign management (60 days)</span>
                          <span className="font-medium">$6K</span>
                        </div>
-                       <div className="flex justify-between items-center bg-orange-50 px-3 py-2 rounded-lg">
+                       <div className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded-lg">
                          <span>Analytics & reporting tools</span>
                          <span className="font-medium">$4K</span>
                        </div>
@@ -3992,18 +4374,18 @@ const ExecutiveOverview = () => {
                    </div>
                  </div>
                  
-                 <div className="mt-6 p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg border border-emerald-200">
+                 <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
                    <div className="flex items-center justify-between mb-2">
-                     <span className="font-semibold text-emerald-900">Expected Results:</span>
-                     <span className="text-emerald-600 font-bold">+$637K Revenue</span>
+                     <span className="font-semibold text-gray-900">Expected Results:</span>
+                     <span className="text-gray-900 font-bold">+$637K Revenue</span>
                    </div>
-                   <div className="text-sm text-emerald-800">
+                   <div className="text-sm text-gray-700">
                      <strong>ROI Calculation:</strong> $150K investment → $637K additional revenue (425% ROI)<br/>
                      <strong>Based on:</strong> 22% sustainability premium × current booking volume × 60-day campaign period
                    </div>
                  </div>
                  
-                 <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                 <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
                    <div className="text-xs text-gray-600">
                      <strong>Budget Scaling:</strong> This budget is for a mid-to-large hotel operation. Smaller properties can scale down to $50-75K, while luxury resorts may invest $200-300K for premium positioning.
                    </div>
@@ -4013,16 +4395,16 @@ const ExecutiveOverview = () => {
 
                               {/* Campaign Visual */}
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                 <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl p-8 border border-emerald-200/50 shadow-lg">
-                  <h4 className="text-lg font-bold text-gray-900 mb-4">📸 Campaign Visual Concept</h4>
+                 <div className="bg-gray-50 rounded-xl p-8 border border-gray-100">
+                  <h4 className="text-lg font-bold text-gray-900 mb-4">Campaign Visual Concept</h4>
                   
                   {/* Mock Instagram Post */}
-                  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                  <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
                     {/* Instagram Header */}
                     <div className="flex items-center justify-between p-4 border-b border-gray-100">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center shadow-md">
-                          <span className="text-white font-bold text-sm">{businessName ? businessName.charAt(0) : 'H'}</span>
+                        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                          <span className="text-gray-700 font-bold text-sm">{businessName ? businessName.charAt(0) : 'H'}</span>
                         </div>
                         <div>
                           <div className="font-semibold text-gray-900 text-sm">{businessName || 'Your Hotel'}</div>
@@ -4037,56 +4419,49 @@ const ExecutiveOverview = () => {
                     </div>
                     
                     {/* Premium Visual Content */}
-                    <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900">
-                      {/* Background Pattern */}
-                      <div className="absolute inset-0 opacity-30">
-                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-emerald-400/20 via-transparent to-teal-400/20"></div>
-                        <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-emerald-400/10 rounded-full blur-3xl"></div>
-                        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl"></div>
-                      </div>
-                      
+                    <div className="aspect-square relative overflow-hidden bg-gray-800">
                       {/* Main Content */}
                       <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-8">
                         <div className="mb-6">
-                          <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-2xl border border-white/30">
-                            <span className="text-4xl">🌿</span>
+                          <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4 mx-auto border border-white/30">
+                            <Leaf className="w-10 h-10 text-white" />
                           </div>
-                          <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">Dubai's Greenest Stay</h3>
-                          <p className="text-emerald-100 text-sm font-medium">100% Carbon Neutral Luxury Experience</p>
+                          <h3 className="text-2xl font-bold text-white mb-2">Dubai's Greenest Stay</h3>
+                          <p className="text-gray-300 text-sm font-medium">100% Carbon Neutral Luxury Experience</p>
                         </div>
                         
-                        {/* Floating Achievement Badges */}
+                        {/* Achievement Badges */}
                         <div className="absolute top-6 right-6">
-                          <div className="bg-white/95 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg border border-white/50">
+                          <div className="bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/50">
                             <div className="flex items-center space-x-2">
-                              <span className="text-lg">🏆</span>
+                              <Award className="w-4 h-4 text-gray-700" />
                               <div className="text-xs">
-                                <div className="font-bold text-emerald-800">LEED Platinum</div>
-                                <div className="text-emerald-600">Certified</div>
+                                <div className="font-bold text-gray-800">LEED Platinum</div>
+                                <div className="text-gray-600">Certified</div>
                               </div>
                             </div>
                           </div>
                         </div>
                         
                         <div className="absolute bottom-6 left-6">
-                          <div className="bg-white/95 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg border border-white/50">
+                          <div className="bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/50">
                             <div className="flex items-center space-x-2">
-                              <span className="text-lg">♻️</span>
+                              <Target className="w-4 h-4 text-gray-700" />
                               <div className="text-xs">
-                                <div className="font-bold text-emerald-800">Zero Waste</div>
-                                <div className="text-emerald-600">Initiative</div>
+                                <div className="font-bold text-gray-800">Zero Waste</div>
+                                <div className="text-gray-600">Initiative</div>
                               </div>
                             </div>
                           </div>
                         </div>
                         
                         <div className="absolute top-6 left-6">
-                          <div className="bg-white/95 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg border border-white/50">
+                          <div className="bg-white/95 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/50">
                             <div className="flex items-center space-x-2">
-                              <span className="text-lg">🌱</span>
+                              <Leaf className="w-4 h-4 text-gray-700" />
                               <div className="text-xs">
-                                <div className="font-bold text-emerald-800">Carbon</div>
-                                <div className="text-emerald-600">Negative</div>
+                                <div className="font-bold text-gray-800">Carbon</div>
+                                <div className="text-gray-600">Negative</div>
                               </div>
                             </div>
                           </div>
@@ -4121,7 +4496,7 @@ const ExecutiveOverview = () => {
                       </div>
                       
                       <div className="text-sm text-gray-900 mb-2">
-                        <span className="font-semibold">{businessName || 'yourhotel'}</span> Experience Dubai's most sustainable luxury stay! 🌿 Our carbon-neutral suites, solar energy, and local partnerships make your dream vacation guilt-free. 
+                        <span className="font-semibold">{businessName || 'yourhotel'}</span> Experience Dubai's most sustainable luxury stay! Our carbon-neutral suites, solar energy, and local partnerships make your dream vacation guilt-free. 
                         <span className="text-blue-600 font-medium">#DubaiGreen #SustainableTravel #EcoLuxury</span>
                       </div>
                       
@@ -4134,31 +4509,31 @@ const ExecutiveOverview = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-                    <h4 className="text-lg font-bold text-gray-900 mb-4">📝 Campaign Content Strategy</h4>
+                  <div className="bg-white rounded-xl p-6 border border-gray-100">
+                    <h4 className="text-lg font-bold text-gray-900 mb-4">Campaign Content Strategy</h4>
                     
                     <div className="space-y-4">
-                      <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                        <h5 className="font-semibold text-blue-900 mb-2">Week 1-2: Foundation</h5>
-                        <ul className="text-sm text-blue-800 space-y-1">
+                      <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                        <h5 className="font-semibold text-gray-900 mb-2">Week 1-2: Foundation</h5>
+                        <ul className="text-sm text-gray-700 space-y-1">
                           <li>• Announce sustainability commitment</li>
                           <li>• Showcase green certifications</li>
                           <li>• Behind-the-scenes eco initiatives</li>
                         </ul>
                       </div>
                       
-                      <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
-                        <h5 className="font-semibold text-emerald-900 mb-2">Week 3-4: Guest Stories</h5>
-                        <ul className="text-sm text-emerald-800 space-y-1">
+                      <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                        <h5 className="font-semibold text-gray-900 mb-2">Week 3-4: Guest Stories</h5>
+                        <ul className="text-sm text-gray-700 space-y-1">
                           <li>• Eco-conscious guest testimonials</li>
                           <li>• Local partnership highlights</li>
                           <li>• Carbon footprint calculations</li>
                         </ul>
                       </div>
                       
-                      <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-                        <h5 className="font-semibold text-purple-900 mb-2">Week 5-8: Premium Launch</h5>
-                        <ul className="text-sm text-purple-800 space-y-1">
+                      <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                        <h5 className="font-semibold text-gray-900 mb-2">Week 5-8: Premium Launch</h5>
+                        <ul className="text-sm text-gray-700 space-y-1">
                           <li>• Green premium room reveals</li>
                           <li>• Exclusive sustainability perks</li>
                           <li>• Limited-time eco packages</li>
@@ -4170,83 +4545,80 @@ const ExecutiveOverview = () => {
               </div>
 
                              {/* Campaign Tags & Hashtags */}
-               <div className="bg-white rounded-2xl p-6 border border-gray-200/50 shadow-sm mb-8">
+               <div className="bg-white rounded-xl p-6 border border-gray-100 mb-8">
                  <div className="flex items-center justify-between mb-4">
                    <h4 className="text-lg font-bold text-gray-900 flex items-center">
-                     🏷️ Campaign Tags & Hashtags
+                     Campaign Tags & Hashtags
                    </h4>
-                   <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">Copy & Paste Ready</span>
+                   <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-md font-medium">Copy & Paste Ready</span>
                  </div>
                  
                  <div className="space-y-3">
                    <div className="flex items-center space-x-4">
-                     <div className="w-20 text-xs font-semibold text-emerald-700 flex items-center">
-                       <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></div>
+                     <div className="w-20 text-xs font-semibold text-gray-700 flex items-center">
+                       <div className="w-2 h-2 bg-gray-500 rounded-full mr-2"></div>
                        Primary
                      </div>
                      <div className="flex flex-wrap gap-2">
-                       <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg text-xs font-medium border border-emerald-200 hover:bg-emerald-100 transition-all cursor-pointer">#DubaiGreen</span>
-                       <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg text-xs font-medium border border-emerald-200 hover:bg-emerald-100 transition-all cursor-pointer">#SustainableTravel</span>
-                       <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg text-xs font-medium border border-emerald-200 hover:bg-emerald-100 transition-all cursor-pointer">#EcoLuxury</span>
-                       <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-lg text-xs font-medium border border-emerald-200 hover:bg-emerald-100 transition-all cursor-pointer">#CarbonNeutral</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#DubaiGreen</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#SustainableTravel</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#EcoLuxury</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#CarbonNeutral</span>
                      </div>
                    </div>
                    
                    <div className="flex items-center space-x-4">
-                     <div className="w-20 text-xs font-semibold text-blue-700 flex items-center">
-                       <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                     <div className="w-20 text-xs font-semibold text-gray-700 flex items-center">
+                       <div className="w-2 h-2 bg-gray-500 rounded-full mr-2"></div>
                        Location
                      </div>
                      <div className="flex flex-wrap gap-2">
-                       <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-xs font-medium border border-blue-200 hover:bg-blue-100 transition-all cursor-pointer">#VisitDubai</span>
-                       <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-xs font-medium border border-blue-200 hover:bg-blue-100 transition-all cursor-pointer">#DubaiSustainability</span>
-                       <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-xs font-medium border border-blue-200 hover:bg-blue-100 transition-all cursor-pointer">#GreenDubai</span>
-                       <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-xs font-medium border border-blue-200 hover:bg-blue-100 transition-all cursor-pointer">#UAE2071</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#VisitDubai</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#DubaiSustainability</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#GreenDubai</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#UAE2071</span>
                      </div>
                    </div>
                    
                    <div className="flex items-center space-x-4">
-                     <div className="w-20 text-xs font-semibold text-purple-700 flex items-center">
-                       <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
+                     <div className="w-20 text-xs font-semibold text-gray-700 flex items-center">
+                       <div className="w-2 h-2 bg-gray-500 rounded-full mr-2"></div>
                        Lifestyle
                      </div>
                      <div className="flex flex-wrap gap-2">
-                       <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-lg text-xs font-medium border border-purple-200 hover:bg-purple-100 transition-all cursor-pointer">#GuiltFreeTravel</span>
-                       <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-lg text-xs font-medium border border-purple-200 hover:bg-purple-100 transition-all cursor-pointer">#EcoWarrior</span>
-                       <span className="bg-purple-50 text-purple-700 px-3 py-1 rounded-lg text-xs font-medium border border-purple-200 hover:bg-purple-100 transition-all cursor-pointer">#ResponsibleTravel</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#GuiltFreeTravel</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#EcoWarrior</span>
+                       <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-lg text-xs font-medium border border-gray-100 hover:bg-gray-100 transition-all cursor-pointer">#ResponsibleTravel</span>
                      </div>
                    </div>
                  </div>
                </div>
 
                                             {/* Action Buttons */}
-               <div className="bg-white rounded-3xl p-8 border border-gray-200/50 shadow-lg">
+               <div className="bg-white rounded-xl p-8 border border-gray-100">
                  <div className="flex items-center justify-between mb-6">
                    <div>
                      <h4 className="text-xl font-bold text-gray-900 mb-1">Ready to Launch?</h4>
                      <p className="text-gray-600">Choose your preferred action to get started immediately</p>
                    </div>
-                   <div className="flex items-center space-x-2 text-sm text-emerald-600">
-                     <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                     <span className="font-semibold">All systems ready</span>
+                   <div className="flex items-center space-x-2 text-sm text-gray-600">
+                     <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                     <span className="font-medium">All systems ready</span>
                    </div>
                  </div>
                  
                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                   <button className="group relative overflow-hidden bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 text-white rounded-2xl p-6 font-bold hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-emerald-400/50">
-                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                     <div className="relative z-10">
-                       <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 mx-auto backdrop-blur-sm">
-                         <span className="text-2xl">🚀</span>
-                       </div>
-                       <div className="text-lg font-bold mb-2">Launch Campaign</div>
-                       <div className="text-sm opacity-90">Start immediately with full strategy deployment</div>
+                   <button className="group bg-gray-900 text-white rounded-lg p-6 font-semibold hover:bg-gray-800 transition-all duration-200">
+                     <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                       <ArrowRight className="w-6 h-6" />
                      </div>
+                     <div className="text-lg font-bold mb-2">Launch Campaign</div>
+                     <div className="text-sm opacity-90">Start immediately with full strategy deployment</div>
                    </button>
                    
-                   <button className="group relative bg-white border-2 border-emerald-500/30 text-emerald-700 rounded-2xl p-6 font-bold hover:bg-gradient-to-br hover:from-emerald-50 hover:to-green-50 hover:border-emerald-500/50 transition-all duration-300 shadow-sm hover:shadow-lg transform hover:-translate-y-1">
-                     <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-green-100 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:from-emerald-200 group-hover:to-green-200 transition-all duration-300">
-                       <span className="text-2xl">📋</span>
+                   <button className="group bg-white border-2 border-gray-100 text-gray-700 rounded-lg p-6 font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all duration-200">
+                     <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                       <BarChart3 className="w-6 h-6" />
                      </div>
                      <div className="text-lg font-bold mb-2 text-gray-900">Download Guide</div>
                      <div className="text-sm text-gray-600">Complete campaign playbook with templates</div>
@@ -4257,32 +4629,32 @@ const ExecutiveOverview = () => {
                        setShowCampaignSuggestion(false)
                        setShowBudgetBreakdown(false)
                      }}
-                     className="group relative bg-gradient-to-br from-gray-50 to-slate-100 text-gray-700 rounded-2xl p-6 font-bold hover:from-gray-100 hover:to-slate-200 transition-all duration-300 shadow-sm hover:shadow-lg transform hover:-translate-y-1 border border-gray-200/50"
+                     className="group bg-gray-100 text-gray-700 rounded-lg p-6 font-semibold hover:bg-gray-200 transition-all duration-200 border border-gray-100"
                    >
-                     <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-4 mx-auto shadow-sm group-hover:shadow-md transition-all duration-300">
-                       <span className="text-2xl text-gray-500">✕</span>
+                     <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 mx-auto">
+                       <X className="w-6 h-6 text-gray-500" />
                      </div>
                      <div className="text-lg font-bold mb-2">Close</div>
                      <div className="text-sm text-gray-500">Return to dashboard</div>
                    </button>
                  </div>
                  
-                 <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200/50">
+                 <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
                    <div className="flex items-center justify-center space-x-6 text-sm">
-                     <div className="flex items-center space-x-2 text-blue-700">
-                       <span className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                     <div className="flex items-center space-x-2 text-gray-700">
+                       <span className="w-4 h-4 bg-gray-500 rounded-full flex items-center justify-center">
                          <span className="text-xs text-white">✓</span>
                        </span>
                        <span className="font-medium">Strategy Validated</span>
                      </div>
-                     <div className="flex items-center space-x-2 text-blue-700">
-                       <span className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                     <div className="flex items-center space-x-2 text-gray-700">
+                       <span className="w-4 h-4 bg-gray-500 rounded-full flex items-center justify-center">
                          <span className="text-xs text-white">✓</span>
                        </span>
                        <span className="font-medium">Budget Optimized</span>
                      </div>
-                     <div className="flex items-center space-x-2 text-blue-700">
-                       <span className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                     <div className="flex items-center space-x-2 text-gray-700">
+                       <span className="w-4 h-4 bg-gray-500 rounded-full flex items-center justify-center">
                          <span className="text-xs text-white">✓</span>
                        </span>
                        <span className="font-medium">ROI Guaranteed</span>
@@ -4299,9 +4671,9 @@ const ExecutiveOverview = () => {
       {showRateManagement && (
         <>
           <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-80" onClick={() => setShowRateManagement(false)}></div>
-          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl z-90 border border-gray-100 flex flex-col">
+          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-lg z-90 border border-gray-100 flex flex-col">
             {/* Header */}
-            <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-b border-gray-200 p-6 flex-shrink-0">
+            <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-b border-gray-100 p-6 flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-1">Rate Management System</h2>
@@ -4345,7 +4717,7 @@ const ExecutiveOverview = () => {
               {rateManagementTab === 'trends' && (
                 <div className="space-y-6">
                   {/* Rate Trends Analysis */}
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <div className="p-6 border-b border-gray-100">
                       <div className="flex items-center justify-between">
                         <div>
@@ -4408,7 +4780,7 @@ const ExecutiveOverview = () => {
                       </div>
 
                                              {/* Rate Chart Interactive */}
-                       <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+                       <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
                          <div className="flex items-center justify-between p-4 border-b border-gray-100">
                            <div>
                              <h4 className="text-lg font-semibold text-gray-900">14-Day Rate Trends</h4>
@@ -4446,7 +4818,7 @@ const ExecutiveOverview = () => {
                                  >
                                    {/* Tooltip */}
                                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-                                     <div className="bg-gray-900 text-white text-xs rounded-lg p-3 shadow-lg min-w-max">
+                                     <div className="bg-gray-900 text-white text-xs rounded-lg p-3 shadow-sm min-w-max">
                                        <div className="font-semibold">{date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'})}</div>
                                        <div className="mt-1 space-y-1">
                                          <div className="flex justify-between space-x-4">
@@ -4569,7 +4941,7 @@ const ExecutiveOverview = () => {
               {rateManagementTab === 'ari' && (
                 <div className="space-y-6">
                   {/* ARI Update Interface */}
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <div className="p-6 border-b border-gray-100">
                       <div className="flex items-center justify-between">
                         <div>
@@ -4613,7 +4985,7 @@ const ExecutiveOverview = () => {
                             description: 'Base room with sustainable practices and eco-conscious features'
                           }
                         ].map((room, idx) => (
-                          <div key={idx} className="bg-gradient-to-r from-gray-50 to-emerald-50/30 rounded-2xl p-6 border border-gray-200">
+                          <div key={idx} className="bg-gradient-to-r from-gray-50 to-emerald-50/30 rounded-2xl p-6 border border-gray-100">
                             <div className="flex items-start justify-between mb-4">
                               <div className="flex-1">
                                 <h4 className="text-lg font-bold text-gray-900 mb-1">{room.type}</h4>
@@ -4632,7 +5004,7 @@ const ExecutiveOverview = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                               {/* Current Rate */}
-                              <div className="bg-white rounded-xl p-4 border border-gray-200">
+                              <div className="bg-white rounded-xl p-4 border border-gray-100">
                                 <div className="text-sm font-semibold text-gray-600 mb-2">Current Rate</div>
                                 <div className="text-2xl font-bold text-gray-900">${room.current}</div>
                                 <div className="text-xs text-gray-500 mt-1">Per night</div>
@@ -4704,9 +5076,9 @@ const ExecutiveOverview = () => {
       {showSoloRatesManagement && (
         <>
           <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-80" onClick={() => setShowSoloRatesManagement(false)}></div>
-          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl z-90 border border-gray-100 flex flex-col">
+          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-lg z-90 border border-gray-100 flex flex-col">
             {/* Header */}
-            <div className="bg-gradient-to-r from-violet-50 to-purple-50 border-b border-gray-200 p-6 flex-shrink-0">
+            <div className="bg-gradient-to-r from-violet-50 to-purple-50 border-b border-gray-100 p-6 flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-1">Solo Traveler Premium Rates</h2>
@@ -4750,7 +5122,7 @@ const ExecutiveOverview = () => {
               {soloRatesTab === 'trends' && (
                 <div className="space-y-6">
                   {/* Solo Market Analysis */}
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <div className="p-6 border-b border-gray-100">
                       <div className="flex items-center justify-between">
                         <div>
@@ -4813,7 +5185,7 @@ const ExecutiveOverview = () => {
                       </div>
 
                       {/* Solo Rate Trends Chart */}
-                      <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+                      <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
                         <div className="flex items-center justify-between p-4 border-b border-gray-100">
                           <div>
                             <h4 className="text-lg font-semibold text-gray-900">14-Day Solo Rate Trends</h4>
@@ -4852,7 +5224,7 @@ const ExecutiveOverview = () => {
                                 >
                                   {/* Tooltip */}
                                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-                                    <div className="bg-gray-900 text-white text-xs rounded-lg p-3 shadow-lg min-w-max">
+                                    <div className="bg-gray-900 text-white text-xs rounded-lg p-3 shadow-sm min-w-max">
                                       <div className="font-semibold">{date.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'})}</div>
                                       <div className="mt-1 space-y-1">
                                         <div className="flex justify-between space-x-4">
@@ -4985,7 +5357,7 @@ const ExecutiveOverview = () => {
               {soloRatesTab === 'ari' && (
                 <div className="space-y-6">
                   {/* Solo ARI Update Interface */}
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <div className="p-6 border-b border-gray-100">
                       <div className="flex items-center justify-between">
                         <div>
@@ -5060,7 +5432,7 @@ const ExecutiveOverview = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                               {/* Current Rate */}
-                              <div className="bg-white rounded-xl p-4 border border-gray-200">
+                              <div className="bg-white rounded-xl p-4 border border-gray-100">
                                 <div className="text-sm font-semibold text-gray-600 mb-2">Current Solo Rate</div>
                                 <div className="text-2xl font-bold text-gray-900">${room.current}</div>
                                 <div className="text-xs text-gray-500 mt-1">Per night</div>
@@ -5151,9 +5523,9 @@ const ExecutiveOverview = () => {
       {showBookingEngineModal && (
         <>
           <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-80" onClick={() => setShowBookingEngineModal(false)}></div>
-          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl z-90 border border-gray-100 flex flex-col">
+          <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-lg z-90 border border-gray-100 flex flex-col">
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200 p-6 flex-shrink-0">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100 p-6 flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-1">Solo Traveler Booking Engine</h2>
@@ -5197,7 +5569,7 @@ const ExecutiveOverview = () => {
               {bookingEngineTab === 'widget' && (
                 <div className="space-y-6">
                   {/* Sample Hotel Booking Widget */}
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                     <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
                       <div className="flex items-center justify-between">
                         <div>
@@ -5232,7 +5604,7 @@ const ExecutiveOverview = () => {
                             <div className="text-xs text-blue-600 font-medium">✓ Selected</div>
                           </div>
                           
-                          <div className="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300">
+                          <div className="border border-gray-100 rounded-xl p-4 cursor-pointer hover:border-gray-300">
                             <div className="flex items-center space-x-3 mb-2">
                               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                                 <span className="text-gray-600 text-lg">👥</span>
@@ -5244,7 +5616,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
                           
-                          <div className="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300">
+                          <div className="border border-gray-100 rounded-xl p-4 cursor-pointer hover:border-gray-300">
                             <div className="flex items-center space-x-3 mb-2">
                               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                                 <span className="text-gray-600 text-lg">👨‍👩‍👧‍👦</span>
@@ -5298,7 +5670,7 @@ const ExecutiveOverview = () => {
                           </div>
                         </div>
                         
-                        <button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                        <button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm">
                           View Solo Traveler Rooms & Rates
                         </button>
                       </div>
@@ -5353,7 +5725,7 @@ const ExecutiveOverview = () => {
               {bookingEngineTab === 'rooms' && (
                 <div className="space-y-6">
                   {/* Solo Traveler Rooms */}
-                  <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <div className="p-6 border-b border-gray-100">
                       <div className="flex items-center justify-between">
                         <div>
@@ -5429,7 +5801,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
                           
-                          <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                          <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm">
                             Book Solo Executive Suite
                           </button>
                         </div>
@@ -5489,7 +5861,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
                           
-                          <button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                          <button className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-emerald-600 hover:to-emerald-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm">
                             Book Solo Comfort Room
                           </button>
                         </div>
@@ -5549,7 +5921,7 @@ const ExecutiveOverview = () => {
                             </div>
                           </div>
                           
-                          <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-purple-600 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg">
+                          <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-purple-600 hover:to-purple-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm">
                             Book Solo Standard Plus
                           </button>
                         </div>
@@ -5590,6 +5962,366 @@ const ExecutiveOverview = () => {
             </div>
           </div>
         </>
+      )}
+
+      {/* Ancillary Spending Drawer */}
+      {showAncillarySpendingDrawer && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Dubai Ancillary Spending Analysis</h2>
+                  <p className="text-gray-600">Detailed breakdown of visitor spending across service categories</p>
+                </div>
+                <button
+                  onClick={() => setShowAncillarySpendingDrawer(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="p-6 space-y-8">
+              {/* Overall Ancillary Spending */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-blue-900">Overall Ancillary Spending</h3>
+                    <p className="text-blue-700">Average per visitor beyond core accommodation/transport</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-blue-600">$892</div>
+                    <div className="text-sm text-blue-600">per visitor</div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-gray-900">52%</div>
+                    <div className="text-sm text-gray-600">of total trip spend</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-gray-900">+18%</div>
+                    <div className="text-sm text-gray-600">YoY growth</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-gray-900">$14.8B</div>
+                    <div className="text-sm text-gray-600">annual market size</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-gray-900">85%</div>
+                    <div className="text-sm text-gray-600">visitor participation</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Hotel Ancillaries */}
+              <div className="bg-white rounded-xl border border-gray-200">
+                <div className="p-6 border-b border-gray-100">
+                  <h3 className="text-xl font-bold text-gray-900">Hotel Ancillary Services</h3>
+                  <p className="text-gray-600">Additional services and amenities beyond room rates</p>
+                </div>
+                <div className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Spa & Wellness</h4>
+                        <div className="text-lg font-bold text-emerald-600">$285</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Spa treatments</span>
+                          <span className="font-medium">$165</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Fitness classes</span>
+                          <span className="font-medium">$45</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Wellness programs</span>
+                          <span className="font-medium">$75</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">73% participation rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Dining & Beverages</h4>
+                        <div className="text-lg font-bold text-blue-600">$198</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Room service</span>
+                          <span className="font-medium">$78</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Minibar</span>
+                          <span className="font-medium">$52</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Restaurant upgrades</span>
+                          <span className="font-medium">$68</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">89% participation rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Services & Amenities</h4>
+                        <div className="text-lg font-bold text-purple-600">$142</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Laundry/dry cleaning</span>
+                          <span className="font-medium">$45</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Business center</span>
+                          <span className="font-medium">$28</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Concierge services</span>
+                          <span className="font-medium">$69</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">65% participation rate</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-gray-900">Total Hotel Ancillaries</span>
+                      <span className="text-xl font-bold text-gray-900">$625</span>
+                    </div>
+                    <div className="text-sm text-gray-600 mt-1">Average per guest per stay</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Airline Ancillaries */}
+              <div className="bg-white rounded-xl border border-gray-200">
+                <div className="p-6 border-b border-gray-100">
+                  <h3 className="text-xl font-bold text-gray-900">Airline Ancillary Services</h3>
+                  <p className="text-gray-600">Additional services purchased with flights to/from Dubai</p>
+                </div>
+                <div className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Seat & Comfort</h4>
+                        <div className="text-lg font-bold text-blue-600">$89</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Seat selection</span>
+                          <span className="font-medium">$35</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Extra legroom</span>
+                          <span className="font-medium">$42</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Priority boarding</span>
+                          <span className="font-medium">$12</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">68% participation rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Baggage & Cargo</h4>
+                        <div className="text-lg font-bold text-orange-600">$73</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Extra baggage</span>
+                          <span className="font-medium">$48</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Overweight fees</span>
+                          <span className="font-medium">$15</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Priority handling</span>
+                          <span className="font-medium">$10</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">42% participation rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">In-Flight Services</h4>
+                        <div className="text-lg font-bold text-emerald-600">$46</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Wi-Fi</span>
+                          <span className="font-medium">$18</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Meals & drinks</span>
+                          <span className="font-medium">$22</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Entertainment</span>
+                          <span className="font-medium">$6</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">54% participation rate</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-gray-900">Total Airline Ancillaries</span>
+                      <span className="text-xl font-bold text-gray-900">$208</span>
+                    </div>
+                    <div className="text-sm text-gray-600 mt-1">Average per passenger roundtrip</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Car Rental Ancillaries */}
+              <div className="bg-white rounded-xl border border-gray-200">
+                <div className="p-6 border-b border-gray-100">
+                  <h3 className="text-xl font-bold text-gray-900">Car Rental Ancillary Services</h3>
+                  <p className="text-gray-600">Additional services and insurance for rental vehicles</p>
+                </div>
+                <div className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Insurance & Protection</h4>
+                        <div className="text-lg font-bold text-green-600">$95</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Full coverage</span>
+                          <span className="font-medium">$58</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Liability insurance</span>
+                          <span className="font-medium">$22</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Personal protection</span>
+                          <span className="font-medium">$15</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">78% participation rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Equipment & Accessories</h4>
+                        <div className="text-lg font-bold text-indigo-600">$42</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">GPS navigation</span>
+                          <span className="font-medium">$18</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Child seats</span>
+                          <span className="font-medium">$12</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Additional driver</span>
+                          <span className="font-medium">$12</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">35% participation rate</div>
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-semibold text-gray-900">Services & Upgrades</h4>
+                        <div className="text-lg font-bold text-purple-600">$27</div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Vehicle upgrade</span>
+                          <span className="font-medium">$15</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Fuel service</span>
+                          <span className="font-medium">$8</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Express service</span>
+                          <span className="font-medium">$4</span>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="text-xs text-gray-600">28% participation rate</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-gray-900">Total Car Rental Ancillaries</span>
+                      <span className="text-xl font-bold text-gray-900">$164</span>
+                    </div>
+                    <div className="text-sm text-gray-600 mt-1">Average per rental (5-day average)</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Summary and Insights */}
+              <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Key Ancillary Insights</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-emerald-600">Hotels</div>
+                    <div className="text-sm text-gray-600">Highest ancillary revenue</div>
+                    <div className="text-lg font-semibold text-gray-900">$625</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">Airlines</div>
+                    <div className="text-sm text-gray-600">Growing segment</div>
+                    <div className="text-lg font-semibold text-gray-900">$208</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-purple-600">Car Rentals</div>
+                    <div className="text-sm text-gray-600">High conversion rate</div>
+                    <div className="text-lg font-semibold text-gray-900">$164</div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-white rounded-lg border border-gray-200">
+                  <h4 className="font-semibold text-gray-900 mb-2">Revenue Opportunity</h4>
+                  <p className="text-sm text-gray-700">
+                    Ancillary services represent 52% of total visitor spending in Dubai. Focus on high-participation 
+                    services like hotel dining (89%) and airline seat selection (68%) for maximum revenue impact.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

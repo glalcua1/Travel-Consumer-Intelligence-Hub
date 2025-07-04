@@ -689,238 +689,71 @@ const ProductInsights = () => {
 
 
 
-      {/* Behavioral Revenue Drivers - Magazine Style */}
-      <div className="bg-white rounded-2xl p-8 border border-gray-100" data-section="product-performance">
-        <div className="border-b border-gray-200 pb-6 mb-8">
+      {/* Key Performance Metrics - Magazine Style */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100">
+        <div className="border-b border-gray-100 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-3xl font-light text-gray-900 mb-2">Behavioral Revenue <span className="font-bold">Drivers</span></h2>
-              <p className="text-gray-500 text-sm">Key trends beyond price influencing revenue opportunities • {currentPeriod}</p>
+              <h2 className="text-3xl font-light text-gray-900 mb-2">Key Performance <span className="font-bold">Metrics</span></h2>
+              <p className="text-gray-500 text-sm">Core revenue indicators • {currentPeriod} Performance</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-light text-emerald-600 mb-1">+{activeTab === 'hotels' ? '127' : activeTab === 'airlines' ? '93' : '106'}<span className="text-lg">%</span></p>
+              <p className="text-4xl font-light text-emerald-600 mb-1">+{activeTab === 'hotels' ? '8.2' : activeTab === 'airlines' ? '12.8' : '15.3'}<span className="text-lg">%</span></p>
               <p className="text-xs text-gray-500 mb-2">Avg Growth</p>
               <div className="flex items-center justify-center text-xs text-green-600">
                 <TrendingUp className="w-3 h-3 mr-1" />
-                <span className="font-semibold">High Impact</span>
+                <span className="font-semibold">Strong Performance</span>
               </div>
             </div>
           </div>
         </div>
-          
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {activeTab === 'hotels' && (
-              <>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
-                    <span className="text-2xl">🌱</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+156%</h4>
-                    <p className="text-sm font-medium text-gray-600">Sustainable Travel</p>
-                    <p className="text-xs text-gray-500">18% willing to pay premium for eco-certified rooms</p>
-                    <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Sustainable Travel International • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-rose-200 transition-colors">
-                    <span className="text-2xl">👩</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+124%</h4>
-                    <p className="text-sm font-medium text-gray-600">Solo Female Travel</p>
-                    <p className="text-xs text-gray-500">23% higher spend on room upgrades & amenities</p>
-                    <div className="w-12 h-1 bg-rose-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Solo Travel World • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                    <span className="text-2xl">💼</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+89%</h4>
-                    <p className="text-sm font-medium text-gray-600">Bleisure Travel</p>
-                    <p className="text-xs text-gray-500">31% higher total spend per extended stay</p>
-                    <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Business Travel Association • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                    <span className="text-2xl">🧘</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+42%</h4>
-                    <p className="text-sm font-medium text-gray-600">Wellness Premium</p>
-                    <p className="text-xs text-gray-500">Digital detox packages command premium rates</p>
-                    <div className="w-12 h-1 bg-purple-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Global Wellness Institute • Q3 2025</div>
-                  </div>
-                </div>
-              </>
-            )}
-            {activeTab === 'airlines' && (
-              <>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                    <span className="text-2xl">💼</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+24%</h4>
-                    <p className="text-sm font-medium text-gray-600">Business Travel Recovery</p>
-                    <p className="text-xs text-gray-500">Corporate rates optimization opportunity</p>
-                    <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: GBTA • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                    <span className="text-2xl">✈️</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+19%</h4>
-                    <p className="text-sm font-medium text-gray-600">Premium Class Demand</p>
-                    <p className="text-xs text-gray-500">Yield management opportunities in business class</p>
-                    <div className="w-12 h-1 bg-purple-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: IATA • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
-                    <span className="text-2xl">🌐</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+22%</h4>
-                    <p className="text-sm font-medium text-gray-600">Hub Traffic Growth</p>
-                    <p className="text-xs text-gray-500">Strategic slot optimization potential</p>
-                    <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Dubai Airports • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                    <span className="text-2xl">🌱</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+12%</h4>
-                    <p className="text-sm font-medium text-gray-600">Sustainability Premium</p>
-                    <p className="text-xs text-gray-500">Eco-conscious travelers willing to pay more</p>
-                    <div className="w-12 h-1 bg-green-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Air Transport Action Group • Q3 2025</div>
-                  </div>
-                </div>
-              </>
-            )}
-            {activeTab === 'carRentals' && (
-              <>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-200 transition-colors">
-                    <span className="text-2xl">🚗</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+34%</h4>
-                    <p className="text-sm font-medium text-gray-600">Luxury Fleet Preference</p>
-                    <p className="text-xs text-gray-500">Premium vehicle demand driving rate increases</p>
-                    <div className="w-12 h-1 bg-amber-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: AutoRental News • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-teal-200 transition-colors">
-                    <span className="text-2xl">🗺️</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+26%</h4>
-                    <p className="text-sm font-medium text-gray-600">Tourism Vehicle Demand</p>
-                    <p className="text-xs text-gray-500">Seasonal pricing optimization opportunity</p>
-                    <div className="w-12 h-1 bg-teal-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Dubai Tourism Analytics • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-200 transition-colors">
-                    <span className="text-2xl">🏢</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">+21%</h4>
-                    <p className="text-sm font-medium text-gray-600">Corporate Fleet Services</p>
-                    <p className="text-xs text-gray-500">B2B subscription pricing model potential</p>
-                    <div className="w-12 h-1 bg-indigo-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Enterprise Fleet Management • Q3 2025</div>
-                  </div>
-                </div>
-                <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
-                    <span className="text-2xl">🔄</span>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-gray-900">40%</h4>
-                    <p className="text-sm font-medium text-gray-600">Subscription Revenue</p>
-                    <p className="text-xs text-gray-500">New business model opportunity</p>
-                    <div className="w-12 h-1 bg-emerald-500 rounded-full mx-auto mt-3"></div>
-                    <div className="text-xs text-gray-400 mt-2">Source: Mobility Intelligence Report • Q3 2025</div>
-                  </div>
-                </div>
-              </>
-            )}
-        </div>
-
-        {/* Revenue Performance Summary - Magazine Style */}
-        <div className="border-t border-gray-200 pt-8 mt-8">
-          <div className="mb-6">
-            <h4 className="text-xl font-light text-gray-900 mb-2">Key Performance <span className="font-bold">Metrics</span></h4>
-            <p className="text-gray-500 text-sm">Core revenue indicators • {currentPeriod} Performance</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+              <span className="text-2xl">💰</span>
+            </div>
+            <div className="space-y-1">
+              <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '485' : activeTab === 'airlines' ? '625' : '285'}</h5>
+              <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'ADR (Avg Daily Rate)' : activeTab === 'airlines' ? 'Avg Ticket Price' : 'Avg Rental Rate'}</p>
+              <p className="text-xs text-green-600 font-semibold">+8.2% vs {previousPeriod}</p>
+              <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'STR Global' : activeTab === 'airlines' ? 'IATA Economics' : 'Car Rental Intelligence'} • Q3 2025</div>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                <span className="text-2xl">💰</span>
-              </div>
-              <div className="space-y-1">
-                <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '485' : activeTab === 'airlines' ? '625' : '285'}</h5>
-                <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'ADR (Avg Daily Rate)' : activeTab === 'airlines' ? 'Avg Ticket Price' : 'Avg Rental Rate'}</p>
-                <p className="text-xs text-green-600 font-semibold">+8.2% vs {previousPeriod}</p>
-                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'STR Global' : activeTab === 'airlines' ? 'IATA Economics' : 'Car Rental Intelligence'} • Q3 2025</div>
-              </div>
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+              <span className="text-2xl">📊</span>
             </div>
-            
-            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                <span className="text-2xl">📊</span>
-              </div>
-              <div className="space-y-1">
-                <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '78.5%' : activeTab === 'airlines' ? '82.1%' : '71.3%'}</h5>
-                <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'Occupancy Rate' : activeTab === 'airlines' ? 'Load Factor' : 'Utilization Rate'}</p>
-                <p className="text-xs text-green-600 font-semibold">+4.1% vs {previousPeriod}</p>
-                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'STR Global' : activeTab === 'airlines' ? 'IATA Stats' : 'Fleet Utilization Analytics'} • Q3 2025</div>
-              </div>
+            <div className="space-y-1">
+              <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '78.5%' : activeTab === 'airlines' ? '82.1%' : '71.3%'}</h5>
+              <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'Occupancy Rate' : activeTab === 'airlines' ? 'Load Factor' : 'Utilization Rate'}</p>
+              <p className="text-xs text-green-600 font-semibold">+4.1% vs {previousPeriod}</p>
+              <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'STR Global' : activeTab === 'airlines' ? 'IATA Stats' : 'Fleet Utilization Analytics'} • Q3 2025</div>
             </div>
-            
-            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
-                <span className="text-2xl">📈</span>
-              </div>
-              <div className="space-y-1">
-                <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '381' : activeTab === 'airlines' ? '513' : '204'}</h5>
-                <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'RevPAR' : activeTab === 'airlines' ? 'RevPAX' : 'Revenue per Rental'}</p>
-                <p className="text-xs text-green-600 font-semibold">+12.8% vs {previousPeriod}</p>
-                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'Revenue Analytics International' : activeTab === 'airlines' ? 'Aviation Revenue Intelligence' : 'Rental Revenue Metrics'} • Q3 2025</div>
-              </div>
+          </div>
+          
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
+              <span className="text-2xl">📈</span>
             </div>
-            
-            <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
-                <span className="text-2xl">🎯</span>
-              </div>
-              <div className="space-y-1">
-                <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '24.5%' : activeTab === 'airlines' ? '18.2%' : '31.7%'}</h5>
-                <p className="text-sm font-medium text-gray-600">Profit Margin</p>
-                <p className="text-xs text-green-600 font-semibold">+2.3% vs {previousPeriod}</p>
-                <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'Hospitality Financial Analytics' : activeTab === 'airlines' ? 'Aviation Financial Intelligence' : 'Car Rental Profitability Index'} • Q3 2025</div>
-              </div>
+            <div className="space-y-1">
+              <h5 className="text-2xl font-bold text-gray-900">${activeTab === 'hotels' ? '381' : activeTab === 'airlines' ? '513' : '204'}</h5>
+              <p className="text-sm font-medium text-gray-600">{activeTab === 'hotels' ? 'RevPAR' : activeTab === 'airlines' ? 'RevPAX' : 'Revenue per Rental'}</p>
+              <p className="text-xs text-green-600 font-semibold">+12.8% vs {previousPeriod}</p>
+              <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'Revenue Analytics International' : activeTab === 'airlines' ? 'Aviation Revenue Intelligence' : 'Rental Revenue Metrics'} • Q3 2025</div>
+            </div>
+          </div>
+          
+          <div className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300">
+            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
+              <span className="text-2xl">🎯</span>
+            </div>
+            <div className="space-y-1">
+              <h5 className="text-2xl font-bold text-gray-900">{activeTab === 'hotels' ? '24.5%' : activeTab === 'airlines' ? '18.2%' : '31.7%'}</h5>
+              <p className="text-sm font-medium text-gray-600">Profit Margin</p>
+              <p className="text-xs text-green-600 font-semibold">+2.3% vs {previousPeriod}</p>
+              <div className="text-xs text-gray-400 mt-1">Source: {activeTab === 'hotels' ? 'Hospitality Financial Analytics' : activeTab === 'airlines' ? 'Aviation Financial Intelligence' : 'Car Rental Profitability Index'} • Q3 2025</div>
             </div>
           </div>
         </div>
@@ -928,7 +761,7 @@ const ProductInsights = () => {
 
       {/* Product Performance Overview - Magazine Style */}
       <div className="bg-white rounded-2xl p-8 border border-gray-100">
-        <div className="border-b border-gray-200 pb-6 mb-8">
+        <div className="border-b border-gray-100 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-3xl font-light text-gray-900 mb-2">Product Performance <span className="font-bold">Portfolio</span></h2>
@@ -948,7 +781,7 @@ const ProductInsights = () => {
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
           {productPerformance.map((product, index) => (
-            <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300 border border-gray-200">
+            <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-6 transition-all duration-300 border border-gray-100">
               <div className="space-y-3">
                 <h4 className="text-lg font-bold text-gray-900">{product.product}</h4>
                 <div className="space-y-2">
@@ -978,11 +811,11 @@ const ProductInsights = () => {
 
         {/* Detailed Performance Cards */}
         {showProductDetails && (
-          <div className="mt-8 pt-8 border-t border-gray-200">
+          <div className="mt-8 pt-8 border-t border-gray-100">
             <h3 className="text-xl font-bold text-gray-900 mb-6">Detailed Performance Metrics</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
               {productPerformance.map((product, index) => (
-          <div key={index} className="bg-white rounded border border-gray-200 p-4 hover:border-gray-300 transition-colors">
+          <div key={index} className="bg-white rounded border border-gray-100 p-4 hover:border-gray-300 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-medium text-gray-900 truncate">{product.product}</h3>
               <span className={`text-xs font-medium ${
@@ -1081,10 +914,10 @@ const ProductInsights = () => {
       </div>
 
       {/* Highlighted Product Portfolio Lifecycle */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 shadow-xl">
+      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 shadow-md">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
-            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-sm">
               <Star className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -1106,7 +939,7 @@ const ProductInsights = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {productLifecycle.map((stage, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+            <div key={index} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <h4 className={`text-xl font-bold ${
                   stage.stage === 'Introduction' ? 'text-blue-600' :
@@ -1225,7 +1058,7 @@ const ProductInsights = () => {
       </div>
 
       {/* Full Width Market Intelligence */}
-      <div className="bg-white rounded border border-gray-200 p-6">
+      <div className="bg-white rounded border border-gray-100 p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-medium text-gray-900">{currentConfig.analysisScope} Market Intelligence</h3>
@@ -1427,7 +1260,7 @@ const ProductInsights = () => {
         </div>
         
         {/* Market Outlook */}
-        <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+        <div className="mt-6 p-4 bg-gray-50 border border-gray-100 rounded-lg">
           <h4 className="font-medium text-gray-900 mb-2">Market Outlook & Opportunities</h4>
           <div className="text-sm text-gray-700 space-y-1">
             {activeTab === 'hotels' && (
@@ -1457,7 +1290,7 @@ const ProductInsights = () => {
 
       {/* Revenue Channel Performance - Magazine Style */}
       <div className="bg-white rounded-2xl p-8 border border-gray-100">
-        <div className="border-b border-gray-200 pb-6 mb-8">
+        <div className="border-b border-gray-100 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-3xl font-light text-gray-900 mb-2">Revenue Channel <span className="font-bold">Performance</span></h2>
@@ -1523,7 +1356,7 @@ const ProductInsights = () => {
 
         {/* Detailed Channel Breakdown */}
         {showChannelDetails && (
-          <div className="mt-8 pt-8 border-t border-gray-200">
+          <div className="mt-8 pt-8 border-t border-gray-100">
             <h3 className="text-xl font-bold text-gray-900 mb-6">Channel Performance Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {[
@@ -1574,10 +1407,10 @@ const ProductInsights = () => {
             onClick={() => setShowActionPlan(false)}
           ></div>
           
-          <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-xl transform transition-transform">
+          <div className="absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-md transform transition-transform">
             <div className="flex flex-col h-full">
               {/* Drawer Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900">Revenue Action Plan</h2>
                   <p className="text-sm text-gray-600">Get personalized recommendations for your {activeTab.slice(0, -1)} business</p>
@@ -1624,7 +1457,7 @@ const ProductInsights = () => {
                              
                              {/* Search suggestions dropdown */}
                              {businessInfo.name && getBusinessSuggestions(businessInfo.name).length > 0 && (
-                               <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                               <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-sm max-h-60 overflow-y-auto">
                                  <div className="p-2 border-b border-gray-100">
                                    <div className="text-xs text-gray-500 font-medium">
                                      {getBusinessSuggestions(businessInfo.name).length} {activeTab.slice(0, -1)} businesses found
@@ -1662,7 +1495,7 @@ const ProductInsights = () => {
                              
                              {/* No results message */}
                              {businessInfo.name && businessInfo.name.length > 0 && getBusinessSuggestions(businessInfo.name).length === 0 && (
-                               <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4">
+                               <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-sm p-4">
                                  <div className="text-center text-gray-500">
                                    <div className="text-sm font-medium">No businesses found</div>
                                    <div className="text-xs mt-1">
@@ -1936,7 +1769,7 @@ const ProductInsights = () => {
                     <div className="space-y-4">
                       <h4 className="text-lg font-semibold text-gray-900">Strategic Action Plan</h4>
                       {generateActionPlan().map((section, sectionIndex) => (
-                        <div key={sectionIndex} className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
+                        <div key={sectionIndex} className="border border-gray-100 rounded-lg p-4 hover:border-gray-300 transition-colors">
                           <div className="flex items-center justify-between mb-3">
                             <h5 className="font-medium text-gray-900">{section.category}</h5>
                             <div className="flex items-center space-x-2">
@@ -1964,7 +1797,7 @@ const ProductInsights = () => {
                     </div>
 
                     {/* Implementation Support */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div className="bg-gray-50 border border-gray-100 rounded-lg p-4">
                       <h4 className="font-medium text-gray-900 mb-2">Implementation & Support</h4>
                       <p className="text-sm text-gray-600 mb-4">
                         Our revenue optimization experts can help implement these behavioral-driven strategies for maximum impact.
@@ -1996,11 +1829,11 @@ const ProductInsights = () => {
     {showDataSources && (
         <>
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setShowDataSources(false)}></div>
-          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
             showDataSources ? 'translate-x-0' : 'translate-x-full'
           }`}>
             {/* Drawer Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
               <div className="flex items-center space-x-3">
                 <div className="p-3 bg-blue-100 rounded-xl">
                   <Database className="w-6 h-6 text-blue-600" />

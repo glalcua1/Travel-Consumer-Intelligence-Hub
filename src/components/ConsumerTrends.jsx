@@ -797,76 +797,11 @@ const ConsumerTrends = () => {
 
 
 
-      {/* Revenue-Driving Behavioral Trends - Magazine Style */}
-      <div className="bg-white rounded-2xl p-8 border border-gray-100 mb-8" data-section="revenue-drivers">
-        <div className="border-b border-gray-200 pb-6 mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-light text-gray-900 mb-2">Revenue-Driving <span className="font-bold">Behavioral Trends</span></h2>
-              <p className="text-gray-500 text-sm">Premium opportunities with high willingness to pay • {currentPeriod} Intelligence</p>
-            </div>
-            <button
-              onClick={() => setShowDataSources(true)}
-              className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
-              title="Data Sources"
-            >
-              <HelpCircle className="w-4 h-4 text-gray-400" />
-            </button>
-          </div>
-        </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {revenueDrivers.map((trend, index) => {
-          const Icon = trend.icon
-          const colorMap = {
-            'from-emerald-500 to-green-600': { bg: 'bg-emerald-100', text: 'text-emerald-600' },
-            'from-blue-500 to-indigo-600': { bg: 'bg-blue-100', text: 'text-blue-600' },
-            'from-rose-500 to-pink-600': { bg: 'bg-rose-100', text: 'text-rose-600' },
-            'from-purple-500 to-violet-600': { bg: 'bg-purple-100', text: 'text-purple-600' }
-          }
-          const colors = colorMap[trend.color] || { bg: 'bg-gray-100', text: 'text-gray-600' }
-          
-          return (
-            <div key={index} className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all duration-300">
-              {/* Header with Icon left, Impact badge right */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-10 h-10 ${colors.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                    <Icon className={`w-5 h-5 ${colors.text}`} />
-                  </div>
-                  <h3 className="text-sm font-bold text-gray-900 leading-tight">{trend.trend}</h3>
-                </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  trend.impact === 'High' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                }`}>
-                  {trend.impact}
-                </span>
-              </div>
-              
-              {/* Data Grid */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="text-center">
-                  <p className="text-lg font-bold text-emerald-600">+{trend.growth}%</p>
-                  <p className="text-xs text-gray-500">Growth</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-lg font-bold text-blue-600">+{trend.premiumWillingness}%</p>
-                  <p className="text-xs text-gray-500">Premium</p>
-                </div>
-                <div className="text-center col-span-2 mt-2 pt-2 border-t border-gray-100">
-                  <p className="text-xl font-bold text-green-600">+{trend.revenueUplift}K</p>
-                  <p className="text-xs text-gray-500">Revenue Uplift (AED)</p>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-      </div>
+
 
       {/* Dubai Source Markets Intelligence - Magazine Style */}
       <div className="bg-white rounded-2xl p-8 border border-gray-100">
-        <div className="border-b border-gray-200 pb-6 mb-8">
+        <div className="border-b border-gray-100 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-3xl font-light text-gray-900 mb-2">
@@ -949,7 +884,7 @@ const ConsumerTrends = () => {
 
           {/* Secondary Markets - Progressive Disclosure */}
           {showSecondaryMarkets && (
-            <div className="border-t border-gray-200 pt-6 mt-6">
+            <div className="border-t border-gray-100 pt-6 mt-6">
               <h5 className="text-lg font-semibold text-gray-900 mb-4">Secondary Markets</h5>
               <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                 {[
@@ -975,7 +910,7 @@ const ConsumerTrends = () => {
 
 
         {/* Key Insights */}
-        <div className="border-t border-gray-200 pt-6">
+        <div className="border-t border-gray-100 pt-6">
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
               <Lightbulb className="w-4 h-4 text-emerald-600" />
@@ -1011,7 +946,7 @@ const ConsumerTrends = () => {
             {/* Audience Analysis & Demographics - Magazine Style */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100">
         {/* Header - Clean & Minimal */}
-        <div className="border-b border-gray-200 pb-4 mb-6">
+        <div className="border-b border-gray-100 pb-4 mb-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-2xl font-light text-gray-900 mb-1">
@@ -1029,33 +964,57 @@ const ConsumerTrends = () => {
           </div>
         </div>
 
-        {/* Age Demographics - Magazine Layout */}
-        <div className="mb-8">
-          <div className="mb-5">
-            <h4 className="text-xl font-light text-gray-900 mb-1">Age <span className="font-bold">Demographics</span></h4>
-            <p className="text-gray-500 text-sm">Visitor distribution by age groups</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {audienceData.ageGroups.map((group, index) => (
-              <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-3 transition-all duration-300">
-                <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-gray-200 transition-colors">
-                  {index === 0 ? <Briefcase className="w-6 h-6 text-gray-600" /> : 
-                   index === 1 ? <Laptop className="w-6 h-6 text-gray-600" /> : 
-                   index === 2 ? <Home className="w-6 h-6 text-gray-600" /> : 
-                   index === 3 ? <GraduationCap className="w-6 h-6 text-gray-600" /> : 
-                   <Crown className="w-6 h-6 text-gray-600" />}
-                </div>
-                <div className="space-y-0.5">
-                  <h5 className="text-lg font-bold text-gray-900">{group.percentage}%</h5>
-                  <p className="text-sm font-medium text-gray-600">{group.age} years</p>
-                  <p className="text-xs text-gray-500">{group.travelers}</p>
-                  <p className="text-sm font-semibold text-emerald-600">{group.spending}</p>
-                </div>
+        {/* Main Content with Image Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
+          {/* Left Side - Image */}
+          <div className="lg:col-span-2">
+            <div className="relative rounded-2xl overflow-hidden h-full min-h-[250px]">
+              <img 
+                src="/106034408_VNU_M746_10.jpg" 
+                alt="Dubai Tourism Demographics" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2 text-white">
+                <p className="text-sm font-medium">Dubai Tourism Market</p>
+                <p className="text-xl font-bold">6.5M Visitors</p>
+                <p className="text-sm opacity-90">{currentPeriod}</p>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Right Side - Demographics Data */}
+          <div className="lg:col-span-3">
+            {/* Age Demographics */}
+            <div className="mb-8">
+              <div className="mb-5">
+                <h4 className="text-xl font-light text-gray-900 mb-1">Age <span className="font-bold">Demographics</span></h4>
+                <p className="text-gray-500 text-sm">Visitor distribution by age groups</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                {audienceData.ageGroups.map((group, index) => (
+                  <div key={index} className="text-center group hover:bg-gray-50 rounded-xl p-3 transition-all duration-300">
+                    <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-gray-200 transition-colors">
+                      {index === 0 ? <Briefcase className="w-6 h-6 text-gray-600" /> : 
+                       index === 1 ? <Laptop className="w-6 h-6 text-gray-600" /> : 
+                       index === 2 ? <Home className="w-6 h-6 text-gray-600" /> : 
+                       index === 3 ? <GraduationCap className="w-6 h-6 text-gray-600" /> : 
+                       <Crown className="w-6 h-6 text-gray-600" />}
+                    </div>
+                    <div className="space-y-0.5">
+                      <h5 className="text-lg font-bold text-gray-900">{group.percentage}%</h5>
+                      <p className="text-sm font-medium text-gray-600">{group.age} years</p>
+                      <p className="text-xs text-gray-500">{group.travelers}</p>
+                      <p className="text-sm font-semibold text-emerald-600">{group.spending}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
+
+
 
         {/* Show More/Less Button */}
         <div className="text-center">
@@ -1077,7 +1036,7 @@ const ConsumerTrends = () => {
         {showExtendedDemographics && (
           <>
             {/* Travel Types - Magazine Layout */}
-            <div className="mb-8 mt-6 border-t border-gray-200 pt-6">
+            <div className="mb-8 mt-6 border-t border-gray-100 pt-6">
               <div className="mb-5">
                 <h4 className="text-xl font-light text-gray-900 mb-1">Travel <span className="font-bold">Types</span></h4>
                 <p className="text-gray-500 text-sm">Purpose and spending patterns</p>
@@ -1137,7 +1096,7 @@ const ConsumerTrends = () => {
         )}
 
         {/* Key Insights - Magazine Footer */}
-        <div className="border-t border-gray-200 pt-4">
+        <div className="border-t border-gray-100 pt-4">
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
               <Lightbulb className="w-4 h-4 text-emerald-600" />
@@ -1172,7 +1131,7 @@ const ConsumerTrends = () => {
 
       {/* Consumer Behavior Evolution - Magazine Style */}
       <div className="bg-white rounded-2xl p-8 border border-gray-100">
-        <div className="border-b border-gray-200 pb-6 mb-8">
+        <div className="border-b border-gray-100 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-3xl font-light text-gray-900 mb-2">Consumer Behavior <span className="font-bold">Evolution</span></h3>
@@ -1234,7 +1193,7 @@ const ConsumerTrends = () => {
         </div>
 
         {/* Key Behavior Insights */}
-        <div className="border-t border-gray-200 pt-6">
+        <div className="border-t border-gray-100 pt-6">
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
               <TrendingUp className="w-4 h-4 text-blue-600" />
@@ -1273,7 +1232,7 @@ const ConsumerTrends = () => {
 
       {/* Strategic Insights Summary - Magazine Style */}
       <div className="bg-white rounded-2xl p-8 border border-gray-100">
-        <div className="border-b border-gray-200 pb-6 mb-8">
+        <div className="border-b border-gray-100 pb-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-3xl font-light text-gray-900 mb-2">Strategic Consumer <span className="font-bold">Insights</span></h3>
@@ -1288,7 +1247,7 @@ const ConsumerTrends = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Sustainability Focus */}
-          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+          <div className="border border-gray-100 rounded-xl p-6 hover:shadow-sm transition-all duration-300">
             <div className="flex items-start space-x-4 mb-4">
               <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center">
                 <Leaf className="w-8 h-8 text-emerald-600" />
@@ -1308,7 +1267,7 @@ const ConsumerTrends = () => {
           </div>
 
           {/* Solo Female Travel */}
-          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+          <div className="border border-gray-100 rounded-xl p-6 hover:shadow-sm transition-all duration-300">
             <div className="flex items-start space-x-4 mb-4">
               <div className="w-16 h-16 bg-rose-100 rounded-xl flex items-center justify-center">
                 <Heart className="w-8 h-8 text-rose-600" />
@@ -1328,7 +1287,7 @@ const ConsumerTrends = () => {
           </div>
 
           {/* Bleisure Revolution */}
-          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+          <div className="border border-gray-100 rounded-xl p-6 hover:shadow-sm transition-all duration-300">
             <div className="flex items-start space-x-4 mb-4">
               <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center">
                 <Zap className="w-8 h-8 text-blue-600" />
@@ -1348,7 +1307,7 @@ const ConsumerTrends = () => {
           </div>
 
           {/* Digital Integration */}
-          <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
+          <div className="border border-gray-100 rounded-xl p-6 hover:shadow-sm transition-all duration-300">
             <div className="flex items-start space-x-4 mb-4">
               <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
                 <Target className="w-8 h-8 text-purple-600" />
@@ -1373,11 +1332,11 @@ const ConsumerTrends = () => {
       {showDataSources && (
         <>
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setShowDataSources(false)}></div>
-          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+          <div className={`fixed right-0 top-0 h-full w-full max-w-4xl bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
             showDataSources ? 'translate-x-0' : 'translate-x-full'
           }`}>
             {/* Drawer Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-emerald-50">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-emerald-50">
               <div className="flex items-center space-x-3">
                 <div className="p-3 bg-blue-100 rounded-xl">
                   <Database className="w-6 h-6 text-blue-600" />
@@ -1648,7 +1607,7 @@ const ConsumerTrends = () => {
           className={`absolute inset-0 bg-black transition-all duration-300 ${isDrawerOpen ? 'bg-opacity-20' : 'bg-opacity-0'}`} 
           onClick={closeDrawer}
         ></div>
-        <div className={`absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`}>
             <div className="flex flex-col h-full">
               {/* Drawer Header */}
               <div className="bg-gradient-to-r from-teal-600 to-emerald-600 text-white p-6 flex items-center justify-between">
@@ -1700,7 +1659,7 @@ const ConsumerTrends = () => {
                           
                           {/* Business Suggestions Dropdown */}
                           {showSuggestions && businessSuggestions.length > 0 && (
-                            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-sm max-h-48 overflow-y-auto">
                               {businessSuggestions.map((business, index) => (
                                 <div
                                   key={index}
@@ -1854,7 +1813,7 @@ const ConsumerTrends = () => {
                       {generateTrendBasedRecommendations().map((recommendation) => {
                         const Icon = recommendation.icon
                         return (
-                          <div key={recommendation.id} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                          <div key={recommendation.id} className="bg-gray-50 rounded-xl p-6 border border-gray-100">
                             <div className="flex items-start justify-between mb-4">
                               <div className="flex items-center space-x-3">
                                 <div className={`p-2 rounded-lg bg-gradient-to-br ${
@@ -1899,7 +1858,7 @@ const ConsumerTrends = () => {
                               </h5>
                               <div className="grid grid-cols-1 gap-3">
                                 {recommendation.campaigns.slice(0, 2).map((campaign, i) => (
-                                  <div key={i} className="bg-white border border-gray-200 rounded-lg p-4">
+                                  <div key={i} className="bg-white border border-gray-100 rounded-lg p-4">
                                     <div className="flex items-start justify-between mb-2">
                                       <h6 className="font-bold text-gray-900 text-sm">{campaign.name}</h6>
                                       <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
@@ -1963,7 +1922,7 @@ const ConsumerTrends = () => {
                             </div>
 
                             {/* Launch Campaign CTA */}
-                            <div className="mt-4 pt-4 border-t border-gray-200">
+                            <div className="mt-4 pt-4 border-t border-gray-100">
                               <button
                                 className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 flex items-center justify-center space-x-2"
                                 onClick={() => {

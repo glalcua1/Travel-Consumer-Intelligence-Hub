@@ -135,7 +135,7 @@ const ActionPlanner = () => {
       />
 
       {!showRecommendations && (
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100" data-section="business-form">
+        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100" data-section="business-form">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-blue-100 rounded-lg">
               <Building2 className="w-5 h-5 text-blue-600" />
@@ -252,7 +252,7 @@ const ActionPlanner = () => {
             {generateRecommendations().map((rec) => {
               const Icon = rec.icon
               return (
-                <div key={rec.id} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                <div key={rec.id} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
                   <div className="flex items-start justify-between mb-6">
                     <div className="flex items-center space-x-4">
                       <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600">

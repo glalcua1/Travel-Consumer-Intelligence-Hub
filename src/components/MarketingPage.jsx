@@ -25,11 +25,16 @@ import {
 
 const MarketingPage = ({ onSignup }) => {
   const [showSignupModal, setShowSignupModal] = useState(false)
+  const [showLoginModal, setShowLoginModal] = useState(false)
   const [signupForm, setSignupForm] = useState({
     name: '',
     email: '',
     company: '',
     businessType: 'hotel',
+    password: ''
+  })
+  const [loginForm, setLoginForm] = useState({
+    email: '',
     password: ''
   })
 
@@ -39,6 +44,22 @@ const MarketingPage = ({ onSignup }) => {
     setShowSignupModal(false)
     if (onSignup) {
       onSignup(signupForm)
+    }
+  }
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault()
+    console.log('Login form submitted:', loginForm)
+    setShowLoginModal(false)
+    if (onSignup) {
+      // For demo purposes, create a user object from login
+      const loginUser = {
+        name: loginForm.email.split('@')[0], // Use email prefix as name
+        email: loginForm.email,
+        company: 'Demo Company',
+        businessType: 'hotel'
+      }
+      onSignup(loginUser)
     }
   }
 
@@ -172,6 +193,12 @@ const MarketingPage = ({ onSignup }) => {
               <a href="#features" className="text-gray-600 hover:text-gray-900 font-medium">Features</a>
               <a href="#pricing" className="text-gray-600 hover:text-gray-900 font-medium">Pricing</a>
               <button
+                onClick={() => setShowLoginModal(true)}
+                className="text-gray-600 hover:text-gray-900 font-medium px-4 py-2 rounded-lg border border-gray-300 hover:border-gray-400 transition-all duration-200"
+              >
+                Login
+              </button>
+              <button
                 onClick={() => setShowSignupModal(true)}
                 className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all duration-200"
               >
@@ -203,7 +230,7 @@ const MarketingPage = ({ onSignup }) => {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/30">
+            <div className="bg-white/70 backdrop-blur-lg rounded-3xl p-8 shadow-lg border border-white/30 relative overflow-hidden">
               <div className="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <Zap className="w-4 h-4" />
                 <span>AI-Powered Travel Intelligence</span>
@@ -218,7 +245,7 @@ const MarketingPage = ({ onSignup }) => {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <button
                   onClick={() => setShowSignupModal(true)}
-                  className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-emerald-700 hover:to-blue-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
+                  className="bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-emerald-700 hover:to-blue-700 transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm"
                 >
                   <span>Start Free Trial</span>
                   <ArrowRight className="w-5 h-5" />
@@ -243,10 +270,36 @@ const MarketingPage = ({ onSignup }) => {
                 </div>
               </div>
             </div>
-            <div className="relative">
-              {/* Hero Card Content */}
-              <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/30">
-                <div className="bg-gradient-to-r from-emerald-500 to-blue-600 rounded-xl p-4 text-white mb-4 shadow-lg">
+            <div className="relative lg:block hidden">
+              {/* Hero Card Content - Slides out from left card like a sleeve */}
+              <div className="absolute -left-2 top-12 w-72 bg-emerald-50/60 backdrop-blur-lg rounded-r-2xl rounded-l-lg shadow-lg p-5 border-r border-t border-b border-emerald-200/40 transform translate-x-0 opacity-100 transition-all duration-500 ease-out animate-slideInFromLeft z-10">
+                <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-4 text-white mb-4 shadow-sm">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-sm">Revenue Opportunity Detected</h3>
+                    <Lightbulb className="w-5 h-5" />
+                  </div>
+                  <p className="text-emerald-100 text-xs">Solo female travel trend: +124% growth</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-emerald-800 font-medium text-sm">Potential Revenue Uplift</span>
+                    <span className="font-bold text-emerald-700 text-sm">+$285K</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-emerald-800 font-medium text-sm">Implementation Time</span>
+                    <span className="font-bold text-emerald-600 text-sm">15-30 days</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-emerald-800 font-medium text-sm">Success Probability</span>
+                    <span className="font-bold text-emerald-700 text-sm">94%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Mobile version - no animation */}
+            <div className="relative lg:hidden">
+              <div className="bg-emerald-50/60 backdrop-blur-lg rounded-2xl shadow-lg p-6 border border-emerald-200/40">
+                <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl p-4 text-white mb-4 shadow-sm">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-bold">Revenue Opportunity Detected</h3>
                     <Lightbulb className="w-6 h-6" />
@@ -255,16 +308,16 @@ const MarketingPage = ({ onSignup }) => {
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-medium">Potential Revenue Uplift</span>
-                    <span className="font-bold text-green-600">+$285K</span>
+                    <span className="text-emerald-800 font-medium">Potential Revenue Uplift</span>
+                    <span className="font-bold text-emerald-700">+$285K</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-medium">Implementation Time</span>
-                    <span className="font-bold text-blue-600">15-30 days</span>
+                    <span className="text-emerald-800 font-medium">Implementation Time</span>
+                    <span className="font-bold text-emerald-600">15-30 days</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-700 font-medium">Success Probability</span>
-                    <span className="font-bold text-purple-600">94%</span>
+                    <span className="text-emerald-800 font-medium">Success Probability</span>
+                    <span className="font-bold text-emerald-700">94%</span>
                   </div>
                 </div>
               </div>
@@ -286,7 +339,7 @@ const MarketingPage = ({ onSignup }) => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-red-100">
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-red-100">
               <div className="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mb-6">
                 <Eye className="w-8 h-8 text-red-600" />
               </div>
@@ -300,7 +353,7 @@ const MarketingPage = ({ onSignup }) => {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-yellow-100">
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-yellow-100">
               <div className="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6">
                 <Clock className="w-8 h-8 text-yellow-600" />
               </div>
@@ -314,7 +367,7 @@ const MarketingPage = ({ onSignup }) => {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-blue-100">
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-blue-100">
               <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
                 <Target className="w-8 h-8 text-blue-600" />
               </div>
@@ -441,7 +494,7 @@ const MarketingPage = ({ onSignup }) => {
               }
               
               return (
-                <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div key={index} className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
                   <div className={`w-16 h-16 ${colorClasses[feature.color]} rounded-2xl flex items-center justify-center mb-6`}>
                     <Icon className="w-8 h-8" />
                   </div>
@@ -502,7 +555,7 @@ const MarketingPage = ({ onSignup }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {pricingPlans.map((plan, index) => (
-              <div key={index} className={`bg-white rounded-2xl p-8 shadow-lg ${plan.popular ? 'ring-2 ring-emerald-500 transform scale-105' : ''} relative`}>
+              <div key={index} className={`bg-white rounded-2xl p-8 shadow-sm ${plan.popular ? 'ring-2 ring-emerald-500 transform scale-105' : ''} relative`}>
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span className="bg-emerald-500 text-white px-4 py-1 rounded-full text-sm font-medium">
@@ -735,6 +788,118 @@ const MarketingPage = ({ onSignup }) => {
               <p className="text-center text-sm text-gray-500 mt-6">
                 By signing up, you agree to our Terms of Service and Privacy Policy
               </p>
+              
+              <div className="mt-4 text-center">
+                <p className="text-sm text-gray-500">
+                  Already have an account?{' '}
+                  <button
+                    onClick={() => {
+                      setShowSignupModal(false)
+                      setShowLoginModal(true)
+                    }}
+                    className="font-medium text-emerald-600 hover:text-emerald-500"
+                  >
+                    Sign in
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Login Modal */}
+      {showLoginModal && (
+        <>
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={() => setShowLoginModal(false)}></div>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-md w-full p-8 transform transition-all duration-300 scale-100">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
+                <button
+                  onClick={() => setShowLoginModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+              
+              <form onSubmit={handleLoginSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      required
+                      value={loginForm.email}
+                      onChange={(e) => setLoginForm({...loginForm, email: e.target.value})}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      placeholder="you@company.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="password"
+                      required
+                      value={loginForm.password}
+                      onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      placeholder="Enter your password"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <input
+                      id="remember-me"
+                      name="remember-me"
+                      type="checkbox"
+                      className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                      Remember me
+                    </label>
+                  </div>
+                  <div className="text-sm">
+                    <a href="#" className="font-medium text-emerald-600 hover:text-emerald-500">
+                      Forgot password?
+                    </a>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all duration-200"
+                >
+                  Sign In
+                </button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p className="text-sm text-gray-500">
+                  Don't have an account?{' '}
+                  <button
+                    onClick={() => {
+                      setShowLoginModal(false)
+                      setShowSignupModal(true)
+                    }}
+                    className="font-medium text-emerald-600 hover:text-emerald-500"
+                  >
+                    Sign up for free
+                  </button>
+                </p>
+              </div>
             </div>
           </div>
         </>

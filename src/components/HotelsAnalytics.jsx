@@ -112,7 +112,7 @@ const HotelsAnalytics = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl p-6 shadow-lg">
+      <div className="bg-white rounded-xl p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Hotels Analytics</h1>
@@ -140,7 +140,7 @@ const HotelsAnalytics = () => {
       {/* Revenue Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* RevPAR & Occupancy Trends */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">RevPAR & Performance Metrics</h3>
           <ResponsiveContainer width="100%" height={300}>
             <ComposedChart data={revParData}>
@@ -171,7 +171,7 @@ const HotelsAnalytics = () => {
         </div>
 
         {/* Pricing Optimization */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Dynamic Pricing Opportunities</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={pricingData}>
@@ -192,12 +192,12 @@ const HotelsAnalytics = () => {
       </div>
 
       {/* Competitor Analysis */}
-      <div className="bg-white rounded-xl p-6 shadow-lg">
+      <div className="bg-white rounded-xl p-6 shadow-sm">
         <h3 className="text-lg font-bold text-gray-900 mb-4">Competitive Landscape Analysis</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200">
+              <tr className="border-b border-gray-100">
                 <th className="text-left py-3 px-4 font-semibold text-gray-900">Hotel</th>
                 <th className="text-right py-3 px-4 font-semibold text-gray-900">ADR</th>
                 <th className="text-right py-3 px-4 font-semibold text-gray-900">Occupancy</th>
@@ -250,7 +250,7 @@ const HotelsAnalytics = () => {
       {/* Guest Segments & Seasonal Trends */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Guest Segments */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Guest Segment Analysis</h3>
           <div className="space-y-4">
             {guestSegments.map((segment, index) => (
@@ -279,7 +279,7 @@ const HotelsAnalytics = () => {
         </div>
 
         {/* Seasonal Booking Patterns */}
-        <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
           <h3 className="text-lg font-bold text-gray-900 mb-4">Seasonal Booking Patterns</h3>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={seasonalTrends}>
