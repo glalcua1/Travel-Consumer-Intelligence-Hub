@@ -292,13 +292,13 @@ const DubaiHeroCard = ({ activeSection = '', onExploreClick, compact = false, us
           {/* Key Stats in Single Row */}
           <div className="grid grid-cols-4 gap-4 mb-4">
             {keyStats.map((stat, index) => (
-              <div key={index} className="bg-white/5 rounded-lg p-3">
-                <div className="flex items-center justify-between mb-1">
-                  <stat.icon className="w-4 h-4 text-emerald-400" />
-                  <span className="text-emerald-400 text-xs font-medium">{stat.change}</span>
+              <div key={index} className="bg-white/5 rounded-lg p-5 min-h-[120px] flex flex-col justify-center">
+                <div className="flex items-center justify-between mb-2">
+                  <stat.icon className="w-5 h-5 text-emerald-400" />
+                  <span className="text-emerald-400 text-sm font-medium">{stat.change}</span>
                 </div>
-                <div className="text-lg font-bold text-white">{stat.value}</div>
-                <div className="text-white/60 text-xs">{stat.label}</div>
+                <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+                <div className="text-white/60 text-sm">{stat.label}</div>
               </div>
             ))}
           </div>

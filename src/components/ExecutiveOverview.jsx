@@ -1069,7 +1069,7 @@ const ExecutiveOverview = ({ userInfo }) => {
   return (
     <div className="min-h-screen">
             {/* Header */}
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm" data-coach="data-overview">
         <div className="px-6 py-6">
           <div className="flex items-center justify-between">
             <div>
@@ -1091,8 +1091,12 @@ const ExecutiveOverview = ({ userInfo }) => {
             </div>
             <div className="flex items-center space-x-3">
               <button
-                onClick={() => setShowActionPlan(true)}
+                onClick={() => {
+                  console.log('🎯 Get Action Plan button clicked!')
+                  setShowActionPlan(true)
+                }}
                 className="flex items-center space-x-2 px-6 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-sm transition-all duration-200"
+                data-coach="action-plans-button"
               >
                 <Brain className="w-4 h-4" />
                 <span>Get Action Plan</span>
@@ -1105,6 +1109,17 @@ const ExecutiveOverview = ({ userInfo }) => {
                 <Database className="w-4 h-4" />
                 <span>Sources</span>
               </button>
+              {/* Developer Tour Reset Button */}
+              {process.env.NODE_ENV === 'development' && (
+                <button
+                  onClick={() => window.resetCoachMarks && window.resetCoachMarks()}
+                  className="flex items-center space-x-2 px-4 py-3 text-sm font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 transition-colors"
+                  title="Reset Coach Marks Tour (Dev Only)"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                  <span>Reset Tour</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -1713,7 +1728,7 @@ const ExecutiveOverview = ({ userInfo }) => {
             />
 
             {/* Dubai Consumer Trends Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-section="consumer-trends">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-section="consumer-trends" data-coach="consumer-trends">
               {dubaiConsumerTrends.map((trend, index) => (
                 <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
                   <div className="flex items-center justify-between mb-4">
@@ -2378,7 +2393,7 @@ const ExecutiveOverview = ({ userInfo }) => {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300" onClick={() => setShowActionPlan(false)}></div>
           <div className={`fixed right-0 top-0 h-full w-full max-w-6xl bg-white shadow-lg transform transition-transform duration-500 ease-out z-50 ${
             showActionPlan ? 'translate-x-0' : 'translate-x-full'
-          }`}>
+          }`} data-coach="action-drawer">
             {/* Drawer Header */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-100 border-b border-blue-200 p-6 sticky top-0 z-10">
               <div className="flex items-center justify-between mb-6">
@@ -4171,17 +4186,17 @@ const ExecutiveOverview = ({ userInfo }) => {
              setShowBudgetBreakdown(false)
            }}></div>
           <div className="fixed inset-x-4 top-1/2 transform -translate-y-1/2 max-w-6xl mx-auto bg-white rounded-2xl shadow-lg z-70 max-h-[85vh] overflow-y-auto border border-gray-100">
-            <div className="flex items-center justify-between p-8 border-b border-gray-100 bg-gradient-to-r from-green-50 to-emerald-50">
+            <div className="flex items-center justify-between p-8 border-b border-emerald-100 bg-emerald-50/60 backdrop-blur-lg">
                              <div>
-                 <h2 className="text-3xl font-bold text-green-800 mb-2">Green Awareness Campaign Strategy</h2>
-                 <p className="text-green-600 text-lg">Ready-to-launch sustainability campaign for Dubai market</p>
+                 <h2 className="text-3xl font-bold text-emerald-800 mb-2">Green Awareness Campaign Strategy</h2>
+                 <p className="text-emerald-600 text-lg">Ready-to-launch sustainability campaign for Dubai market</p>
                </div>
                                 <button
                    onClick={() => {
                      setShowCampaignSuggestion(false)
                      setShowBudgetBreakdown(false)
                    }}
-                   className="p-3 hover:bg-gray-100 rounded-xl transition-all duration-200 text-gray-500 hover:text-gray-700"
+                   className="p-3 hover:bg-white/70 rounded-xl transition-all duration-200 text-emerald-600 hover:text-emerald-700 bg-white/40 backdrop-blur-sm"
                  >
                    <X className="w-6 h-6" />
                  </button>
@@ -4195,36 +4210,30 @@ const ExecutiveOverview = ({ userInfo }) => {
                    <div className="flex items-start justify-between mb-8">
                      <div className="flex-1">
                        <div className="flex items-center mb-4">
-                         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                           <Leaf className="w-6 h-6 text-green-600" />
-                         </div>
                          <div>
-                           <div className="text-xs font-medium text-green-600 uppercase tracking-wider mb-1">Premium Campaign Strategy</div>
-                           <h3 className="text-2xl font-bold text-gray-900 leading-tight">"Dubai's Greenest Stay Experience"</h3>
+                           <div className="text-xs font-medium text-emerald-600 uppercase tracking-wider mb-1">Premium Campaign Strategy</div>
+                           <h3 className="text-2xl font-bold text-emerald-900 leading-tight">"Dubai's Greenest Stay Experience"</h3>
                          </div>
                        </div>
-                       <div className="flex items-center space-x-6 text-sm text-gray-600">
+                       <div className="flex items-center space-x-6 text-sm text-emerald-700">
                          <div className="flex items-center space-x-2">
-                           <Calendar className="w-4 h-4" />
                            <span className="font-medium">60-Day Strategy</span>
                          </div>
                          <div className="flex items-center space-x-2">
-                           <Network className="w-4 h-4" />
                            <span className="font-medium">Multi-Channel</span>
                          </div>
                          <div className="flex items-center space-x-2">
-                           <Zap className="w-4 h-4" />
                            <span className="font-medium">AI-Optimized</span>
                          </div>
                        </div>
                      </div>
                      
                      {/* Performance Badge */}
-                     <div className="bg-green-50 rounded-xl p-6 border border-green-200 min-w-[140px]">
+                     <div className="bg-emerald-50/60 backdrop-blur-lg rounded-xl p-6 border border-emerald-200/40 min-w-[140px]">
                        <div className="text-center">
-                         <div className="text-3xl font-bold text-green-800 mb-1">+22%</div>
-                         <div className="text-xs font-medium text-green-600 uppercase tracking-wider">Revenue Growth</div>
-                         <div className="text-xs text-gray-500 mt-1">Projected Increase</div>
+                         <div className="text-3xl font-bold text-emerald-800 mb-1">+22%</div>
+                         <div className="text-xs font-medium text-emerald-600 uppercase tracking-wider">Revenue Growth</div>
+                         <div className="text-xs text-emerald-600 mt-1">Projected Increase</div>
                        </div>
                      </div>
                    </div>
@@ -4233,66 +4242,46 @@ const ExecutiveOverview = ({ userInfo }) => {
                    <div className="grid grid-cols-3 gap-4">
                      <div 
                        onClick={() => setShowBudgetBreakdown(!showBudgetBreakdown)}
-                       className="group bg-gray-50 rounded-lg p-6 border border-gray-100 hover:border-gray-300 transition-all duration-200 cursor-pointer"
+                       className="group bg-emerald-50/60 backdrop-blur-lg rounded-lg p-6 border border-emerald-200/40 hover:border-emerald-300/60 transition-all duration-200 cursor-pointer"
                        title="Click for detailed budget breakdown"
                      >
-                       <div className="flex items-start justify-between mb-4">
-                         <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
-                           <Calculator className="w-5 h-5 text-gray-600" />
-                         </div>
-                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                           <BarChart3 className="w-4 h-4 text-gray-400" />
-                         </div>
-                       </div>
-                       <div className="text-2xl font-bold text-gray-900 mb-1">$150K</div>
-                       <div className="text-sm font-medium text-gray-600 mb-2">Campaign Investment</div>
-                       <div className="text-xs bg-white text-gray-600 px-3 py-1 rounded-md font-medium border border-gray-100">
+                       <div className="text-2xl font-bold text-emerald-800 mb-1">$150K</div>
+                       <div className="text-sm font-medium text-emerald-700 mb-2">Campaign Investment</div>
+                       <div className="text-xs bg-white/80 text-emerald-600 px-3 py-1 rounded-md font-medium border border-emerald-200/40">
                          {showBudgetBreakdown ? 'Hide breakdown' : 'View breakdown'}
                        </div>
                      </div>
                      
-                     <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
-                       <div className="flex items-start justify-between mb-4">
-                         <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
-                           <TrendingUp className="w-5 h-5 text-gray-600" />
-                         </div>
-                         <Target className="w-4 h-4 text-gray-400" />
-                       </div>
-                       <div className="text-2xl font-bold text-gray-900 mb-1">425%</div>
-                       <div className="text-sm font-medium text-gray-600 mb-2">Expected ROI</div>
-                       <div className="text-xs bg-white text-gray-600 px-3 py-1 rounded-md font-medium border border-gray-100">
+                     <div className="bg-emerald-50/60 backdrop-blur-lg rounded-lg p-6 border border-emerald-200/40">
+                       <div className="text-2xl font-bold text-emerald-800 mb-1">425%</div>
+                       <div className="text-sm font-medium text-emerald-700 mb-2">Expected ROI</div>
+                       <div className="text-xs bg-white/80 text-emerald-600 px-3 py-1 rounded-md font-medium border border-emerald-200/40">
                          Industry Leading
                        </div>
                      </div>
                      
-                     <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
-                       <div className="flex items-start justify-between mb-4">
-                         <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
-                           <Calendar className="w-5 h-5 text-gray-600" />
-                         </div>
-                         <ArrowRight className="w-4 h-4 text-gray-400" />
-                       </div>
-                       <div className="text-2xl font-bold text-gray-900 mb-1">60</div>
-                       <div className="text-sm font-medium text-gray-600 mb-2">Campaign Days</div>
-                       <div className="text-xs bg-white text-gray-600 px-3 py-1 rounded-md font-medium border border-gray-100">
+                     <div className="bg-emerald-50/60 backdrop-blur-lg rounded-lg p-6 border border-emerald-200/40">
+                       <div className="text-2xl font-bold text-emerald-800 mb-1">60</div>
+                       <div className="text-sm font-medium text-emerald-700 mb-2">Campaign Days</div>
+                       <div className="text-xs bg-white/80 text-emerald-600 px-3 py-1 rounded-md font-medium border border-emerald-200/40">
                          Fast Launch
                        </div>
                      </div>
                    </div>
                    
                    {/* Quick Stats Bar */}
-                   <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                   <div className="mt-6 p-4 bg-emerald-50/60 backdrop-blur-lg rounded-lg border border-emerald-200/40">
                      <div className="flex items-center justify-between text-sm">
                        <div className="flex items-center space-x-6">
-                         <div className="text-gray-600">
-                           <span className="font-medium text-gray-900">Target:</span> 89% sustainability-focused travelers
+                         <div className="text-emerald-700">
+                           <span className="font-medium text-emerald-800">Target:</span> 89% sustainability-focused travelers
                          </div>
-                         <div className="text-gray-600">
-                           <span className="font-medium text-gray-900">Reach:</span> 2.5M+ Dubai visitors annually
+                         <div className="text-emerald-700">
+                           <span className="font-medium text-emerald-800">Reach:</span> 2.5M+ Dubai visitors annually
                          </div>
                        </div>
-                       <div className="flex items-center space-x-2 text-green-600">
-                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                       <div className="flex items-center space-x-2 text-emerald-600">
+                         <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                          <span className="font-medium">Ready to Launch</span>
                        </div>
                      </div>
@@ -4395,8 +4384,8 @@ const ExecutiveOverview = ({ userInfo }) => {
 
                               {/* Campaign Visual */}
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                 <div className="bg-gray-50 rounded-xl p-8 border border-gray-100">
-                  <h4 className="text-lg font-bold text-gray-900 mb-4">Campaign Visual Concept</h4>
+                 <div className="bg-emerald-50/60 backdrop-blur-lg rounded-xl p-8 border border-emerald-200/40">
+                  <h4 className="text-lg font-bold text-emerald-900 mb-4">Campaign Visual Concept</h4>
                   
                   {/* Mock Instagram Post */}
                   <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
@@ -4736,9 +4725,6 @@ const ExecutiveOverview = ({ userInfo }) => {
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
                         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200/50">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                              <span className="text-white text-lg">💰</span>
-                            </div>
                             <span className="text-blue-600 text-sm font-semibold">+12%</span>
                           </div>
                           <div className="text-2xl font-bold text-gray-900 mb-1">$387</div>
@@ -4747,9 +4733,6 @@ const ExecutiveOverview = ({ userInfo }) => {
                         
                         <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200/50">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
-                              <span className="text-white text-lg">📈</span>
-                            </div>
                             <span className="text-emerald-600 text-sm font-semibold">+18%</span>
                           </div>
                           <div className="text-2xl font-bold text-gray-900 mb-1">$298</div>
@@ -4758,9 +4741,6 @@ const ExecutiveOverview = ({ userInfo }) => {
                         
                         <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-4 border border-purple-200/50">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center">
-                              <span className="text-white text-lg">🏨</span>
-                            </div>
                             <span className="text-purple-600 text-sm font-semibold">+8%</span>
                           </div>
                           <div className="text-2xl font-bold text-gray-900 mb-1">77%</div>
@@ -4769,9 +4749,6 @@ const ExecutiveOverview = ({ userInfo }) => {
                         
                         <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200/50">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center">
-                              <span className="text-white text-lg">🎯</span>
-                            </div>
                             <span className="text-orange-600 text-sm font-semibold">92%</span>
                           </div>
                           <div className="text-2xl font-bold text-gray-900 mb-1">Clean</div>
@@ -4917,10 +4894,9 @@ const ExecutiveOverview = ({ userInfo }) => {
                             { name: 'Agoda', rate: '$379', parity: '-8%', status: 'critical', color: 'red' },
                             { name: 'Direct', rate: '$399', parity: '+3%', status: 'excellent', color: 'blue' }
                           ].map((channel, idx) => (
-                            <div key={idx} className={`bg-white rounded-xl p-4 border-2 border-${channel.color}-200/50 shadow-sm`}>
+                            <div key={idx} className="bg-white rounded-xl p-4 shadow-sm">
                               <div className="flex items-center justify-between mb-3">
                                 <div className="font-semibold text-gray-900">{channel.name}</div>
-                                <div className={`w-3 h-3 rounded-full bg-${channel.color}-400`}></div>
                               </div>
                               <div className="text-xl font-bold text-gray-900 mb-1">{channel.rate}</div>
                               <div className={`text-sm font-medium ${
@@ -5525,7 +5501,7 @@ const ExecutiveOverview = ({ userInfo }) => {
           <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-80" onClick={() => setShowBookingEngineModal(false)}></div>
           <div className="fixed inset-x-4 top-4 bottom-4 max-w-7xl mx-auto bg-white rounded-3xl shadow-lg z-90 border border-gray-100 flex flex-col">
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100 p-6 flex-shrink-0">
+            <div className="bg-gray-50/60 backdrop-blur-lg border-b border-gray-200/40 p-6 flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-1">Solo Traveler Booking Engine</h2>
@@ -5533,9 +5509,9 @@ const ExecutiveOverview = ({ userInfo }) => {
                 </div>
                 <button
                   onClick={() => setShowBookingEngineModal(false)}
-                  className="p-3 hover:bg-white/70 rounded-xl transition-all duration-200 hover:scale-110 bg-white/40 backdrop-blur-sm"
+                  className="p-3 hover:bg-white/70 rounded-xl transition-all duration-200 hover:scale-110 bg-white/40 backdrop-blur-sm text-gray-600"
                 >
-                  <X className="w-6 h-6 text-gray-600" />
+                  <X className="w-6 h-6" />
                 </button>
               </div>
               
@@ -5545,21 +5521,21 @@ const ExecutiveOverview = ({ userInfo }) => {
                   onClick={() => setBookingEngineTab('widget')}
                   className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                     bookingEngineTab === 'widget' 
-                      ? 'bg-blue-500 text-white shadow-sm' 
-                      : 'text-gray-600 hover:bg-white/70'
+                      ? 'bg-gray-900 text-white shadow-sm' 
+                      : 'text-gray-700 hover:bg-white/70'
                   }`}
                 >
-                  🔧 Booking Widget
+                  Booking Widget
                 </button>
                 <button
                   onClick={() => setBookingEngineTab('rooms')}
                   className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                     bookingEngineTab === 'rooms' 
-                      ? 'bg-blue-500 text-white shadow-sm' 
-                      : 'text-gray-600 hover:bg-white/70'
+                      ? 'bg-gray-900 text-white shadow-sm' 
+                      : 'text-gray-700 hover:bg-white/70'
                   }`}
                 >
-                  🏨 Solo Rooms & Rates
+                  Solo Rooms & Rates
                 </button>
               </div>
             </div>
@@ -5569,19 +5545,19 @@ const ExecutiveOverview = ({ userInfo }) => {
               {bookingEngineTab === 'widget' && (
                 <div className="space-y-6">
                   {/* Sample Hotel Booking Widget */}
-                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                    <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
+                  <div className="bg-white/80 backdrop-blur-lg rounded-2xl border border-gray-200/40 shadow-sm overflow-hidden">
+                    <div className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6">
                       <div className="flex items-center justify-between">
                         <div>
                           <h3 className="text-2xl font-bold mb-2">The Ritz-Carlton Dubai</h3>
-                          <p className="text-blue-100">Luxury beachfront resort • Dubai Marina</p>
+                          <p className="text-gray-300">Luxury beachfront resort • Dubai Marina</p>
                         </div>
                         <div className="text-right">
-                          <div className="flex items-center space-x-2 text-blue-100 mb-1">
+                          <div className="flex items-center space-x-2 text-yellow-400 mb-1">
                             <Star className="w-5 h-5 fill-current" />
                             <span className="font-semibold">4.8/5</span>
                           </div>
-                          <div className="text-sm text-blue-100">Solo Traveler Certified</div>
+                          <div className="text-sm text-emerald-400">Solo Traveler Certified</div>
                         </div>
                       </div>
                     </div>
@@ -5591,20 +5567,20 @@ const ExecutiveOverview = ({ userInfo }) => {
                       <div className="mb-6">
                         <h4 className="text-lg font-semibold text-gray-900 mb-4">Select Your Travel Style</h4>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                          <div className="border-2 border-blue-500 bg-blue-50 rounded-xl p-4 cursor-pointer">
+                          <div className="border-2 border-gray-800 bg-gray-50 rounded-xl p-4 cursor-pointer">
                             <div className="flex items-center space-x-3 mb-2">
-                              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                              <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
                                 <span className="text-white text-lg">👤</span>
                               </div>
                               <div>
-                                <div className="font-semibold text-blue-900">Solo Traveler</div>
-                                <div className="text-sm text-blue-700">Personalized experience</div>
+                                <div className="font-semibold text-gray-900">Solo Traveler</div>
+                                <div className="text-sm text-gray-700">Personalized experience</div>
                               </div>
                             </div>
-                            <div className="text-xs text-blue-600 font-medium">✓ Selected</div>
+                            <div className="text-xs text-emerald-600 font-medium">✓ Selected</div>
                           </div>
                           
-                          <div className="border border-gray-100 rounded-xl p-4 cursor-pointer hover:border-gray-300">
+                          <div className="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300">
                             <div className="flex items-center space-x-3 mb-2">
                               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                                 <span className="text-gray-600 text-lg">👥</span>
@@ -5616,7 +5592,7 @@ const ExecutiveOverview = ({ userInfo }) => {
                             </div>
                           </div>
                           
-                          <div className="border border-gray-100 rounded-xl p-4 cursor-pointer hover:border-gray-300">
+                          <div className="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300">
                             <div className="flex items-center space-x-3 mb-2">
                               <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                                 <span className="text-gray-600 text-lg">👨‍👩‍👧‍👦</span>
@@ -5631,14 +5607,14 @@ const ExecutiveOverview = ({ userInfo }) => {
                       </div>
                       
                       {/* Booking Form */}
-                      <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-                        <h4 className="text-lg font-semibold text-blue-900 mb-4">Book Your Solo Experience</h4>
+                      <div className="bg-gray-50/80 backdrop-blur-lg rounded-xl p-6 border border-gray-200/40">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Book Your Solo Experience</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
                             <input 
                               type="date" 
-                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                               defaultValue="2025-02-15"
                             />
                           </div>
@@ -5646,7 +5622,7 @@ const ExecutiveOverview = ({ userInfo }) => {
                             <label className="block text-sm font-medium text-gray-700 mb-2">Check-out Date</label>
                             <input 
                               type="date" 
-                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                               defaultValue="2025-02-18"
                             />
                           </div>
@@ -5655,13 +5631,13 @@ const ExecutiveOverview = ({ userInfo }) => {
                         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Solo Traveler</label>
-                            <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                               <option>1 Adult</option>
                             </select>
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Solo Preferences</label>
-                            <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                               <option>Safety & Security Priority</option>
                               <option>Social & Community Access</option>
                               <option>Privacy & Quiet</option>
@@ -5670,49 +5646,49 @@ const ExecutiveOverview = ({ userInfo }) => {
                           </div>
                         </div>
                         
-                        <button className="w-full mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-200 shadow-sm">
+                        <button className="w-full mt-6 bg-gradient-to-r from-gray-800 to-gray-900 text-white py-4 px-6 rounded-xl font-semibold hover:from-gray-900 hover:to-black transform hover:scale-[1.02] transition-all duration-200 shadow-sm">
                           View Solo Traveler Rooms & Rates
                         </button>
                       </div>
                       
                       {/* Solo Traveler Benefits */}
-                      <div className="mt-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-200">
-                        <h4 className="text-lg font-semibold text-indigo-900 mb-4">Solo Traveler Benefits</h4>
+                      <div className="mt-6 bg-gray-50/80 backdrop-blur-lg rounded-xl p-6 border border-gray-200/40">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Solo Traveler Benefits</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
                               <span className="text-white text-sm">🛡️</span>
                             </div>
                             <div>
-                              <div className="font-semibold text-indigo-900">Safety & Security</div>
-                              <div className="text-sm text-indigo-700">24/7 concierge & secure access</div>
+                              <div className="font-semibold text-gray-900">Safety & Security</div>
+                              <div className="text-sm text-gray-700">24/7 concierge & secure access</div>
                             </div>
                           </div>
                           <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
                               <span className="text-white text-sm">🎯</span>
                             </div>
                             <div>
-                              <div className="font-semibold text-indigo-900">Personalized Service</div>
-                              <div className="text-sm text-indigo-700">Dedicated solo traveler concierge</div>
+                              <div className="font-semibold text-gray-900">Personalized Service</div>
+                              <div className="text-sm text-gray-700">Dedicated solo traveler concierge</div>
                             </div>
                           </div>
                           <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
                               <span className="text-white text-sm">🌟</span>
                             </div>
                             <div>
-                              <div className="font-semibold text-indigo-900">Premium Amenities</div>
-                              <div className="text-sm text-indigo-700">Solo-friendly room layouts</div>
+                              <div className="font-semibold text-gray-900">Premium Amenities</div>
+                              <div className="text-sm text-gray-700">Solo-friendly room layouts</div>
                             </div>
                           </div>
                           <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
                               <span className="text-white text-sm">🤝</span>
                             </div>
                             <div>
-                              <div className="font-semibold text-indigo-900">Community Access</div>
-                              <div className="text-sm text-indigo-700">Solo traveler events & networking</div>
+                              <div className="font-semibold text-gray-900">Community Access</div>
+                              <div className="text-sm text-emerald-700">Solo traveler events & networking</div>
                             </div>
                           </div>
                         </div>

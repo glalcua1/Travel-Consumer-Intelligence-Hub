@@ -6,6 +6,7 @@ import ProductInsights from './components/ProductInsights'
 import ActionPlanner from './components/ActionPlanner'
 import ChannelStrategy from './components/ChannelStrategy'
 import MarketingPage from './components/MarketingPage'
+import CoachMarks from './components/CoachMarks'
 
 // Placeholder components for other sections
 
@@ -118,6 +119,7 @@ function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userInfo, setUserInfo] = useState(null)
+  const [showCoachMarks, setShowCoachMarks] = useState(false)
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(prev => !prev)
@@ -128,12 +130,20 @@ function App() {
     console.log('User signed up:', signupData)
     setUserInfo(signupData)
     setIsLoggedIn(true)
+    // Show coach marks for new users after a brief delay
+    setTimeout(() => {
+      setShowCoachMarks(true)
+    }, 1000)
   }
 
   const handleLogout = () => {
     setUserInfo(null)
     setIsLoggedIn(false)
     setActiveSection('overview') // Reset to overview when logging out
+  }
+
+  const handleCoachMarksComplete = () => {
+    setShowCoachMarks(false)
   }
 
   const renderContent = () => {
@@ -185,6 +195,14 @@ function App() {
           {renderContent()}
         </div>
       </div>
+
+      {/* Coach Marks */}
+      {showCoachMarks && (
+        <CoachMarks 
+          userInfo={userInfo} 
+          onComplete={handleCoachMarksComplete}
+        />
+      )}
     </div>
   )
 }
